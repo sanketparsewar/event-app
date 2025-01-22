@@ -18,7 +18,7 @@ export const categories:Icategory[]=[
     {
         id: 4,
         name: 'Theater',
-        image: 'assets/imgs/theater.jpeg'
+        image: 'assets/imgs/comedy.jpeg'
     },
     {
         id: 5,

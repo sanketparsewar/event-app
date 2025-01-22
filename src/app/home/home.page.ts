@@ -8,12 +8,13 @@ import { Ievent } from '../interfaces/event.interface';
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { IonHeader, IonToolbar, IonicSlides, IonContent } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonContent,CommonModule ],
+  imports: [IonHeader, IonToolbar, IonContent,CommonModule ,RouterLink],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomePage implements OnInit{

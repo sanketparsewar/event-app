@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { register } from 'swiper/element/bundle';
-import {  locateOutline, notificationsOutline, optionsOutline } from 'ionicons/icons'; // Import specific icons
+import {  arrowRedoOutline, locateOutline, locationOutline, notificationsOutline, optionsOutline } from 'ionicons/icons'; // Import specific icons
 
 register();
 
@@ -16,7 +16,9 @@ export class AppComponent {
     addIcons({
      locateOutline,
      notificationsOutline,
-     optionsOutline
+     optionsOutline,
+     locationOutline,
+     arrowRedoOutline
     });
   }
 }

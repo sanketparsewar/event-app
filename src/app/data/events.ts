@@ -18,7 +18,7 @@ export const events: Ievent[] = [
     name: 'Tech Expo 2025',
     date: new Date('2025-09-10'),
     image: 'assets/images/jazz.jpeg',
-    location: 'Silicon Valley Convention Center, California',
+    location: 'Silicon Valley Convention, California',
     categoryId: '2',
     description:
       'Explore the latest innovations in technology and connect with industry leaders.',

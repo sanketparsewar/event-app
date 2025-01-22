@@ -37,20 +37,79 @@
     <ion-list-header mode="ios">
       Upcoming Events
     </ion-list-header>
-    <swiper-container>
+    <swiper-container #event_upcoming [modules]="swiperModule" [slidesPerView]="1.3" [keyboard]="true"
+      [centerSlides]="true">
       <swiper-slide *ngFor="let event of upcomingEvents; let i = index">
-        <ion-item lines="none">
-          <ion-thumbnail item-start>
-            <img [src]="event.image" alt="Event Image">
-          </ion-thumbnail>
-          <ion-label>
-            <!-- <h2>{{ event.title }}</h2>
-            <p>{{ event.description }}</p>
-            <p>Starts: {{ event.start_date | date:'medium' }}</p> -->
-          </ion-label>
-        </ion-item>
+        <ion-card class="event1" [routerLink]="['/','home','event',event?.id]">
+
+          <ion-item lines="none">
+            <ion-thumbnail item-start>
+              <img [src]="event.image" alt="Event Image">
+            </ion-thumbnail>
+            <ion-label>
+              <ion-text class="date">
+                {{event?.date |date:'MMM d, y' }}
+              </ion-text>
+              <p><ion-text color="dark">
+                  {{event?.name}}
+                </ion-text></p>
+              <p>
+                <ion-icon name="location-outline"></ion-icon>
+                {{event?.location}}
+              </p>
+            </ion-label>
+          </ion-item>
+        </ion-card>
       </swiper-slide>
     </swiper-container>
   </ion-list>
+
+  <!-- category -->
+  <ion-list class="">
+    <ion-item-divider mode="ios" clor-light>
+      Top Picks
+      <ion-button fill="clear" slot="end" shape="round">
+        View All
+      </ion-button>
+    </ion-item-divider>
+
+    <swiper-container #category [modules]="swiperModule" [slidesPerView]="2.5" [keyboard]="true" [centerSlides]="true">
+      <swiper-slide *ngFor="let category of categories; let i = index">
+        <ion-card class="category1 ion-no-padding">
+          <ion-item lines="none">
+            <ion-avatar>
+              <img [src]="category.image" />
+            </ion-avatar>
+            <ion-label class="">
+              {{category?.name}}
+            </ion-label>
+          </ion-item>
+        </ion-card>
+
+      </swiper-slide>
+    </swiper-container>
+  </ion-list>
+
+
+
+  <ion-list>
+    <ion-card class="currentEvent" *ngFor="let event of currentEvents; let i = index">
+      <img alt="image" [src]="event?.image" width="100%" />
+      <ion-card-header>
+        <ion-item lines="none">
+          <ion-label>
+            <p>{{event?.name}}</p>
+            <p>{{event?.date | date :'MMM d, y hh:mm a'}}
+            </p>
+          </ion-label>
+          <ion-fab-button size="small" color="tertiary">
+            <ion-icon name="arrow-redo-outline"></ion-icon>
+          </ion-fab-button>
+
+        </ion-item>
+      </ion-card-header>
+    </ion-card>
+  </ion-list>
+
 
 </ion-content>
