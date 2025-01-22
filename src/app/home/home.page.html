@@ -92,22 +92,18 @@
 
 
 
-  <ion-list>
-    <ion-card class="currentEvent" *ngFor="let event of currentEvents; let i = index">
-      <img alt="image" [src]="event?.image" width="100%" />
-      <ion-card-header>
-        <ion-item lines="none">
-          <ion-label>
-            <p>{{event?.name}}</p>
+  <ion-list >
+    <ion-card class="currentEvent" *ngFor="let event of currentEvents; let i = index" [ngStyle]="{'background-image':'url('+event?.image+')'}"> 
+        <ion-item lines="none"  >
+          <ion-label >
+            <p class="name">{{event?.name}}</p>
             <p>{{event?.date | date :'MMM d, y hh:mm a'}}
             </p>
           </ion-label>
           <ion-fab-button size="small" color="tertiary">
             <ion-icon name="arrow-redo-outline"></ion-icon>
           </ion-fab-button>
-
         </ion-item>
-      </ion-card-header>
     </ion-card>
   </ion-list>
 

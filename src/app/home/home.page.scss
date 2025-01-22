@@ -67,6 +67,7 @@ ion-content {
 
   ion-list {
     background: transparent;
+    align-items: center;
   }
 
   ion-item-divider {
@@ -117,14 +118,28 @@ ion-content {
 
   ion-card.currentEvent {
     border-radius: 20px;
+    height: 15rem;
+    margin: 5px 5px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
 
+    align-content: end;
     ion-item {
-      p{
+      border-radius: 20px;
+      --background: rgba(47, 47, 47, 0.05);
+      backdrop-filter: blur(8px);
+      p.name {
+        color: white;
         font-weight: bold;
-        font-size: 1rem;
-        // color: black;
+        font-size: 1.3rem;
+      }
+      p{
+        color: white;
       }
     }
+
+
 
   }
 
