@@ -2,7 +2,7 @@ import { Ievent } from '../interfaces/event.interface';
 
 export const events: Ievent[] = [
   {
-    id: 1,
+    _id: 1,
     name: 'Rock Festival 2025',
     date: new Date('2025-06-15'),
     image: 'assets/images/jazz.jpeg',
@@ -14,7 +14,7 @@ export const events: Ievent[] = [
       'Join us for an unforgettable night of rock music with legendary bands and upcoming artists.',
   },
   {
-    id: 2,
+    _id: 2,
     name: 'Tech Expo 2025',
     date: new Date('2025-09-10'),
     image: 'assets/images/jazz.jpeg',
@@ -24,7 +24,7 @@ export const events: Ievent[] = [
       'Explore the latest innovations in technology and connect with industry leaders.',
   },
   {
-    id: 3,
+    _id: 3,
     name: 'Food Carnival 2025',
     date: new Date('2025-04-22'),
     image: 'assets/images/jazz.jpeg',
@@ -35,7 +35,7 @@ export const events: Ievent[] = [
       'A feast for the senses featuring cuisines from around the world and live cooking shows.',
   },
   {
-    id: 4,
+    _id: 4,
     name: 'Art Exhibition 2025',
     date: new Date('2025-07-05'),
     image: 'assets/images/jazz.jpeg',
@@ -45,7 +45,7 @@ export const events: Ievent[] = [
       'A showcase of contemporary art by renowned and emerging artists.',
   },
   {
-    id: 5,
+    _id: 5,
     name: 'Jazz Night 2025',
     date: new Date('2025-03-18'),
     image: 'assets/images/jazz.jpeg',
@@ -56,7 +56,7 @@ export const events: Ievent[] = [
     description: 'An evening of smooth and soulful jazz music.',
   },
   {
-    id: 6,
+    _id: 6,
     name: 'Startup Meetup 2025',
     date: new Date('2025-11-12'),
     image: 'assets/images/jazz.jpeg',
@@ -66,7 +66,7 @@ export const events: Ievent[] = [
       'Network with founders, investors, and mentors at the biggest startup event of the year.',
   },
   {
-    id: 7,
+    _id: 7,
     name: 'Yoga Retreat 2025',
     date: new Date('2025-08-08'),
     image: 'assets/images/jazz.jpeg',
@@ -77,7 +77,7 @@ export const events: Ievent[] = [
       'Reconnect with your inner self at this relaxing and rejuvenating yoga retreat.',
   },
   {
-    id: 8,
+    _id: 8,
     name: 'Gaming Championship 2025',
     date: new Date('2025-05-25'),
     image: 'assets/images/jazz.jpeg',
@@ -87,7 +87,7 @@ export const events: Ievent[] = [
       'Watch top gamers compete in the ultimate gaming championship.',
   },
   {
-    id: 9,
+    _id: 9,
     name: 'Film Festival 2025',
     date: new Date('2025-10-20'),
     image: 'assets/images/jazz.jpeg',
@@ -97,7 +97,7 @@ export const events: Ievent[] = [
       'Experience the magic of cinema with screenings of critically acclaimed films.',
   },
   {
-    id: 10,
+    _id: 10,
     name: 'Marathon 2025',
     date: new Date('2025-02-15'),
     image: 'assets/images/jazz.jpeg',

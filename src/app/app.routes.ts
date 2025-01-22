@@ -1,9 +1,13 @@
 import { Routes } from '@angular/router';
-
 export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+  },
+  {
+    path: 'event/:id',
+    loadComponent: () =>
+      import('./home/event/event.page').then((m) => m.EventPage),
   },
   {
     path: '',
@@ -12,6 +16,7 @@ export const routes: Routes = [
   },
   {
     path: 'welcome',
-    loadComponent: () => import('./welcome/welcome.page').then( m => m.WelcomePage)
-  }
+    loadComponent: () =>
+      import('./welcome/welcome.page').then((m) => m.WelcomePage),
+  },
 ];

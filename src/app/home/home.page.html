@@ -40,7 +40,7 @@
     <swiper-container #event_upcoming [modules]="swiperModule" [slidesPerView]="1.3" [keyboard]="true"
       [centerSlides]="true">
       <swiper-slide *ngFor="let event of upcomingEvents; let i = index">
-        <ion-card class="event1" [routerLink]="['/','home','event',event?.id]">
+        <ion-card class="event1" [routerLink]="['/','event',event?._id]">
 
           <ion-item lines="none">
             <ion-thumbnail item-start>
@@ -93,7 +93,7 @@
 
 
   <ion-list >
-    <ion-card class="currentEvent" *ngFor="let event of currentEvents; let i = index" [ngStyle]="{'background-image':'url('+event?.image+')'}"> 
+    <ion-card class="currentEvent" *ngFor="let event of currentEvents; let i = index" [ngStyle]="{'background-image':'url('+event?.image+')'}"  [routerLink]="['/','event',event?._id]"> 
         <ion-item lines="none"  >
           <ion-label >
             <p class="name">{{event?.name}}</p>
