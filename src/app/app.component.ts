@@ -11,6 +11,7 @@ import {
   locationOutline,
   notificationsOutline,
   optionsOutline,
+  personCircle,
   ticketOutline,
 } from 'ionicons/icons'; // Import specific icons
 
@@ -33,6 +34,7 @@ export class AppComponent {
       arrowDownCircleOutline,
       chevronBackCircleOutline,
       ticketOutline,
+      personCircle
     });
   }
 }

@@ -33,12 +33,12 @@
             <ion-label color="tertiary">
                 Check Shows
             </ion-label>
-            <ion-label color="tertiary" class="down-icon" id="open-modal" expand="block">
+            <ion-label color="tertiary" class="down-icon" id="show-modal" expand="block">
                 <ion-icon name="arrow-down-circle-outline"></ion-icon>
             </ion-label>
         </div>
 
-        <ion-modal #modal trigger="open-modal" [presentingElement]="presentingElement" mode="ios">
+        <!-- <ion-modal #modal trigger="show-modal" [presentingElement]="presentingElement" mode="ios">
             <ng-template>
                 <ion-header>
                     <ion-toolbar>
@@ -82,10 +82,14 @@
                     </ion-list>
                 </ion-content>
             </ng-template>
-        </ion-modal>
+        </ion-modal> -->
+
+        <!-- shows modal -->
+        <app-shows [event]="event" ></app-shows>
+
+        
+
     </ion-item>
-
-
 
 
 
