@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { register } from 'swiper/element/bundle';
-import {  arrowRedoOutline, calendarOutline, locateOutline, locationOutline, notificationsOutline, optionsOutline } from 'ionicons/icons'; // Import specific icons
+import {  arrowDownCircleOutline, arrowRedoOutline, calendarOutline, chevronBackCircleOutline, locateOutline, locationOutline, notificationsOutline, optionsOutline } from 'ionicons/icons'; // Import specific icons
 
 register();
 
@@ -19,7 +19,9 @@ export class AppComponent {
      optionsOutline,
      locationOutline,
      arrowRedoOutline,
-     calendarOutline
+     calendarOutline,
+     arrowDownCircleOutline,
+     chevronBackCircleOutline
 
     });
   }

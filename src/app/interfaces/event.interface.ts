@@ -8,4 +8,6 @@ export interface Ievent {
   performers?: string[];
   categoryId: string;
   description: string;
+  shows:any[],
+    bookings:any[],
 }

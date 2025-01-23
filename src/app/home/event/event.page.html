@@ -7,7 +7,11 @@
 
     <!-- Container for background image -->
     <div color="light" class="bg-container">
-        <div class="bg" [ngStyle]="{'background-image': 'url(' + event.image + ')'}">
+        <div class="bg ion-display-flex" [ngStyle]="{'background-image': 'url(' + event.image + ')'}">
+            <ion-button slot="start" fill="clear" size="large" shape="round" [routerLink]="['/home']" routerLinkActive="router-link-active"   >
+                <ion-icon slot="icon-only" size="large" color="light" name="chevron-back-circle-outline"></ion-icon>
+            </ion-button>
+
         </div>
 
     </div>
@@ -24,11 +28,49 @@
                 </ion-col>
             </ion-row>
         </ion-label>
-        <div slot="end" >
+        <div slot="end" class="ion-text-center check-show">
             <ion-label color="tertiary">
-               $545
+                Check Shows
+            </ion-label>
+            <ion-label color="tertiary" class="down-icon">
+                <ion-icon name="arrow-down-circle-outline"></ion-icon>
             </ion-label>
         </div>
     </ion-item>
+
+    <ion-card  lines="none" color="ligth">
+        <ion-list>
+            <ion-list-header>About Event</ion-list-header>
+            <p class="ion-margin-horizontal description" >{{event.description}}</p>
+            <ion-row class="ion-margin-horizontal">
+                <ion-col class="ion-align-items-center participant-text ion-no-padding">
+                    <ion-label>
+                        <ion-text color="dark"><strong>Participants</strong></ion-text>
+                        <p>All over the world</p>
+                    </ion-label>
+                </ion-col>
+                <ion-col class="ion-align-items-center ion-no-padding">
+                    <!-- Display first 4 avatars -->
+                    @for (item of event.bookings; track $index) {
+                    <ion-avatar *ngIf="$index < 4" class="participant">
+                        <img [src]="item?.image" />
+                    </ion-avatar>
+                    }
+
+                    <!-- Display remaining number of participants if there are more than 4 -->
+                    <ion-avatar *ngIf="event.bookings.length > 4"
+                        class="ion-text-center ion-align-items-center ion-justify-content-center participant bg-avatar">
+                        <ion-text color="dark">
+                            +{{ event.bookings.length - 4 }}
+                        </ion-text>
+                    </ion-avatar>
+
+                </ion-col>
+
+                
+            </ion-row>
+
+        </ion-list>
+    </ion-card>
 
 </ion-content>

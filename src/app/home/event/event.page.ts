@@ -11,8 +11,14 @@ import {
   IonCol,
   IonRow,
   IonIcon,
+  IonCard,
+  IonList,
+  IonListHeader,
+  IonAvatar,
+  IonText,
+  IonButton,
 } from '@ionic/angular/standalone';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EventService } from 'src/app/services/event/event.service';
 import { Ievent } from 'src/app/interfaces/event.interface';
 
@@ -22,6 +28,13 @@ import { Ievent } from 'src/app/interfaces/event.interface';
   styleUrls: ['./event.page.scss'],
   standalone: true,
   imports: [
+    IonButton,
+    IonText,
+    IonAvatar,
+RouterLink,
+    IonListHeader,
+    IonList,
+    IonCard,
     IonIcon,
     IonRow,
     IonCol,
@@ -47,6 +60,8 @@ export class EventPage implements OnInit {
     performers: [],
     categoryId: '',
     description: '',
+    shows: [],
+    bookings: [],
   };
 
   constructor(
