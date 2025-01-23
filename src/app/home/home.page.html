@@ -37,7 +37,7 @@
     <ion-list-header mode="ios">
       Upcoming Events
     </ion-list-header>
-    <swiper-container #event_upcoming [modules]="swiperModule" [slidesPerView]="1.3" [keyboard]="true"
+    <swiper-container #event_upcoming [modules]="swiperModule" [slidesPerView]="1.14" [keyboard]="true"
       [centerSlides]="true">
       <swiper-slide *ngFor="let event of upcomingEvents; let i = index">
         <ion-card class="event1" [routerLink]="['/','event',event?._id]">
@@ -47,9 +47,9 @@
               <img [src]="event.image" alt="Event Image">
             </ion-thumbnail>
             <ion-label>
-              <ion-text class="date">
+              <!-- <ion-text class="date">
                 {{event?.date |date:'MMM d, y' }}
-              </ion-text>
+              </ion-text> -->
               <p><ion-text color="dark">
                   {{event?.name}}
                 </ion-text></p>
@@ -73,7 +73,7 @@
       </ion-button>
     </ion-item-divider>
 
-    <swiper-container #category [modules]="swiperModule" [slidesPerView]="2.5" [keyboard]="true" [centerSlides]="true">
+    <swiper-container #category [modules]="swiperModule" [slidesPerView]="2.3" [keyboard]="true" [centerSlides]="true">
       <swiper-slide *ngFor="let category of categories; let i = index">
         <ion-card class="category1 ion-no-padding">
           <ion-item lines="none">

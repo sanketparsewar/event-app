@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -17,6 +17,10 @@ import {
   IonAvatar,
   IonText,
   IonButton,
+  IonImg,
+  IonButtons,
+  IonModal,
+  IonBadge,
 } from '@ionic/angular/standalone';
 import { ActivatedRoute, RouterLink } from '@angular/router';
 import { EventService } from 'src/app/services/event/event.service';
@@ -28,10 +32,13 @@ import { Ievent } from 'src/app/interfaces/event.interface';
   styleUrls: ['./event.page.scss'],
   standalone: true,
   imports: [
+    IonModal,
+    IonButtons,
+    IonImg,
     IonButton,
     IonText,
     IonAvatar,
-RouterLink,
+    RouterLink,
     IonListHeader,
     IonList,
     IonCard,
@@ -63,6 +70,7 @@ export class EventPage implements OnInit {
     shows: [],
     bookings: [],
   };
+  presentingElement!: HTMLElement | null;
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -76,6 +84,8 @@ export class EventPage implements OnInit {
         this.getEventById();
       }
     });
+
+    this.presentingElement = document.querySelector('.ion-page');
   }
 
   getEventById() {
@@ -88,5 +98,49 @@ export class EventPage implements OnInit {
         console.error('Error:', error); // Log error if request fails
       },
     });
+  }
+
+  getRemainingTime(show: any): string {
+    const showDate = new Date(show.date);
+    const [hours, minutes, period] = show.time.match(/(\d+):(\d+)\s?(AM|PM)/i)!.slice(1);
+
+    // Convert to 24-hour format
+    let hour = parseInt(hours, 10);
+    if (period.toUpperCase() === 'PM' && hour !== 12) {
+      hour += 12;
+    } else if (period.toUpperCase() === 'AM' && hour === 12) {
+      hour = 0;
+    }
+
+    // Set the time for the show
+    showDate.setHours(hour, parseInt(minutes, 10), 0, 0);
+
+    const now = new Date();
+    const diffInMs = showDate.getTime() - now.getTime();
+
+    if (diffInMs <= 0) {
+      return 'Show started';
+    }
+
+    // Calculate days, hours, and minutes
+    const daysRemaining = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
+    const hoursRemaining = Math.floor((diffInMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+    const minutesRemaining = Math.floor((diffInMs % (1000 * 60 * 60)) / (1000 * 60));
+
+    // Construct the remaining time string
+    let timeString = '';
+    if (daysRemaining > 0) {
+      timeString += `${daysRemaining}d `;
+    }
+    if (hoursRemaining > 0 || daysRemaining > 0) {
+      timeString += `${hoursRemaining}h `;
+    }
+    timeString += `${minutesRemaining}m remaining`;
+
+    return timeString.trim();
+  }
+
+  bookTickets(item: any) {
+    console.log(item)
   }
 }
