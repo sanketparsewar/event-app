@@ -91,7 +91,7 @@ export class EventPage implements OnInit {
     this.eventService.getEventById(this.eventId).subscribe({
       next: (res: Ievent) => {
         this.event = res; // Assigning response to event
-        console.log(this.event);
+        // console.log(this.event);
       },
       error: (error) => {
         console.error('Error:', error); // Log error if request fails
