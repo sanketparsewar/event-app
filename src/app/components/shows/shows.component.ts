@@ -18,6 +18,7 @@ import {
 } from '@ionic/angular/standalone';
 import { Ievent } from 'src/app/interfaces/event.interface';
 import { BookingComponent } from '../booking/booking.component';
+import { Router } from '@angular/router';
 @Component({
   selector: 'app-shows',
   templateUrl: './shows.component.html',
@@ -45,18 +46,20 @@ import { BookingComponent } from '../booking/booking.component';
 export class ShowsComponent implements OnInit {
   @Input() event!: Ievent;
   show: any;
-  constructor() {}
+  constructor(private router:Router) {}
   presentingElement!: HTMLElement | null;
 
   ngOnInit() {
     this.presentingElement = document.querySelector('.ion-page');
   }
 
-  // openCustomDialog = document.querySelector('#open-custom-dialog');
-
-  async bookTickets(item: any) {
+  async bookTickets(modal:any,item: any) {    
     this.show = await item;
-    // if (this.openCustomDialog) this.openCustomDialog;
-    // console.log(item);
+    console.log(item);
+     // Passing data using router navigation
+     this.router.navigate(['/my-booking'], {
+      state: { eventData: item },  // Sending data as state
+    });
+    modal.dismiss()
   }
 }

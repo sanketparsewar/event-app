@@ -1,13 +1,46 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>myBooking</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content [fullscreen]="true">
   <ion-header collapse="condense">
     <ion-toolbar>
       <ion-title size="large">myBooking</ion-title>
     </ion-toolbar>
   </ion-header>
+
+  <ion-list lines="none" class="column-list">
+    <ion-item>
+      <ion-label>Date:{{ eventData.date | date: 'd MMM' }}</ion-label>
+      <ion-label slot="end"><strong>Price:</strong>{{ eventData.ticketPrice | currency:"INR" }}</ion-label>
+    </ion-item>
+
+    <ion-list>
+      <ion-item>
+        <ion-label required>Name:</ion-label>
+        <input placeholder="Enter text" [(ngModel)]="bookingData.name" />
+      </ion-item>
+
+      <ion-item>
+        <ion-label required>Phone:</ion-label>
+        <input type="text" placeholder="7984561321" [(ngModel)]="bookingData.phone" />
+      </ion-item>
+
+      <ion-item>
+        <ion-label required>Email:</ion-label>
+        <input type="email" placeholder="example@gmail.com" [(ngModel)]="bookingData.email" />
+      </ion-item>
+
+      <ion-item>
+        <ion-label required>Tickets:</ion-label>
+        <input type="number" placeholder="1" [(ngModel)]="bookingData.tickets" />
+      </ion-item>
+    </ion-list>
+
+    <ion-button class="" expand="full" color="tertiary" id="open-custom-dialog" (click)="bookTickets()" shape="round">Book
+      Now</ion-button>
+
+  </ion-list>
+
+
+  <app-booking  ></app-booking>
+
+
+
 </ion-content>

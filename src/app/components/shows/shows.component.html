@@ -34,10 +34,10 @@
             </ion-text>
 
             <div slot="end" style="display: flex; flex-direction: column;align-items: center;">
-              <ion-button class="ion-no-padding" color="primary" id="open-custom-dialog" expand="block" fill="clear"
-                class="book-now-btn" (click)="bookTickets(item)">
+              <ion-button class="ion-no-padding" color="primary"  expand="block" fill="clear"
+                class="book-now-btn" (click)="bookTickets(modal,item)">
 
-                <app-booking [show]="item" ></app-booking>
+                <!-- <app-booking [show]="item" ></app-booking> -->
 
                 <ion-icon size="large" name="ticket-outline"></ion-icon>Book
               </ion-button>
