@@ -7,8 +7,8 @@ import { Icategory } from 'src/app/interfaces/category.interface';
   providedIn: 'root'
 })
 export class CategoryService {
-//  private API_URI = 'http://localhost:8000/api';
- private API_URI = 'https://event-app-backend-ntri.onrender.com/api';
+ private API_URI = 'http://localhost:8000/api';
+//  private API_URI = 'https://event-app-backend-ntri.onrender.com/api';
 
   constructor(private http: HttpClient) {}
   getCategories(): Observable<Icategory[]> {

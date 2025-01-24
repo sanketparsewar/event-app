@@ -57,6 +57,6 @@ export class ShowsComponent implements OnInit {
   async bookTickets(item: any) {
     this.show = await item;
     // if (this.openCustomDialog) this.openCustomDialog;
-    console.log(item);
+    // console.log(item);
   }
 }

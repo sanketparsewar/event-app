@@ -7,8 +7,8 @@ import { Ievent } from 'src/app/interfaces/event.interface';
   providedIn: 'root',
 })
 export class EventService {
-  // private API_URI = 'http://localhost:8000/api';
-  private API_URI = 'https://event-app-backend-ntri.onrender.com/api';
+  private API_URI = 'http://localhost:8000/api';
+  // private API_URI = 'https://event-app-backend-ntri.onrender.com/api';
 
   constructor(private http: HttpClient) {}
   getEvents(): Observable<Ievent[]> {

@@ -1,5 +1,4 @@
 <ion-content class="ion-padding">
-
   <ion-modal id="example-modal" #modal trigger="open-custom-dialog">
     <ng-template>
       <div class="wrapper">
@@ -13,40 +12,55 @@
         </ion-header>
         <ion-list lines="none" class="column-list">
           <ion-item>
-            <ion-label>Date:{{ show.date | date: 'd MMM' }}</ion-label>
-            <ion-label slot="end"><strong>Price:</strong>{{ show.ticketPrice | currency:"INR" }}</ion-label>
+            <ion-label>Date: {{ show.date | date: 'd MMM' }}</ion-label>
+            <ion-label slot="end">
+              <strong>Price:</strong> {{ show.ticketPrice | currency: 'INR' }}
+            </ion-label>
           </ion-item>
 
           <ion-list>
             <ion-item>
               <ion-label required>Name:</ion-label>
-              <input placeholder="Enter text" [(ngModel)]="formData.name"/>
+              <input placeholder="Enter text" [(ngModel)]="bookingData.name" />
             </ion-item>
 
             <ion-item>
               <ion-label required>Phone:</ion-label>
-              <input type="text" placeholder="7984561321" [(ngModel)]="formData.phone"/>
+              <input
+                type="text"
+                placeholder="7984561321"
+                [(ngModel)]="bookingData.phone"
+              />
             </ion-item>
 
             <ion-item>
               <ion-label required>Email:</ion-label>
-              <input type="email" placeholder="example@gmail.com" [(ngModel)]="formData.email"/>
+              <input
+                type="email"
+                placeholder="example@gmail.com"
+                [(ngModel)]="bookingData.email"
+              />
             </ion-item>
 
             <ion-item>
               <ion-label required>Tickets:</ion-label>
-              <input type="number" placeholder="1" [(ngModel)]="formData.tickets"/>
+              <input
+                type="number"
+                placeholder="1"
+                [(ngModel)]="bookingData.tickets"
+              />
             </ion-item>
           </ion-list>
 
-
-          <ion-button class="" expand="full" color="tertiary" (click)="bookTickets()"
-            shape="round">Book Now</ion-button>
-
-
+          <ion-button
+            class=""
+            expand="full"
+            color="tertiary"
+            (click)="bookTickets(modal)"
+            shape="round"
+            >Book Now</ion-button
+          >
         </ion-list>
-
-
       </div>
     </ng-template>
   </ion-modal>
