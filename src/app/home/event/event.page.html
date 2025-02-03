@@ -94,27 +94,27 @@
         </ion-header>
         <ion-content style="background-color: rgb(240, 240, 240);" mode="ios">
             <ion-list style="background-color: rgb(240, 240, 240);">
-                <ion-item class="ion-margin" *ngFor="let item of event.shows, let i = index" lines="full"
+                <ion-item class="ion-margin" *ngFor="let item of showsList; let i = index" lines="full"
                     style="border-radius: 25px;">
                     <div slot="start" class="ion-align-items-center" style="display: flex;flex-direction: column;">
                         <ion-avatar style="padding: 2px 0;">
-                            <ion-img [src]="event.image"></ion-img>
+                            <!-- <ion-img [src]="event.image"></ion-img> -->
                         </ion-avatar>
                         <ion-text class="dark ion-no-margin ion-no-padding">
-                            <strong>{{ item.date | date: 'd MMM' }}</strong>
+                            <strong>{{ item?.date | date: 'd MMM' }}</strong>
                         </ion-text>
                     </div>
 
                     <ion-text style="font-size: .8rem;">
                         <p class="ion-no-margin ion-no-padding">
-                            <strong>Time:</strong> {{ item.time }}
+                            <strong>Time:</strong> {{ item?.time }}
                         </p>
                         <p class=" ion-no-margin ion-no-padding">
-                            <strong>Available Seats:</strong> <span style="color: green;">{{ item.availableSeats
+                            <strong>Available Seats:</strong> <span style="color: green;">{{ item?.availableSeats
                                 }}</span>
                         </p>
                         <p class="ion-no-margin ion-no-padding">
-                            <strong>Price:</strong> ₹{{ item.ticketPrice }}
+                            <strong>Price:</strong> ₹{{ item?.ticketPrice }}
                         </p>
                     </ion-text>
 

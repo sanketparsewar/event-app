@@ -24,6 +24,7 @@ import {
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EventService } from 'src/app/services/event/event.service';
 import { Ievent } from 'src/app/interfaces/event.interface';
+import { ShowService } from 'src/app/services/show/show.service';
 
 @Component({
   selector: 'app-event',
@@ -69,11 +70,13 @@ export class EventPage implements OnInit {
     shows: [],
     bookings: [],
   };
+  showsList:any;
   // show: any;
   router = inject(Router);
   constructor(
     private activatedRoute: ActivatedRoute,
-    private eventService: EventService
+    private eventService: EventService,
+    private showService: ShowService,
   ) {}
   @ViewChild('modal') modal!: IonModal;
   ngOnInit() {
@@ -81,6 +84,7 @@ export class EventPage implements OnInit {
       if (params['id']) {
         this.eventId = params['id'];
         this.getEventById();
+        this.getShowsByEvent()
       }
     });
   }
@@ -89,10 +93,21 @@ export class EventPage implements OnInit {
     this.eventService.getEventById(this.eventId).subscribe({
       next: (res: Ievent) => {
         this.event = res; // Assigning response to event
-        console.log(res);
+        console.log('event',res);
       },
       error: (error) => {
         console.error('Error:', error); // Log error if request fails
+      },
+    });
+  }
+  getShowsByEvent(){
+    this.showService.getShowsByEvent(this.eventId).subscribe({
+      next: (shows) => {
+        this.showsList = shows;
+        console.log('showsList:', this.showsList);
+      },
+      error: (error) => {
+        console.error('Error:', error);
       },
     });
   }

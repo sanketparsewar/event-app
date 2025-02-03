@@ -10,7 +10,6 @@ import {
   IonToolbar,
   IonList,
   IonIcon,
-  IonLabel,
   IonButton,
 } from '@ionic/angular/standalone';
 
@@ -21,7 +20,6 @@ import {
   standalone: true,
   imports: [
     IonButton,
-    IonLabel,
     IonIcon,
     IonList,
     IonContent,
