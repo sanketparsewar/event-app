@@ -6,8 +6,8 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class BookingService {
-//  private API_URI = 'http://localhost:8000/api';
-  private API_URI = 'https://event-app-backend-ntri.onrender.com/api';
+ private API_URI = 'http://localhost:8000/api';
+  // private API_URI = 'https://event-app-backend-ntri.onrender.com/api';
 
   constructor(private http:HttpClient) { }
 

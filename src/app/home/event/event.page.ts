@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -20,20 +20,20 @@ import {
   IonImg,
   IonButtons,
   IonModal,
-  IonBadge,
 } from '@ionic/angular/standalone';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EventService } from 'src/app/services/event/event.service';
 import { Ievent } from 'src/app/interfaces/event.interface';
-import { ShowsComponent } from 'src/app/components/shows/shows.component';
 
 @Component({
   selector: 'app-event',
   templateUrl: './event.page.html',
   styleUrls: ['./event.page.scss'],
   standalone: true,
-  imports: [ShowsComponent,
-   
+  imports: [
+    IonModal,
+    IonButtons,
+    IonImg,
     IonButton,
     IonText,
     IonAvatar,
@@ -69,13 +69,13 @@ export class EventPage implements OnInit {
     shows: [],
     bookings: [],
   };
-  // presentingElement!: HTMLElement | null;
-
+  // show: any;
+  router = inject(Router);
   constructor(
     private activatedRoute: ActivatedRoute,
     private eventService: EventService
   ) {}
-
+  @ViewChild('modal') modal!: IonModal;
   ngOnInit() {
     this.activatedRoute.params.subscribe((params) => {
       if (params['id']) {
@@ -83,15 +83,13 @@ export class EventPage implements OnInit {
         this.getEventById();
       }
     });
-
-    // this.presentingElement = document.querySelector('.ion-page');
   }
 
   getEventById() {
     this.eventService.getEventById(this.eventId).subscribe({
       next: (res: Ievent) => {
         this.event = res; // Assigning response to event
-        // console.log(this.event);
+        console.log(this.event);
       },
       error: (error) => {
         console.error('Error:', error); // Log error if request fails
@@ -99,47 +97,20 @@ export class EventPage implements OnInit {
     });
   }
 
-  // getRemainingTime(show: any): string {
-  //   const showDate = new Date(show.date);
-  //   const [hours, minutes, period] = show.time.match(/(\d+):(\d+)\s?(AM|PM)/i)!.slice(1);
+  openModal() {
+    this.modal.present();
+  }
 
-  //   // Convert to 24-hour format
-  //   let hour = parseInt(hours, 10);
-  //   if (period.toUpperCase() === 'PM' && hour !== 12) {
-  //     hour += 12;
-  //   } else if (period.toUpperCase() === 'AM' && hour === 12) {
-  //     hour = 0;
-  //   }
+  closeModal() {
+    this.modal.dismiss();
+  }
 
-  //   // Set the time for the show
-  //   showDate.setHours(hour, parseInt(minutes, 10), 0, 0);
-
-  //   const now = new Date();
-  //   const diffInMs = showDate.getTime() - now.getTime();
-
-  //   if (diffInMs <= 0) {
-  //     return 'Show started';
-  //   }
-
-  //   // Calculate days, hours, and minutes
-  //   const daysRemaining = Math.floor(diffInMs / (1000 * 60 * 60 * 24));
-  //   const hoursRemaining = Math.floor((diffInMs % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-  //   const minutesRemaining = Math.floor((diffInMs % (1000 * 60 * 60)) / (1000 * 60));
-
-  //   // Construct the remaining time string
-  //   let timeString = '';
-  //   if (daysRemaining > 0) {
-  //     timeString += `${daysRemaining}d `;
-  //   }
-  //   if (hoursRemaining > 0 || daysRemaining > 0) {
-  //     timeString += `${hoursRemaining}h `;
-  //   }
-  //   timeString += `${minutesRemaining}m remaining`;
-
-  //   return timeString.trim();
-  // }
-
-  // bookTickets(item: any) {
-  //   console.log(item)
-  // }
+  async bookTickets(item: any) {
+    // this.show = await item;
+    console.log(item);
+    this.router.navigate(['/my-booking'], {
+      state: { showData: item }, // Sending data as state
+    });
+   this.closeModal()
+  }
 }

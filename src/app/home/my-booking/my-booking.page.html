@@ -1,46 +1,136 @@
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">myBooking</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <ion-list lines="none" class="column-list">
-    <ion-item>
-      <ion-label>Date:{{ eventData.date | date: 'd MMM' }}</ion-label>
-      <ion-label slot="end"><strong>Price:</strong>{{ eventData.ticketPrice | currency:"INR" }}</ion-label>
-    </ion-item>
-
-    <ion-list>
-      <ion-item>
-        <ion-label required>Name:</ion-label>
-        <input placeholder="Enter text" [(ngModel)]="bookingData.name" />
-      </ion-item>
-
-      <ion-item>
-        <ion-label required>Phone:</ion-label>
-        <input type="text" placeholder="7984561321" [(ngModel)]="bookingData.phone" />
-      </ion-item>
-
-      <ion-item>
-        <ion-label required>Email:</ion-label>
-        <input type="email" placeholder="example@gmail.com" [(ngModel)]="bookingData.email" />
-      </ion-item>
-
-      <ion-item>
-        <ion-label required>Tickets:</ion-label>
-        <input type="number" placeholder="1" [(ngModel)]="bookingData.tickets" />
-      </ion-item>
-    </ion-list>
-
-    <ion-button class="" expand="full" color="tertiary" id="open-custom-dialog" (click)="bookTickets()" shape="round">Book
-      Now</ion-button>
-
-  </ion-list>
+<ion-content [fullscreen]="true" class="ion-padding" scroll-y="false">
+  <!-- <ion-header collapse="condense"> -->
+    <!-- <ion-toolbar> -->
+      <!-- <ion-title size="large">myBooking</ion-title> -->
+    <!-- </ion-toolbar> -->
+  <!-- </ion-header> -->
 
 
-  <app-booking  ></app-booking>
+  <div class="bg ion-display-flex">
+    <ion-button slot="start" fill="clear" size="large" shape="round"
+      (click)="router.navigateByUrl('/event/'+showData.eventId)" routerLinkActive="router-link-active">
+      <ion-icon slot="icon-only" size="large" name="chevron-back-circle-outline"></ion-icon>
+    </ion-button>
+  </div>
 
 
+
+  <!-- Centered Container with Curved Box -->
+  <div class="centered-container">
+    <div class="booking-box ion-padding">
+      <!-- Event Details -->
+      <ion-grid>
+        <ion-row>
+          <ion-col class="ion-no-padding">
+            <p class="ion-no-margin">
+              <ion-text><strong>Date:</strong>{{ showData.date | date: 'd MMM, hh:mm a' }}</ion-text>
+            </p>
+            <p class="ion-no-margin">
+              <ion-text><strong>Price per ticket:</strong> {{ showData.ticketPrice | currency:"INR" }}</ion-text>
+            </p>
+          </ion-col>
+        </ion-row>
+      </ion-grid>
+
+      <!-- Booking Form -->
+      <ion-list class="ion-no-margin ion-no-padding">
+        <ion-item class="ion-no-padding ion-margin-bottom" lines="none">
+          <ion-label position="stacked" required>Name:</ion-label>
+          <input placeholder="Enter your name" [(ngModel)]="bookingData.name" />
+        </ion-item>
+
+        <ion-item class="ion-no-padding ion-margin-bottom" lines="none">
+          <ion-label position="stacked" required>Phone:</ion-label>
+          <input type="tel" placeholder="7984561321" [(ngModel)]="bookingData.phone" />
+        </ion-item>
+
+        <ion-item class="ion-no-padding ion-margin-bottom" lines="none">
+          <ion-label position="stacked" required>Email:</ion-label>
+          <input type="email" placeholder="example@gmail.com" [(ngModel)]="bookingData.email" />
+        </ion-item>
+
+        <ion-item class="ion-no-padding ion-margin-bottom" lines="none">
+          <ion-label position="stacked" required>Tickets:</ion-label>
+          <input type="number" placeholder="1" [(ngModel)]="bookingData.tickets" />
+        </ion-item>
+      </ion-list>
+
+      <!-- Book Now Button -->
+      <ion-button expand="full" color="tertiary" (click)="bookTickets()" shape="round" class="ion-margin-top">
+        Book Now
+      </ion-button>
+    </div>
+  </div>
 
 </ion-content>
+
+
+
+
+<ion-modal #modal>
+  <ng-template>
+    <div class="wrapper">
+      <ion-header>
+        <ion-toolbar>
+          <ion-title>Ticket</ion-title>
+          <ion-buttons slot="end">
+            <ion-button (click)="closeModal()">Back</ion-button>
+          </ion-buttons>
+        </ion-toolbar>
+      </ion-header>
+
+      <ion-card class="ticket">
+        <div class="holes-top"></div>
+
+        <ion-card-header>
+          <ion-card-subtitle class="cinema">NOW SHOWING</ion-card-subtitle>
+          <ion-card-title class="event-title">{{ ticketDetails?.showId?.eventId?.name }}</ion-card-title>
+        </ion-card-header>
+
+        <ion-card-content>
+          <div class="poster">
+            <img [src]="ticketDetails?.showId?.eventId?.image" alt="Event Poster" />
+          </div>
+
+          <div class="info">
+            <ion-grid>
+              <ion-row>
+                <ion-col>
+                  <h5>Price</h5>
+                  <p>{{ ticketDetails?.totalAmount |currency:"INR" }}</p>
+                </ion-col>
+                <ion-col>
+                  <h5>Date</h5>
+                  <p>{{ ticketDetails?.showId?.date | date: "d MMM, y" }}</p>
+                </ion-col>
+                <ion-col>
+                  <h5>Time</h5>
+                  <p>{{ ticketDetails?.showId?.date | date: "hh:mm a" }}</p>
+                </ion-col>
+              </ion-row>
+            </ion-grid>
+          </div>
+          <div>
+            <hr>
+          </div>
+          <div class="ticket-details">
+            <img [src]="ticketDetails?.image" class="userDetails" alt="image" />
+            <div class="ticket-info">
+              <p class="ticket-name">{{ ticketDetails?.name }}</p>
+              <p>{{ ticketDetails?.email }}</p>
+              <p>{{ ticketDetails?.phone }}</p>
+              <p class="ticket-id">Tickets: {{ ticketDetails?.tickets}}</p>
+              <p class="ticket-id">Ticket ID: <a href="">{{ ticketDetails?._id }}</a></p>
+            </div>
+          </div>
+          
+          <div class="holes-lower"></div>
+         
+        </ion-card-content>
+      </ion-card>
+    </div>
+  </ng-template>
+</ion-modal>
+
+
+

@@ -1,5 +1,5 @@
 import { BookingService } from 'src/app/services/booking/booking.service';
-import { Component, OnInit } from '@angular/core';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -11,9 +11,20 @@ import {
   IonLabel,
   IonButton,
   IonList,
+  IonText,
+  IonGrid,
+  IonRow,
+  IonCol,
+  IonButtons,
+  IonModal,
+  IonIcon,
+  IonCardHeader,
+  IonCardSubtitle,
+  IonCardTitle,
+  IonCardContent,
+  IonCard,
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
-import { BookingComponent } from 'src/app/components/booking/booking.component';
 
 @Component({
   selector: 'app-my-booking',
@@ -21,6 +32,18 @@ import { BookingComponent } from 'src/app/components/booking/booking.component';
   styleUrls: ['./my-booking.page.scss'],
   standalone: true,
   imports: [
+    IonCard,
+    IonCardContent,
+    IonCardTitle,
+    IonCardSubtitle,
+    IonCardHeader,
+    IonIcon,
+    IonModal,
+    IonButtons,
+    IonCol,
+    IonRow,
+    IonGrid,
+    IonText,
     IonList,
     IonButton,
     IonLabel,
@@ -30,47 +53,67 @@ import { BookingComponent } from 'src/app/components/booking/booking.component';
     IonTitle,
     IonToolbar,
     CommonModule,
-    FormsModule,BookingComponent
+    FormsModule,
   ],
 })
 export class MyBookingPage implements OnInit {
-  eventData: any;
+  showData: any;
   bookingData: any = {
     name: '',
     email: '',
     phone: '',
     tickets: 1,
     showId: '',
+    totalAmount: 0,
   };
-  constructor(private router: Router,private bookingService:BookingService) {}
-
+  ticketDetails: any;
+  constructor(private bookingService: BookingService) {}
+  router = inject(Router);
+  @ViewChild('modal') modal: any;
   ngOnInit() {
-    // Accessing data passed from the previous page
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
-      this.eventData = navigation.extras.state['eventData'];
-      console.log('Data passed from ShowsComponent:', this.eventData);
+      this.showData = navigation.extras.state['showData'];
+      console.log('Data passed from ShowsComponent:', this.showData);
     } else {
       console.log('No data received.');
     }
   }
 
+  openModal() {
+    if (this.modal) {
+      this.modal.present();
+    }
+  }
+
+  closeModal() {
+    if (this.modal) {
+      if(confirm('Download ticket before leaving this page?')){
+        this.modal.dismiss();
+        this.router.navigateByUrl(`/event/${this.showData.eventId}`);
+      }
+    }
+  }
+
   bookTickets() {
-    // console.log(this.bookingData);
-    // this.bookingData.showId = this.eventData._id;
-    // this.bookingService.bookTicket(this.bookingData).subscribe({
-    //   next: async (res: any) => {
-    //     console.log('Booking successful:', res);
-    //     this.router.navigateByUrl('/events')
-    //     this.bookingData = {
-    //       name: '',
-    //       email: '',
-    //       phone: '',
-    //       tickets: 1,
-    //       showId: '',
-    //     };
-    //   },
-    //   error: (error: any) => console.error('Error:', error),
-    // });
+    this.bookingData.showId = this.showData._id;
+    this.bookingData.totalAmount =
+      this.bookingData.tickets * this.showData.ticketPrice;
+    this.bookingService.bookTicket(this.bookingData).subscribe({
+      next: async (res: any) => {
+        this.ticketDetails = res.booking;
+        console.log('ticketDetails successful:', res);
+        this.openModal();
+        this.bookingData = {
+          name: '',
+          email: '',
+          phone: '',
+          tickets: 1,
+          showId: '',
+          totalAmount: 0,
+        };
+      },
+      error: (error: any) => console.error('Error:', error),
+    });
   }
 }

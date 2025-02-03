@@ -90,15 +90,7 @@ ion-item {
     user-select:none;
     transition:all .1s;
   }
-  
-//   body{
-//     display:flex;
-//     justify-content:center;
-//     align-items:center;
-//     min-height:100vh;
-//     background:#ccc;
-//     overflow:hidden;
-//   }
+
   
   .msg{
     position:absolute;
@@ -175,7 +167,6 @@ ion-item {
   }
   
   .m-ticket > .movie-details > .movie > h4{
-    text-transfrom:capitalize;
     font-size:1.6em;
     margin-bottom:20px;
     width:200px;

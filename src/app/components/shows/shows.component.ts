@@ -17,14 +17,14 @@ import {
   IonModal,
 } from '@ionic/angular/standalone';
 import { Ievent } from 'src/app/interfaces/event.interface';
-import { BookingComponent } from '../booking/booking.component';
+// import { BookingComponent } from '../booking/booking.component';
 import { Router } from '@angular/router';
 @Component({
   selector: 'app-shows',
   templateUrl: './shows.component.html',
   styleUrls: ['./shows.component.scss'],
   imports: [
-    BookingComponent,
+    // BookingComponent,
     IonContent,
     DatePipe,
     IonHeader,

@@ -48,21 +48,21 @@ export class BookingComponent implements OnInit {
   ngOnInit() {}
 
   bookTickets(modal: any) {
-    console.log(this.bookingData);
-    this.bookingData.showId = this.show._id;
-    this.bookingService.bookTicket(this.bookingData).subscribe({
-      next: async (res: any) => {
-        console.log('Booking successful:', res);
-        this.bookingData = {
-          name: '',
-          email: '',
-          phone: '',
-          tickets: 1,
-          showId: '',
-        };
-        await modal.dismiss();
-      },
-      error: (error: any) => console.error('Error:', error),
-    });
+    // console.log(this.bookingData);
+    // this.bookingData.showId = this.show._id;
+    // this.bookingService.bookTicket(this.bookingData).subscribe({
+    //   next: async (res: any) => {
+    //     console.log('Booking successful:', res);
+    //     this.bookingData = {
+    //       name: '',
+    //       email: '',
+    //       phone: '',
+    //       tickets: 1,
+    //       showId: '',
+    //     };
+    //     await modal.dismiss();
+    //   },
+    //   error: (error: any) => console.error('Error:', error),
+    // });
   }
 }
