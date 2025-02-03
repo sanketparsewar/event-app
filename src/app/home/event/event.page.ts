@@ -89,7 +89,7 @@ export class EventPage implements OnInit {
     this.eventService.getEventById(this.eventId).subscribe({
       next: (res: Ievent) => {
         this.event = res; // Assigning response to event
-        console.log(this.event);
+        console.log(res);
       },
       error: (error) => {
         console.error('Error:', error); // Log error if request fails
@@ -106,8 +106,6 @@ export class EventPage implements OnInit {
   }
 
   async bookTickets(item: any) {
-    // this.show = await item;
-    console.log(item);
     this.router.navigate(['/my-booking'], {
       state: { showData: item }, // Sending data as state
     });

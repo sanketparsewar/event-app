@@ -1,5 +1,5 @@
 import { BookingService } from 'src/app/services/booking/booking.service';
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -19,13 +19,11 @@ import {
   IonModal,
   IonIcon,
   IonCardHeader,
-  IonCardSubtitle,
   IonCardTitle,
   IonCardContent,
   IonCard,
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
-
 @Component({
   selector: 'app-my-booking',
   templateUrl: './my-booking.page.html',
@@ -35,7 +33,6 @@ import { Router } from '@angular/router';
     IonCard,
     IonCardContent,
     IonCardTitle,
-    IonCardSubtitle,
     IonCardHeader,
     IonIcon,
     IonModal,
@@ -66,19 +63,26 @@ export class MyBookingPage implements OnInit {
     showId: '',
     totalAmount: 0,
   };
-  ticketDetails: any;
-  constructor(private bookingService: BookingService) {}
   router = inject(Router);
+  
   @ViewChild('modal') modal: any;
+  ticketDetails: any;
+  
   ngOnInit() {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       this.showData = navigation.extras.state['showData'];
-      console.log('Data passed from ShowsComponent:', this.showData);
+console.log('showdata',this.showData)
     } else {
       console.log('No data received.');
     }
   }
+  constructor(
+    private bookingService: BookingService,
+    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
+  ) {}
+
+  
 
   openModal() {
     if (this.modal) {
@@ -88,32 +92,38 @@ export class MyBookingPage implements OnInit {
 
   closeModal() {
     if (this.modal) {
-      if(confirm('Download ticket before leaving this page?')){
+      if (confirm('Leaving this page?')) {
         this.modal.dismiss();
-        this.router.navigateByUrl(`/event/${this.showData.eventId}`);
+        this.router.navigateByUrl(`/event/${this.showData.eventId._id}`);
       }
     }
   }
 
   bookTickets() {
     this.bookingData.showId = this.showData._id;
-    this.bookingData.totalAmount =
-      this.bookingData.tickets * this.showData.ticketPrice;
-    this.bookingService.bookTicket(this.bookingData).subscribe({
-      next: async (res: any) => {
-        this.ticketDetails = res.booking;
-        console.log('ticketDetails successful:', res);
+    this.bookingData.totalAmount = this.bookingData.tickets * this.showData.ticketPrice;
+    // this.bookingService.bookTicket(this.bookingData).subscribe({
+    //   next: async (res: any) => {
+    //     this.ticketDetails = res.booking;
+        this.ticketDetails = this.bookingData;
         this.openModal();
-        this.bookingData = {
-          name: '',
-          email: '',
-          phone: '',
-          tickets: 1,
-          showId: '',
-          totalAmount: 0,
-        };
-      },
-      error: (error: any) => console.error('Error:', error),
-    });
+        // this.bookingData = {
+        //   name: '',
+        //   email: '',
+        //   phone: '',
+        //   tickets: 1,
+        //   showId: '',
+        //   totalAmount: 0,
+        // };
+    //   },
+    // });
   }
+
+  Payment(){
+    this.ticketDetails = this.bookingData;
+    this.router.navigate(['/payment'], { state: { ticketDetails: this.ticketDetails } });
+    this.modal.dismiss();
+    console.log('ticketdetails',this.ticketDetails)
+  }
+  
 }

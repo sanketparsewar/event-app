@@ -6,9 +6,12 @@ import {
   arrowDownCircleOutline,
   arrowRedoOutline,
   calendarOutline,
+  cardOutline,
   chevronBackCircleOutline,
+  giftOutline,
   locateOutline,
   locationOutline,
+  logoPaypal,
   notificationsOutline,
   optionsOutline,
   personCircle,
@@ -34,7 +37,10 @@ export class AppComponent {
       arrowDownCircleOutline,
       chevronBackCircleOutline,
       ticketOutline,
-      personCircle
+      personCircle,
+      cardOutline,
+      logoPaypal,
+      giftOutline,
     });
   }
 }

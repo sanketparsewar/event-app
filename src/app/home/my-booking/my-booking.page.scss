@@ -74,15 +74,25 @@ ion-button {
   height: 10px;
   background: var(--ion-color-medium);
   border-radius: 50%;
-  margin-bottom: 10px;
+  // margin-bottom: 10px;
 }
 
+ion-card-header{
+  padding: 10px;
+}
 .cinema {
   text-transform: uppercase;
-  color: var(--ion-color-primary);
+  // color: var(--ion-color-primary);
   font-size: 0.8em;
 }
 
+
+ion-grid{
+  padding: 10px;
+}
+ion-col{
+  padding: 0;
+}
 .event-title {
   font-size: 1.2em;
   font-weight: bold;
@@ -95,21 +105,32 @@ ion-button {
   border-radius: 8px;
 }
 
-.info h5 {
-  font-weight: bold;
-  margin-bottom: 5px;
-}
+// .info h5 {
+//   font-weight: bold;
+//   margin-bottom: 5px;
+// }
 
-.info p {
-  color: var(--ion-color-dark);
-}
+// .info p {
+//   color: var(--ion-color-dark);
+// }
 
 
 .ticket-details {
-  display: flex;
-  align-items: center;  // Vertically centers content
-  gap: 15px;
-  padding: 15px;
+  // display: flex;
+  // align-items: center;  // Vertically centers content
+  // gap: 15px;
+  text-align: left;
+ion-grid{
+  padding: 10px 10px;
+}
+  // padding: 15px;
+}
+
+.col-left{
+  text-align: left;
+}
+.col-right{
+  text-align: right;
 }
 
 .userDetails {
@@ -125,9 +146,21 @@ ion-button {
   justify-content: center; // Centers text vertically
 }
 
+h5{
+  font-weight: bold;
+  color: black;
+  // font-size: 0.9em;
+  // margin-bottom: 5px; // Adds spacing between lines
+  // text-align: left; // Aligns text to the left
+}
+
+p{
+  color: black;
+}
+
 .ticket-info p {
   font-size: 0.9em;
-  color: var(--ion-color-dark);
+  // color: var(--ion-color-dark);
   margin: 3px 0; // Adds spacing between lines
   text-align: left; // Aligns text to the left
 }
@@ -139,6 +172,6 @@ ion-button {
 
 .ticket-id {
   font-size: 0.85em;
-  color: var(--ion-color-medium);
+  // color: var(--ion-color-medium);
 }
 

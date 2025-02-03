@@ -1,0 +1,109 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>Payment</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-accordion-group>
+    <ion-accordion value="first">
+      <ion-item slot="header" color="light">
+        <ion-icon name="card-outline"></ion-icon>
+        <ion-label>Debit/Credit card</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <div class='card-form'>
+          <div class='form-content'>
+            <div class='heading'>
+              <h2 class='title'>payment details</h2>
+              <ion-icon name="card-outline"></ion-icon>
+              <label>Card information</label>
+            </div>
+            <form #paymentForm="ngForm" (submit)="handlePayment($event)">
+              <div class='content'>
+
+                <label>Name on card</label>
+                <div class='input-field'>
+                  <input class='form' type='text' [(ngModel)]="paymentDetails.nameOnCard" name="nameOnCard" required>
+                </div>
+
+                <label>Card Number</label>
+                <div class='input-field'>
+                  <input class='form' type='text' [(ngModel)]="paymentDetails.cardNumber" name="cardNumber" required
+                    maxlength="16" minlength="16" #cardNumber="ngModel">
+                </div>
+                <div>
+                  <p *ngIf="cardNumber.invalid && cardNumber.touched" class="error">Card number must be 16 digits.</p>
+                </div>
+
+                <label>Expiration Date</label>
+                <div class='input-field'>
+                  <input class='form' type='date' [(ngModel)]="paymentDetails.expiryDate" name="expiryDate" required
+                    min="{{ today }}" #expiryDate="ngModel">
+                </div>
+                <div>
+                  <p *ngIf="expiryDate.invalid && expiryDate.touched" class="error">Expiration date must be in the
+                    future.</p>
+                </div>
+
+                <label>CCV/CVV</label>
+                <div class='input-field'>
+                  <input class='form' type='text' [(ngModel)]="paymentDetails.cvv" name="cvv" required minlength="3"
+                    maxlength="3" #cvv="ngModel">
+                </div>
+                <div>
+                  <p *ngIf="cvv.invalid && cvv.touched" class="error">CVV must be 3 digits.</p>
+                </div>
+
+                <input class='button -primary -block' type='submit' value='Continue' [disabled]="paymentForm.invalid">
+              </div>
+            </form>
+          </div>
+
+        </div>
+      </div>
+    </ion-accordion>
+    <!-- <ion-accordion value="second">
+      <ion-item slot="header" color="light">
+        <ion-icon name="logo-paypal"></ion-icon>
+        <ion-label>Pay by any UPI App</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <div class='card-form'>
+          <div class='form-content'>
+            <div class='content'>
+              <label>Enter UPI Id</label>
+              <div class='input-field'>
+                <input class='form' type='text'>
+              </div>
+              <input class='button -primary -block' type='submit' value='Continue'>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </ion-accordion>
+    <ion-accordion value="third">
+      <ion-item slot="header" color="light">
+        <ion-icon name="gift-outline"></ion-icon>
+        <ion-label>Gift Voucher</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <div class='card-form'>
+          <div class='form-content'>
+            <div class='content'>
+              <label>Enter Voucher Code</label>
+              <div class='input-field'>
+                <input class='form' type='text'>
+              </div>
+              <input class='button -primary -block' type='submit' value='Continue'>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </ion-accordion> -->
+  </ion-accordion-group>
+
+
+</ion-content>

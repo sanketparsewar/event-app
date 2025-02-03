@@ -1,14 +1,14 @@
-<ion-content [fullscreen]="true" class="ion-padding" scroll-y="false">
+<ion-content [fullscreen]="true" class="ion-padding">
   <!-- <ion-header collapse="condense"> -->
-    <!-- <ion-toolbar> -->
-      <!-- <ion-title size="large">myBooking</ion-title> -->
-    <!-- </ion-toolbar> -->
+  <!-- <ion-toolbar> -->
+  <!-- <ion-title size="large">myBooking</ion-title> -->
+  <!-- </ion-toolbar> -->
   <!-- </ion-header> -->
 
 
   <div class="bg ion-display-flex">
     <ion-button slot="start" fill="clear" size="large" shape="round"
-      (click)="router.navigateByUrl('/event/'+showData.eventId)" routerLinkActive="router-link-active">
+      (click)="router.navigateByUrl('/event/'+showData.eventId._id)" routerLinkActive="router-link-active">
       <ion-icon slot="icon-only" size="large" name="chevron-back-circle-outline"></ion-icon>
     </ion-button>
   </div>
@@ -66,71 +66,110 @@
 
 
 
-
 <ion-modal #modal>
   <ng-template>
     <div class="wrapper">
       <ion-header>
         <ion-toolbar>
-          <ion-title>Ticket</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="closeModal()">Back</ion-button>
+          <ion-buttons>
+
+            <!-- <ion-button (click)="closeModal()">Back</ion-button> -->
           </ion-buttons>
+          <ion-button slot="start" fill="clear" shape="round" (click)="closeModal()">
+            <ion-icon slot="icon-only" size="large" name="chevron-back-circle-outline"></ion-icon>
+          </ion-button>
+          <ion-title class="ion-no-padding">Confirm booking</ion-title>
         </ion-toolbar>
       </ion-header>
 
-      <ion-card class="ticket">
+      <!-- Add a reference to the ion-card for html2canvas -->
+      <ion-card class="ticket ion-no-padding" #ticketCard>
         <div class="holes-top"></div>
 
         <ion-card-header>
-          <ion-card-subtitle class="cinema">NOW SHOWING</ion-card-subtitle>
-          <ion-card-title class="event-title">{{ ticketDetails?.showId?.eventId?.name }}</ion-card-title>
+          <!-- <ion-card-subtitle class="cinema">NOW SHOWING</ion-card-subtitle> -->
+          <ion-card-title class="event-title">{{ showData.eventId?.name }}</ion-card-title>
         </ion-card-header>
 
-        <ion-card-content>
+        <ion-card-content class="ion-no-padding">
           <div class="poster">
-            <img [src]="ticketDetails?.showId?.eventId?.image" alt="Event Poster" />
+            <img [src]="showData.eventId?.image" alt="Event Poster" />
           </div>
 
           <div class="info">
-            <ion-grid>
+            <ion-grid class="ion-margin-vertical" style=" border-radius: 5px;box-shadow: 0 0 3px rgb(168, 168, 168);">
               <ion-row>
-                <ion-col>
-                  <h5>Price</h5>
-                  <p>{{ ticketDetails?.totalAmount |currency:"INR" }}</p>
-                </ion-col>
-                <ion-col>
+
+                <ion-col class="col-left">
                   <h5>Date</h5>
-                  <p>{{ ticketDetails?.showId?.date | date: "d MMM, y" }}</p>
+                  <p>{{ showData?.date | date: 'd MMM, y' }}</p>
                 </ion-col>
-                <ion-col>
+                <ion-col class="col-right">
                   <h5>Time</h5>
-                  <p>{{ ticketDetails?.showId?.date | date: "hh:mm a" }}</p>
+                  <p>{{ showData?.date | date: 'hh:mm a' }}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row>
+
+                <ion-col>
+                  <h5>Venue</h5>
+                  <p>{{ showData?.eventId.location}}</p>
+                </ion-col>
+
+              </ion-row>
+
+
+            </ion-grid>
+            <ion-grid style="box-shadow: 0 0 3px rgb(168, 168, 168); border-radius: 5px;">
+              <ion-row>
+                <ion-col class="col-left">
+                  <h5> Ticket price</h5>
+                  <h5> Total tickets</h5>
+                </ion-col>
+                <ion-col class="col-right">
+                  <p> {{ showData?.ticketPrice | currency:'INR'}}</p>
+                  <p> {{ ticketDetails?.tickets }}</p>
+                </ion-col>
+              </ion-row>
+              <ion-row style="border-top: 1px dotted rgb(163, 163, 163);">
+                <ion-col class="col-left">
+                  <h5>Total amount</h5>
+                </ion-col>
+                <ion-col class="col-right">
+                  <p>{{ ticketDetails?.totalAmount | currency:'INR' }}</p>
                 </ion-col>
               </ion-row>
             </ion-grid>
           </div>
-          <div>
-            <hr>
+
+          <div class="ticket-details ">
+
+            <ion-grid class="ion-margin-vertical" style="box-shadow: 0 0 3px rgb(168, 168, 168); border-radius: 5px;">
+              <ion-row>
+                <ion-col>
+                  <h5>Your details</h5>
+                </ion-col>
+
+              </ion-row>
+              <ion-row>
+                <ion-col>
+                  <p> {{ ticketDetails?.name }}</p>
+                  <p> {{ ticketDetails?.email }} | {{ ticketDetails?.phone }}</p>
+                </ion-col>
+              </ion-row>
+
+            </ion-grid>
           </div>
-          <div class="ticket-details">
-            <img [src]="ticketDetails?.image" class="userDetails" alt="image" />
-            <div class="ticket-info">
-              <p class="ticket-name">{{ ticketDetails?.name }}</p>
-              <p>{{ ticketDetails?.email }}</p>
-              <p>{{ ticketDetails?.phone }}</p>
-              <p class="ticket-id">Tickets: {{ ticketDetails?.tickets}}</p>
-              <p class="ticket-id">Ticket ID: <a href="">{{ ticketDetails?._id }}</a></p>
-            </div>
+
+          <div class="payment">
+            <ion-button class="" color="tertiary" shape="round" (click)="Payment()">Proceed to pay
+              <br> {{ ticketDetails?.totalAmount | currency:'INR' }}</ion-button>
+            <!-- <ion-button expand="full" color="secondary" shape="round" (click)="closeModal()">Close</ion-button> -->
           </div>
-          
           <div class="holes-lower"></div>
-         
+
         </ion-card-content>
       </ion-card>
     </div>
   </ng-template>
 </ion-modal>
-
-
-

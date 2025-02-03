@@ -1,0 +1,75 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-button slot="start" fill="clear" size="large" shape="round"
+      (click)="router.navigateByUrl('/event/'+bookingDetails?.showId?.eventId?._id)" routerLinkActive="router-link-active">
+      <ion-icon slot="icon-only" size="large" name="chevron-back-circle-outline"></ion-icon>
+    </ion-button>
+    <ion-title>Your Ticket</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <!-- <ion-header collapse="condense">
+    <ion-toolbar>
+      
+      <ion-title size="large">Your Ticket</ion-title>
+    </ion-toolbar>
+  </ion-header> -->
+
+  <ion-list lines="none" class="column-list">
+    
+
+
+    <div class="m-ticket">
+
+      <p class="m">M-Ticket</p>
+
+      <div class="event-details">
+       <div class="event">
+          <h4>{{bookingDetails?.showId?.eventId?.name}}</h4>
+
+          <p>{{bookingDetails?.showId?.eventId?.date | date:'MMM d, y | hh:mm a' }}</p>
+          <p><ion-icon name="location-outline"></ion-icon>{{bookingDetails?.showId?.eventId?.location}}</p>
+          <p>{{bookingDetails?.showId?.eventId?.description}}</p>
+        </div>
+
+      </div>
+
+      <div class="info">
+        Thanks for Booking, with us!
+      </div>
+
+      <div class="ticket-details" style="align-items: center;">
+        <img [src]="bookingDetails?.image" class="scan">
+
+        <div class="ticket">
+          
+          <b>{{bookingDetails?.name}}</b>
+          
+          <p>{{bookingDetails?.email}} | {{bookingDetails?.phone}} </p>
+          
+          <h6>{{bookingDetails?.tickets}} Ticket(s)</h6>
+          <p><strong>BOOKING ID: </strong> <a href="">{{bookingDetails?._id}}</a></p>
+
+        </div>
+      </div>
+      <div class="info-cancel">
+        Cancellation not available for this venue
+      </div>
+
+      <div class="total-amount">
+        <p>Total Amount</p>
+        <p>{{bookingDetails?.totalAmount | currency:"INR"}}</p>
+      </div>
+    </div>
+  </ion-list>
+
+
+
+
+
+
+
+
+
+</ion-content>
