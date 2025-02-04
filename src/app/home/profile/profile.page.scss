@@ -18,6 +18,8 @@ ion-toolbar {
     border-radius: 20px;
     .background-image{
         position: absolute;
+        width: 100%;
+        height: 80px;
         
     }
     .card-avatar{
@@ -25,7 +27,8 @@ ion-toolbar {
         position: relative;
         .avatar{
         border-radius: 100%;
-        width: 40%;
+        width: 20%;
+        height: 20%;
     
     }
     }
@@ -34,3 +37,7 @@ ion-toolbar {
 logout-btn{
     text-align: center;
 }
+
+
+
+ion-item{}

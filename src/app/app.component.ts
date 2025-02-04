@@ -10,6 +10,7 @@ import {
   cardOutline,
   checkmark,
   chevronBackCircleOutline,
+  chevronForwardOutline,
   createOutline,
   giftOutline,
   globe,
@@ -17,10 +18,12 @@ import {
   locateOutline,
   locationOutline,
   logoPaypal,
+  logOutOutline,
   notificationsOutline,
   optionsOutline,
   personCircle,
   personOutline,
+  settingsOutline,
   ticketOutline,
 } from 'ionicons/icons'; // Import specific icons
 
@@ -49,7 +52,8 @@ export class AppComponent {
       giftOutline,
       personOutline,
       createOutline,homeOutline,globe,
-      alert,checkmark
+      alert,checkmark,logOutOutline,settingsOutline
+      ,chevronForwardOutline
     });
   }
 }

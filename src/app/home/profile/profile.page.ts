@@ -1,4 +1,5 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { BookingService } from 'src/app/services/booking/booking.service';
+import { Component, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -13,6 +14,15 @@ import {
   IonButton,
   IonItem,
   IonIcon,
+  IonAccordionGroup,
+  IonAccordion,
+  IonLabel,
+  IonModal,
+  IonButtons,
+  IonList,
+  IonAvatar,
+  IonImg,
+  IonText,
 } from '@ionic/angular/standalone';
 import { UserService } from 'src/app/services/user/user.service';
 import { Router } from '@angular/router';
@@ -25,6 +35,15 @@ import { ToastService } from 'src/app/services/toast/toast.service';
   styleUrls: ['./profile.page.scss'],
   standalone: true,
   imports: [
+    IonText,
+    IonImg,
+    IonAvatar,
+    IonList,
+    IonButtons,
+    IonModal,
+    IonLabel,
+    IonAccordion,
+    IonAccordionGroup,
     IonIcon,
     IonItem,
     IonButton,
@@ -43,11 +62,14 @@ import { ToastService } from 'src/app/services/toast/toast.service';
 export class ProfilePage implements OnInit {
   loggedUserData: any;
   router = inject(Router);
+  bookingsList: any;
+  @ViewChild('modal') modal: any;
 
   constructor(
     private userService: UserService,
     private alertService: AlertService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private bookingService: BookingService
   ) {}
 
   public alertButtons = [
@@ -69,6 +91,7 @@ export class ProfilePage implements OnInit {
       next: (response) => {
         this.loggedUserData = response.user; // Store user data in this.data
         console.log('User :', this.loggedUserData);
+        this.getUserBookings();
       },
       error: () => {
         console.log('User is not authenticated, redirecting to login...');
@@ -76,6 +99,24 @@ export class ProfilePage implements OnInit {
       },
     });
   }
+
+  getUserBookings() {
+    this.bookingService.getUserBookings(this.loggedUserData._id).subscribe({
+      next: (res) => {
+        this.bookingsList = res;
+        console.log('User bookingsList :', this.bookingsList);
+      },
+      error: () => {
+        console.log('Failed to fetch user bookings');
+      },
+    });
+  }
+  openModal() {
+    if (this.modal) {
+      this.modal.present();
+    }
+  }
+
   back() {
     history.back();
   }

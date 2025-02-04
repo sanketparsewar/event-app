@@ -17,4 +17,9 @@ export class BookingService {
   getBookingById(bookingId: string): Observable<any> {
     return this.http.get<any>(`${this.API_URI}/booking/${bookingId}`);
   }
+
+  // Get all bookings by user
+  getUserBookings(userId: string): Observable<any[]> {
+    return this.http.get<any[]>(`${this.API_URI}/booking/user/${userId}`);
+  }
 }
