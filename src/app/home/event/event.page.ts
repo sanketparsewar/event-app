@@ -17,9 +17,9 @@ import {
   IonAvatar,
   IonText,
   IonButton,
-  IonImg,
   IonButtons,
   IonModal,
+  IonImg,
 } from '@ionic/angular/standalone';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EventService } from 'src/app/services/event/event.service';
@@ -32,9 +32,9 @@ import { ShowService } from 'src/app/services/show/show.service';
   styleUrls: ['./event.page.scss'],
   standalone: true,
   imports: [
+    IonImg,
     IonModal,
     IonButtons,
-    IonImg,
     IonButton,
     IonText,
     IonAvatar,
@@ -70,13 +70,12 @@ export class EventPage implements OnInit {
     shows: [],
     bookings: [],
   };
-  showsList:any;
-  // show: any;
+  showsList: any;
   router = inject(Router);
   constructor(
     private activatedRoute: ActivatedRoute,
     private eventService: EventService,
-    private showService: ShowService,
+    private showService: ShowService
   ) {}
   @ViewChild('modal') modal!: IonModal;
   ngOnInit() {
@@ -84,7 +83,7 @@ export class EventPage implements OnInit {
       if (params['id']) {
         this.eventId = params['id'];
         this.getEventById();
-        this.getShowsByEvent()
+       
       }
     });
   }
@@ -93,24 +92,41 @@ export class EventPage implements OnInit {
     this.eventService.getEventById(this.eventId).subscribe({
       next: (res: Ievent) => {
         this.event = res; // Assigning response to event
-        console.log('event',res);
+        console.log('event', res);
+        this.getShowsByEvent();
       },
       error: (error) => {
         console.error('Error:', error); // Log error if request fails
       },
     });
   }
-  getShowsByEvent(){
+  getShowsByEvent() {
     this.showService.getShowsByEvent(this.eventId).subscribe({
       next: (shows) => {
-        this.showsList = shows;
-        console.log('showsList:', this.showsList);
+        const currentDateTime = new Date(); // Get current date and time
+  
+        this.showsList = shows.filter((show) => {
+          const showDateTime = new Date(show.date);
+          const [time, period] = show.time.split(" "); // Splitting "9:00 PM"
+          let [hours, minutes] = time.split(":").map(Number);
+  
+          // Convert 12-hour format to 24-hour format
+          if (period === "PM" && hours !== 12) hours += 12;
+          if (period === "AM" && hours === 12) hours = 0;
+  
+          showDateTime.setHours(hours, minutes, 0, 0); // Set time in showDateTime
+  
+          return showDateTime > currentDateTime; // Filter future shows
+        });
+  
+        console.log("Filtered showsList:", this.showsList);
       },
       error: (error) => {
-        console.error('Error:', error);
+        console.error("Error:", error);
       },
     });
   }
+  
 
   openModal() {
     this.modal.present();
@@ -124,6 +140,6 @@ export class EventPage implements OnInit {
     this.router.navigate(['/my-booking'], {
       state: { showData: item }, // Sending data as state
     });
-   this.closeModal()
+    this.closeModal();
   }
 }

@@ -1,14 +1,8 @@
 <ion-content [fullscreen]="true" class="ion-padding">
-  <!-- <ion-header collapse="condense"> -->
-  <!-- <ion-toolbar> -->
-  <!-- <ion-title size="large">myBooking</ion-title> -->
-  <!-- </ion-toolbar> -->
-  <!-- </ion-header> -->
-
 
   <div class="bg ion-display-flex">
-    <ion-button slot="start" fill="clear" size="large" shape="round"
-      (click)="router.navigateByUrl('/event/'+showData.eventId._id)" routerLinkActive="router-link-active">
+    <ion-button slot="start" fill="clear" size="large" shape="round" (click)="back()"
+      routerLinkActive="router-link-active">
       <ion-icon slot="icon-only" size="large" name="chevron-back-circle-outline"></ion-icon>
     </ion-button>
   </div>
@@ -18,12 +12,11 @@
   <!-- Centered Container with Curved Box -->
   <div class="centered-container">
     <div class="booking-box ion-padding">
-      <!-- Event Details -->
       <ion-grid>
         <ion-row>
           <ion-col class="ion-no-padding">
             <p class="ion-no-margin">
-              <ion-text><strong>Date:</strong>{{ showData.date | date: 'd MMM, hh:mm a' }}</ion-text>
+              <ion-text><strong>Date:</strong>{{ showData.date | date: 'd MMM' }}, {{showData.time}}</ion-text>
             </p>
             <p class="ion-no-margin">
               <ion-text><strong>Price per ticket:</strong> {{ showData.ticketPrice | currency:"INR" }}</ion-text>
@@ -34,142 +27,143 @@
 
       <!-- Booking Form -->
       <ion-list class="ion-no-margin ion-no-padding">
-        <ion-item class="ion-no-padding ion-margin-bottom" lines="none">
+        <!-- <ion-item class="ion-no-padding ion-margin-bottom" lines="none">
           <ion-label position="stacked" required>Name:</ion-label>
           <input placeholder="Enter your name" [(ngModel)]="bookingData.name" />
         </ion-item>
 
         <ion-item class="ion-no-padding ion-margin-bottom" lines="none">
-          <ion-label position="stacked" required>Phone:</ion-label>
-          <input type="tel" placeholder="7984561321" [(ngModel)]="bookingData.phone" />
+          <ion-label position="stacked" >Phone:</ion-label>
+          <input type="tel" placeholder="7984561321" minlength="10" maxlength="10" [(ngModel)]="bookingData.phone" />
         </ion-item>
 
         <ion-item class="ion-no-padding ion-margin-bottom" lines="none">
           <ion-label position="stacked" required>Email:</ion-label>
           <input type="email" placeholder="example@gmail.com" [(ngModel)]="bookingData.email" />
-        </ion-item>
+        </ion-item> -->
 
         <ion-item class="ion-no-padding ion-margin-bottom" lines="none">
-          <ion-label position="stacked" required>Tickets:</ion-label>
-          <input type="number" placeholder="1" [(ngModel)]="bookingData.tickets" />
+          <ion-label position="stacked" required>Tickets (max 6) :</ion-label>
+          <input type="number" placeholder="1" maxlength="1" minlength="1" max="6" min="1"
+            [(ngModel)]="bookingData.tickets" />
         </ion-item>
+        <div>
+          <p *ngIf="bookingData.tickets > 6 || bookingData.tickets<1" class="error" style="color: red;">Number of
+            tickets allowed is between 1 to 6.</p>
+        </div>
       </ion-list>
 
       <!-- Book Now Button -->
-      <ion-button expand="full" color="tertiary" (click)="bookTickets()" shape="round" class="ion-margin-top">
-        Book Now
+      <ion-button expand="full" color="tertiary" (click)="bookNow()" shape="round" class="ion-margin-top">
+        Book Now {{(bookingData.tickets * showData.ticketPrice)| currency:"INR"}}
       </ion-button>
     </div>
   </div>
 
-</ion-content>
 
 
 
-<ion-modal #modal>
-  <ng-template>
-    <div class="wrapper">
+
+
+
+  <ion-modal #modal>
+    <ng-template>
       <ion-header>
         <ion-toolbar>
-          <ion-buttons>
-
-            <!-- <ion-button (click)="closeModal()">Back</ion-button> -->
+          <ion-title>Confirm booking</ion-title>
+          <ion-buttons slot="start">
+            <ion-button size="large" (click)="closeModal()"><ion-icon slot="icon-only" size="large"
+                name="chevron-back-circle-outline"></ion-icon></ion-button>
           </ion-buttons>
-          <ion-button slot="start" fill="clear" shape="round" (click)="closeModal()">
-            <ion-icon slot="icon-only" size="large" name="chevron-back-circle-outline"></ion-icon>
-          </ion-button>
-          <ion-title class="ion-no-padding">Confirm booking</ion-title>
         </ion-toolbar>
       </ion-header>
+      <ion-content class="ion-no-padding">
+        <ion-card class="ticket ion-no-padding">
+          <div class="holes-top"></div>
 
-      <!-- Add a reference to the ion-card for html2canvas -->
-      <ion-card class="ticket ion-no-padding" #ticketCard>
-        <div class="holes-top"></div>
+          <ion-card-header>
+            <ion-card-title class="event-title">{{ showData.eventId?.name }}</ion-card-title>
+          </ion-card-header>
 
-        <ion-card-header>
-          <!-- <ion-card-subtitle class="cinema">NOW SHOWING</ion-card-subtitle> -->
-          <ion-card-title class="event-title">{{ showData.eventId?.name }}</ion-card-title>
-        </ion-card-header>
+          <ion-card-content class="ion-no-padding">
+            <div class="poster">
+              <img [src]="showData.eventId?.image" alt="Event Poster" />
+            </div>
 
-        <ion-card-content class="ion-no-padding">
-          <div class="poster">
-            <img [src]="showData.eventId?.image" alt="Event Poster" />
-          </div>
+            <div class="info">
+              <ion-grid class="ion-margin-vertical" style=" border-radius: 5px;box-shadow: 0 0 3px rgb(168, 168, 168);">
+                <ion-row>
 
-          <div class="info">
-            <ion-grid class="ion-margin-vertical" style=" border-radius: 5px;box-shadow: 0 0 3px rgb(168, 168, 168);">
-              <ion-row>
+                  <ion-col class="col-left">
+                    <h5>Date</h5>
+                    <p>{{ showData?.date | date: 'd MMM, y' }}</p>
+                  </ion-col>
+                  <ion-col class="col-right">
+                    <h5>Time</h5>
+                    <p>{{ showData?.time}}</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row>
 
-                <ion-col class="col-left">
-                  <h5>Date</h5>
-                  <p>{{ showData?.date | date: 'd MMM, y' }}</p>
-                </ion-col>
-                <ion-col class="col-right">
-                  <h5>Time</h5>
-                  <p>{{ showData?.date | date: 'hh:mm a' }}</p>
-                </ion-col>
-              </ion-row>
-              <ion-row>
+                  <ion-col>
+                    <h5>Venue</h5>
+                    <p>{{ showData?.eventId.location}}</p>
+                  </ion-col>
 
-                <ion-col>
-                  <h5>Venue</h5>
-                  <p>{{ showData?.eventId.location}}</p>
-                </ion-col>
-
-              </ion-row>
+                </ion-row>
 
 
-            </ion-grid>
-            <ion-grid style="box-shadow: 0 0 3px rgb(168, 168, 168); border-radius: 5px;">
-              <ion-row>
-                <ion-col class="col-left">
-                  <h5> Ticket price</h5>
-                  <h5> Total tickets</h5>
-                </ion-col>
-                <ion-col class="col-right">
-                  <p> {{ showData?.ticketPrice | currency:'INR'}}</p>
-                  <p> {{ ticketDetails?.tickets }}</p>
-                </ion-col>
-              </ion-row>
-              <ion-row style="border-top: 1px dotted rgb(163, 163, 163);">
-                <ion-col class="col-left">
-                  <h5>Total amount</h5>
-                </ion-col>
-                <ion-col class="col-right">
-                  <p>{{ ticketDetails?.totalAmount | currency:'INR' }}</p>
-                </ion-col>
-              </ion-row>
-            </ion-grid>
-          </div>
+              </ion-grid>
+              <ion-grid style="box-shadow: 0 0 3px rgb(168, 168, 168); border-radius: 5px;">
+                <ion-row>
+                  <ion-col class="col-left">
+                    <h5> Ticket price</h5>
+                    <h5> Total tickets</h5>
+                  </ion-col>
+                  <ion-col class="col-right">
+                    <p> {{ showData?.ticketPrice | currency:'INR'}}</p>
+                    <p> {{ ticketDetails?.tickets }}</p>
+                  </ion-col>
+                </ion-row>
+                <ion-row style="border-top: 1px dotted rgb(163, 163, 163);">
+                  <ion-col class="col-left">
+                    <h5>Total amount</h5>
+                  </ion-col>
+                  <ion-col class="col-right">
+                    <p>{{ ticketDetails?.totalAmount | currency:'INR' }}</p>
+                  </ion-col>
+                </ion-row>
+              </ion-grid>
+            </div>
 
-          <div class="ticket-details ">
+            <div class="ticket-details ">
 
-            <ion-grid class="ion-margin-vertical" style="box-shadow: 0 0 3px rgb(168, 168, 168); border-radius: 5px;">
-              <ion-row>
-                <ion-col>
-                  <h5>Your details</h5>
-                </ion-col>
+              <ion-grid class="ion-margin-vertical" style="box-shadow: 0 0 3px rgb(168, 168, 168); border-radius: 5px;">
+                <ion-row>
+                  <ion-col>
+                    <h5>Your details</h5>
+                  </ion-col>
 
-              </ion-row>
-              <ion-row>
-                <ion-col>
-                  <p> {{ ticketDetails?.name }}</p>
-                  <p> {{ ticketDetails?.email }} | {{ ticketDetails?.phone }}</p>
-                </ion-col>
-              </ion-row>
+                </ion-row>
+                <ion-row>
+                  <ion-col>
+                    <p> {{ ticketDetails?.name }}</p>
+                    <p> {{ ticketDetails?.email }} | {{ ticketDetails?.phone }}</p>
+                  </ion-col>
+                </ion-row>
 
-            </ion-grid>
-          </div>
+              </ion-grid>
+            </div>
 
-          <div class="payment">
-            <ion-button class="" color="tertiary" shape="round" (click)="Payment()">Proceed to pay
-              <br> {{ ticketDetails?.totalAmount | currency:'INR' }}</ion-button>
-            <!-- <ion-button expand="full" color="secondary" shape="round" (click)="closeModal()">Close</ion-button> -->
-          </div>
-          <div class="holes-lower"></div>
+            <div class="payment">
+              <ion-button class="" color="tertiary" shape="round" (click)="Payment()">Continue</ion-button>
+            </div>
+            <div class="holes-lower"></div>
 
-        </ion-card-content>
-      </ion-card>
-    </div>
-  </ng-template>
-</ion-modal>
+          </ion-card-content>
+        </ion-card>
+      </ion-content>
+    </ng-template>
+  </ion-modal>
+
+</ion-content>

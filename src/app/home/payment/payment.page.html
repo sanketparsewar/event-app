@@ -1,5 +1,8 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
+    <ion-button slot="start" fill="clear" size="large" (click)="back()" routerLinkActive="router-link-active">
+      <ion-icon slot="icon-only" size="large" name="chevron-back-circle-outline"></ion-icon>
+    </ion-button>
     <ion-title>Payment</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -55,7 +58,10 @@
                   <p *ngIf="cvv.invalid && cvv.touched" class="error">CVV must be 3 digits.</p>
                 </div>
 
-                <input class='button -primary -block' type='submit' value='Continue' [disabled]="paymentForm.invalid">
+                <ion-item lines="none">
+                  <ion-button slot="end"  type='submit' size="large" [disabled]="paymentForm.invalid">Pay
+                    {{ticketDetails?.totalAmount | currency:"INR"}}</ion-button>
+                </ion-item>
               </div>
             </form>
           </div>

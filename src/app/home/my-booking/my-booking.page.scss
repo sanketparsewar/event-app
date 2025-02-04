@@ -55,6 +55,9 @@ ion-button {
 
 
 
+ion-modal {
+  z-index: 9999 !important;
+}
 
 
 // modal scss----------------------------------------------------------------
@@ -105,25 +108,14 @@ ion-col{
   border-radius: 8px;
 }
 
-// .info h5 {
-//   font-weight: bold;
-//   margin-bottom: 5px;
-// }
-
-// .info p {
-//   color: var(--ion-color-dark);
-// }
 
 
 .ticket-details {
-  // display: flex;
-  // align-items: center;  // Vertically centers content
-  // gap: 15px;
+ 
   text-align: left;
 ion-grid{
   padding: 10px 10px;
 }
-  // padding: 15px;
 }
 
 .col-left{
@@ -149,10 +141,7 @@ ion-grid{
 h5{
   font-weight: bold;
   color: black;
-  // font-size: 0.9em;
-  // margin-bottom: 5px; // Adds spacing between lines
-  // text-align: left; // Aligns text to the left
-}
+ }
 
 p{
   color: black;
@@ -160,7 +149,6 @@ p{
 
 .ticket-info p {
   font-size: 0.9em;
-  // color: var(--ion-color-dark);
   margin: 3px 0; // Adds spacing between lines
   text-align: left; // Aligns text to the left
 }
@@ -172,6 +160,5 @@ p{
 
 .ticket-id {
   font-size: 0.85em;
-  // color: var(--ion-color-medium);
 }
 

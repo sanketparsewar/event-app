@@ -1,0 +1,67 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Login</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+    <div class="ion-text-center">
+      <ion-avatar class="login-avatar">
+        <ion-icon name="person-outline" class="avatar-icon"></ion-icon>
+      </ion-avatar>
+      <h2 class="ion-margin-top">Welcome Back</h2>
+      <p>Sign in to continue</p>
+    </div>
+
+
+    <ion-item>
+      <ion-input label="Email" labelPlacement="stacked" type="email" placeholder="Enter email" formControlName="email">
+      </ion-input>
+    </ion-item>
+
+    <ion-text class="validation-error" color="danger"
+      *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['required']">
+      Email is required
+    </ion-text>
+    <ion-text class="validation-error" color="danger"
+      *ngIf="loginForm.get('email')?.touched && loginForm.get('email')?.errors?.['email']">
+      Please enter a valid email
+    </ion-text>
+
+    <ion-item>
+      <ion-input label="Password" labelPlacement="stacked" type="password" placeholder="Enter password"
+        formControlName="password">
+      </ion-input>
+    </ion-item>
+    <ion-text color="danger" class="validation-error"
+      *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['required']">
+      Password is required
+    </ion-text>
+    <ion-text color="danger" class="validation-error"
+      *ngIf="loginForm.get('password')?.touched && loginForm.get('password')?.errors?.['minlength']">
+      Password must be at least 6 characters
+    </ion-text>
+
+    <!-- Forgot Password -->
+    <div class="ion-text-right">
+      <ion-button fill="clear" size="small" routerLink="/forgot-password">
+        Forgot Password?
+      </ion-button>
+    </div>
+
+    <!-- Login Button -->
+    <ion-button expand="block" type="submit" [disabled]="!loginForm.valid || loading">
+      <ion-spinner *ngIf="loading"></ion-spinner>
+      <span *ngIf="!loading">Login</span>
+    </ion-button>
+
+    <!-- Register Redirect -->
+    <div class="ion-text-center ion-margin-top ion-align-items-center">
+      <ion-text>Don't have an account?</ion-text>
+      <ion-button fill="clear" size="small" (click)="router.navigateByUrl('/register')">
+        Sign Up
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

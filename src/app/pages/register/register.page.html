@@ -1,0 +1,83 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title class="ion-text-center">Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding">
+  <form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <div class="ion-text-center">
+      <ion-avatar class="register-avatar">
+        <ion-icon name="person-outline" class="avatar-icon"></ion-icon>
+      </ion-avatar>
+      <h2 class="ion-margin-top">Create Account</h2>
+      <p>Sign up to get started</p>
+    </div>
+
+    <ion-item>
+      <ion-input label="Name" labelPlacement="stacked" type="text" placeholder="Enter name" formControlName="name">
+      </ion-input>
+    </ion-item>
+
+    <ion-text class="validation-error" color="danger"
+      *ngIf="registerForm.get('name')?.touched && registerForm.get('name')?.errors?.['required']">
+      Name is required
+    </ion-text>
+    <ion-item>
+      <ion-input label="Phone" labelPlacement="stacked" type="text" placeholder="Enter phone number"
+        formControlName="phone" maxlength="10">
+      </ion-input>
+    </ion-item>
+
+    <ion-text class="validation-error" color="danger"
+      *ngIf="registerForm.get('phone')?.touched && registerForm.get('phone')?.errors?.['required']">
+      Phone is required
+    </ion-text>
+    <ion-text class="validation-error" color="danger"
+      *ngIf="registerForm.get('phone')?.touched && registerForm.get('phone')?.errors?.['pattern']">
+      Please enter valid phone number
+    </ion-text>
+
+    <ion-item>
+      <ion-input label="Email" labelPlacement="stacked" type="email" placeholder="Enter email" formControlName="email">
+      </ion-input>
+    </ion-item>
+
+    <ion-text class="validation-error" color="danger"
+      *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['required']">
+      Email is required
+    </ion-text>
+    <ion-text class="validation-error" color="danger"
+      *ngIf="registerForm.get('email')?.touched && registerForm.get('email')?.errors?.['email']">
+      Please enter a valid email
+    </ion-text>
+
+    <ion-item>
+      <ion-input label="Password" labelPlacement="stacked" type="password" placeholder="Enter password"
+        formControlName="password">
+      </ion-input>
+    </ion-item>
+    <ion-text color="danger" class="validation-error"
+      *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['required']">
+      Password is required
+    </ion-text>
+    <ion-text color="danger" class="validation-error"
+      *ngIf="registerForm.get('password')?.touched && registerForm.get('password')?.errors?.['minlength']">
+      Password must be at least 6 characters
+    </ion-text>
+
+    <!-- Register Button -->
+    <ion-button expand="block" type="submit" [disabled]="!registerForm.valid || loading">
+      <ion-spinner *ngIf="loading"></ion-spinner>
+      <span *ngIf="!loading">Register</span>
+    </ion-button>
+
+    <!-- Login Redirect -->
+    <div class="ion-text-center ion-margin-top ion-align-items-center">
+      <ion-text>Already have an account?</ion-text>
+      <ion-button fill="clear" size="small" (click)="router.navigateByUrl('/login')">
+        Login
+      </ion-button>
+    </div>
+  </form>
+</ion-content>

@@ -12,8 +12,11 @@ import {
   IonLabel,
   IonAccordionGroup,
   IonIcon,
+  IonButton,
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
+import { AlertService } from 'src/app/services/alert/alert.service';
+import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Component({
   selector: 'app-payment',
@@ -21,6 +24,7 @@ import { Router } from '@angular/router';
   styleUrls: ['./payment.page.scss'],
   standalone: true,
   imports: [
+    IonButton,
     IonIcon,
     IonAccordionGroup,
     IonLabel,
@@ -35,14 +39,18 @@ import { Router } from '@angular/router';
   ],
 })
 export class PaymentPage implements OnInit {
-  constructor(private bookingService: BookingService) {}
+  constructor(
+    private bookingService: BookingService,
+    private alertService: AlertService,
+    private toastService: ToastService
+  ) {}
   router = inject(Router);
   ticketDetails: any;
   bookingDetails: any;
   today = new Date().toISOString().split('T')[0]; // Sets min date to today
-  transaction:any={
+  transaction: any = {
     booking: '',
-    paymentDetails:'',
+    paymentDetails: '',
   };
   paymentDetails = {
     nameOnCard: '',
@@ -50,6 +58,17 @@ export class PaymentPage implements OnInit {
     expiryDate: '',
     cvv: '',
   };
+
+  public alertButtons = [
+    {
+      text: 'Cancel',
+      role: 'cancel',
+    },
+    {
+      text: 'Confirm',
+      role: 'confirm',
+    },
+  ];
   ngOnInit() {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
@@ -60,19 +79,39 @@ export class PaymentPage implements OnInit {
     }
   }
 
-  handlePayment(event: Event) {
-    event.preventDefault(); 
+  async handlePayment(event: Event) {
+    try {
+      const result = await this.alertService.showAlert(
+        'Payment Confirmation',
+        'Are you sure you want to Continue?',
+        this.alertButtons
+      );
 
-    this.bookingService.bookTicket(this.ticketDetails).subscribe({
-      next: async (res: any) => {
-        this.bookingDetails = res.booking;
-        this.transaction.booking = this.bookingDetails?._id;
-        this.transaction.paymentDetails = this.paymentDetails;
-        this.router.navigateByUrl(`/ticket/${this.bookingDetails._id}`);
-      },
-      error: (error: any) => console.error('Error:', error),
-    });
-    console.log('Card Details:', this.paymentDetails);
+      if (result === 'confirmed') {
+        event.preventDefault();
+        this.bookingService.bookTicket(this.ticketDetails).subscribe({
+          next: async (res: any) => {
+            this.bookingDetails = res.booking;
+            this.transaction.booking = this.bookingDetails?._id;
+            this.transaction.paymentDetails = this.paymentDetails;
+            console.log('transaction', this.transaction);
+            this.toastService.presentToast(
+              'Ticket Booked!',
+              'checkmark',
+              'success'
+            );
 
+            this.router.navigateByUrl(`/ticket/${this.bookingDetails._id}`);
+          },
+          error: (error: any) => console.error('Error:', error),
+        });
+        console.log('Card Details:', this.paymentDetails);
+      }
+    } catch (error) {
+      console.log('Payment canceled');
+    }
+  }
+  back() {
+    history.back();
   }
 }

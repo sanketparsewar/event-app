@@ -3,18 +3,24 @@ import { IonApp, IonRouterOutlet } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { register } from 'swiper/element/bundle';
 import {
+  alert,
   arrowDownCircleOutline,
   arrowRedoOutline,
   calendarOutline,
   cardOutline,
+  checkmark,
   chevronBackCircleOutline,
+  createOutline,
   giftOutline,
+  globe,
+  homeOutline,
   locateOutline,
   locationOutline,
   logoPaypal,
   notificationsOutline,
   optionsOutline,
   personCircle,
+  personOutline,
   ticketOutline,
 } from 'ionicons/icons'; // Import specific icons
 
@@ -41,6 +47,9 @@ export class AppComponent {
       cardOutline,
       logoPaypal,
       giftOutline,
+      personOutline,
+      createOutline,homeOutline,globe,
+      alert,checkmark
     });
   }
 }

@@ -53,4 +53,7 @@ export class TicketPage implements OnInit {
       }
     });
   }
+  back(){
+    history.back()
+  }
 }

@@ -1,0 +1,24 @@
+.login-avatar {
+    margin: 0 auto;
+    width: 100px;
+    height: 100px;
+    background: var(--ion-color-primary);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .avatar-icon {
+    font-size: 4rem;
+    color: white;
+  }
+  
+  .validation-error {
+    color: var(--ion-color-danger);
+    font-size: 0.9rem;
+    margin-top: 0.6rem;
+    margin-left: 1rem;
+    display: block;
+  }
+  

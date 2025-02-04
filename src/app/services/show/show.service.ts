@@ -6,7 +6,6 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ShowService {
-// private _data: Ievent[] = [];  
   private API_URI = 'http://localhost:8000/api';
   // private API_URI = 'https://event-app-backend-ntri.onrender.com/api';
 

@@ -20,13 +20,13 @@ export class EventService {
     return this.http.get<Ievent>(`${this.API_URI}/event/${id}`);
   }
 
-   // Getter for event data
-   get data(): Ievent[] {
-    return this._data;
-  }
+  //  // Getter for event data
+  //  get data(): Ievent[] {
+  //   return this._data;
+  // }
 
-  // Setter for event data
-  set data(events: Ievent[]) {
-    this._data = events;
-  }
+  // // Setter for event data
+  // set data(events: Ievent[]) {
+  //   this._data = events;
+  // }
 }

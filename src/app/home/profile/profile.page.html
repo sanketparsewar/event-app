@@ -1,0 +1,41 @@
+<ion-header [translucent]="true" mode="ios">
+  <ion-toolbar>
+    <ion-title class="ion-no-padding">User Profile</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">User Profile</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <ion-card class="profile-card">
+    <div class="card-img">
+      <img class="background-image" src="assets/background.jpg" alt="Background Image" />
+      <ion-button slot="start" size="small" fill="clear" (click)="back()">
+        <ion-icon slot="icon-only" size="large" color="light" name="chevron-back-circle-outline"></ion-icon>
+      </ion-button>
+
+      <div class="card-avatar">
+        <img class="avatar" [src]="loggedUserData?.image" alt="User Avatar" />
+      </div>
+    </div>
+    <ion-card-header>
+      <ion-card-title class="card-title">{{loggedUserData?.name}}</ion-card-title>
+    </ion-card-header>
+    <ion-card-content>
+      <p class=""><strong>Email:</strong> {{loggedUserData?.email}}</p>
+      <p class=""><strong>Phone:</strong> {{loggedUserData?.phone}}</p>
+      <ion-item lines="none">
+        <ion-button slot="end" fill="clear" class="card-btn-solid" size="small"><ion-icon size="large" color="dark"
+            name="create-outline"></ion-icon></ion-button>
+      </ion-item>
+      <ion-item lines="none">
+        <ion-button color="danger" fill="outline" size="small" (click)="logOut()">Log Out</ion-button>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+</ion-content>

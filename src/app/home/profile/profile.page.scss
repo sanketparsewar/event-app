@@ -1,0 +1,36 @@
+
+ion-toolbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  
+  ion-title {
+    flex-grow: 1;
+  }
+  
+  ion-icon {
+    margin-right: 10px;
+  }
+  
+  
+.profile-card{
+    border-radius: 20px;
+    .background-image{
+        position: absolute;
+        
+    }
+    .card-avatar{
+        text-align: center;
+        position: relative;
+        .avatar{
+        border-radius: 100%;
+        width: 40%;
+    
+    }
+    }
+}
+
+logout-btn{
+    text-align: center;
+}

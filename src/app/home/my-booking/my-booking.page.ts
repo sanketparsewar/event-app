@@ -1,5 +1,12 @@
 import { BookingService } from 'src/app/services/booking/booking.service';
-import { ChangeDetectorRef, Component, ElementRef, inject, OnInit, ViewChild } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  ElementRef,
+  inject,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -24,6 +31,7 @@ import {
   IonCard,
 } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
+import { UserService } from 'src/app/services/user/user.service';
 @Component({
   selector: 'app-my-booking',
   templateUrl: './my-booking.page.html',
@@ -64,25 +72,46 @@ export class MyBookingPage implements OnInit {
     totalAmount: 0,
   };
   router = inject(Router);
-  
+
   @ViewChild('modal') modal: any;
   ticketDetails: any;
-  
+  loggedUserData: any;
+
   ngOnInit() {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       this.showData = navigation.extras.state['showData'];
-console.log('showdata',this.showData)
+      console.log('mybooking showdata', this.showData);
     } else {
       console.log('No data received.');
     }
   }
   constructor(
     private bookingService: BookingService,
+    private userService: UserService,
     private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
   ) {}
 
-  
+  ionViewWillEnter() {
+    this.getLoggedUser();
+  }
+
+  getLoggedUser() {
+    this.userService.getLoggedUser().subscribe({
+      next: (response) => {
+        // console.log('User is authenticated:', response);
+        this.loggedUserData = response.user; // Store user data in this.data
+        console.log('User :', this.loggedUserData);
+        this.bookingData.name = this.loggedUserData.name;
+        this.bookingData.email = this.loggedUserData.email;
+        this.bookingData.phone = this.loggedUserData.phone;
+      },
+      error: () => {
+        console.log('User is not authenticated, redirecting to login...');
+        this.router.navigate(['/login']);
+      },
+    });
+  }
 
   openModal() {
     if (this.modal) {
@@ -91,39 +120,28 @@ console.log('showdata',this.showData)
   }
 
   closeModal() {
-    if (this.modal) {
-      if (confirm('Leaving this page?')) {
-        this.modal.dismiss();
-        this.router.navigateByUrl(`/event/${this.showData.eventId._id}`);
-      }
-    }
-  }
-
-  bookTickets() {
-    this.bookingData.showId = this.showData._id;
-    this.bookingData.totalAmount = this.bookingData.tickets * this.showData.ticketPrice;
-    // this.bookingService.bookTicket(this.bookingData).subscribe({
-    //   next: async (res: any) => {
-    //     this.ticketDetails = res.booking;
-        this.ticketDetails = this.bookingData;
-        this.openModal();
-        // this.bookingData = {
-        //   name: '',
-        //   email: '',
-        //   phone: '',
-        //   tickets: 1,
-        //   showId: '',
-        //   totalAmount: 0,
-        // };
-    //   },
-    // });
-  }
-
-  Payment(){
-    this.ticketDetails = this.bookingData;
-    this.router.navigate(['/payment'], { state: { ticketDetails: this.ticketDetails } });
     this.modal.dismiss();
-    console.log('ticketdetails',this.ticketDetails)
   }
-  
+
+  bookNow() {
+    this.bookingData.showId = this.showData._id;
+    this.bookingData.totalAmount =
+      this.bookingData.tickets * this.showData.ticketPrice;
+
+    this.ticketDetails = this.bookingData;
+    console.log('ticketdetails', this.ticketDetails);
+    this.openModal();
+  }
+  back() {
+    history.back();
+  }
+
+  Payment() {
+    this.ticketDetails = this.bookingData;
+    this.router.navigate(['/payment'], {
+      state: { ticketDetails: this.ticketDetails },
+    });
+    this.modal.dismiss();
+    console.log('ticketdetails', this.ticketDetails);
+  }
 }

@@ -11,9 +11,10 @@
         <p color="light">Pune, MH</p>
 
       </ion-label>
-      <ion-fab-button size="small" color="white">
-        <ion-icon name="notifications-outline"></ion-icon>
-        <ion-bagde>&#9679;</ion-bagde>
+      <ion-fab-button size="small" color="white" (click)="profile()" >
+        <!-- <ion-icon name="notifications-outline"></ion-icon> -->
+        <ion-icon name="person-outline"></ion-icon>
+        <ion-bagde *ngIf="!isLogged()" >&#9679;</ion-bagde>
       </ion-fab-button>
     </ion-item>
 
@@ -97,8 +98,8 @@
         <ion-item lines="none"  >
           <ion-label >
             <p class="name">{{event?.name}}</p>
-            <p>{{event?.date | date :'MMM d, y hh:mm a'}}
-            </p>
+            <!-- <p>{{event?.date | date :'MMM d, y hh:mm a'}}</p> -->
+            <p>{{event?.performers}}, {{event.headliners}}</p>
           </ion-label>
           <ion-fab-button size="small" color="tertiary">
             <ion-icon name="arrow-redo-outline"></ion-icon>
@@ -106,6 +107,5 @@
         </ion-item>
     </ion-card>
   </ion-list>
-
 
 </ion-content>
