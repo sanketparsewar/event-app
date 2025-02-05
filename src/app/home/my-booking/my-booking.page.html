@@ -1,12 +1,12 @@
 <ion-content [fullscreen]="true" class="ion-padding">
-
   <div class="bg ion-display-flex">
-    <ion-button slot="start" fill="clear" size="large" shape="round" (click)="back()"
+    <ion-buttons slot="start">
+      <ion-button (click)="back()"
       routerLinkActive="router-link-active">
-      <ion-icon slot="icon-only" size="large" name="chevron-back-circle-outline"></ion-icon>
+      <ion-icon color="dark" slot="icon-only" size="large" name="chevron-back-circle-outline"></ion-icon>
     </ion-button>
+    </ion-buttons>
   </div>
-
 
 
   <!-- Centered Container with Curved Box -->
@@ -72,7 +72,7 @@
         <ion-toolbar>
           <ion-title>Confirm booking</ion-title>
           <ion-buttons slot="start">
-            <ion-button size="large" (click)="closeModal()"><ion-icon slot="icon-only" size="large"
+            <ion-button color="dark" (click)="closeModal()"><ion-icon slot="icon-only" size="large"
                 name="chevron-back-circle-outline"></ion-icon></ion-button>
           </ion-buttons>
         </ion-toolbar>

@@ -1,8 +1,10 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-button slot="start" fill="clear" size="large" (click)="back()" routerLinkActive="router-link-active">
-      <ion-icon slot="icon-only" size="large" name="chevron-back-circle-outline"></ion-icon>
-    </ion-button>
+    <ion-buttons slot="start">
+      <ion-button color="dark" (click)="back()">
+        <ion-icon slot="icon-only" size="large" color="dark" name="chevron-back-circle-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <ion-title>Payment</ion-title>
   </ion-toolbar>
 </ion-header>
@@ -18,51 +20,48 @@
         <div class='card-form'>
           <div class='form-content'>
             <div class='heading'>
-              <h2 class='title'>payment details</h2>
+              <h2 class='title'>Payment details</h2>
               <ion-icon name="card-outline"></ion-icon>
               <label>Card information</label>
             </div>
             <form #paymentForm="ngForm" (submit)="handlePayment($event)">
-              <div class='content'>
 
-                <label>Name on card</label>
-                <div class='input-field'>
-                  <input class='form' type='text' [(ngModel)]="paymentDetails.nameOnCard" name="nameOnCard" required>
-                </div>
-
-                <label>Card Number</label>
-                <div class='input-field'>
-                  <input class='form' type='text' [(ngModel)]="paymentDetails.cardNumber" name="cardNumber" required
-                    maxlength="16" minlength="16" #cardNumber="ngModel">
-                </div>
-                <div>
-                  <p *ngIf="cardNumber.invalid && cardNumber.touched" class="error">Card number must be 16 digits.</p>
-                </div>
-
-                <label>Expiration Date</label>
-                <div class='input-field'>
-                  <input class='form' type='date' [(ngModel)]="paymentDetails.expiryDate" name="expiryDate" required
-                    min="{{ today }}" #expiryDate="ngModel">
-                </div>
-                <div>
-                  <p *ngIf="expiryDate.invalid && expiryDate.touched" class="error">Expiration date must be in the
-                    future.</p>
-                </div>
-
-                <label>CCV/CVV</label>
-                <div class='input-field'>
-                  <input class='form' type='text' [(ngModel)]="paymentDetails.cvv" name="cvv" required minlength="3"
-                    maxlength="3" #cvv="ngModel">
-                </div>
-                <div>
-                  <p *ngIf="cvv.invalid && cvv.touched" class="error">CVV must be 3 digits.</p>
-                </div>
-
-                <ion-item lines="none">
-                  <ion-button slot="end"  type='submit' size="large" [disabled]="paymentForm.invalid">Pay
-                    {{ticketDetails?.totalAmount | currency:"INR"}}</ion-button>
-                </ion-item>
+              <label>Name on card</label>
+              <div class='input-field'>
+                <input class='form' type='text' [(ngModel)]="paymentDetails.nameOnCard" name="nameOnCard" required>
               </div>
+
+              <label>Card Number</label>
+              <div class='input-field'>
+                <input class='form' type='text' [(ngModel)]="paymentDetails.cardNumber" name="cardNumber" required
+                  maxlength="16" minlength="16" #cardNumber="ngModel">
+              </div>
+              <div>
+                <p *ngIf="cardNumber.invalid && cardNumber.touched" class="error">Card number must be 16 digits.</p>
+              </div>
+
+              <label>Expiration Date</label>
+              <div class='input-field'>
+                <input class='form' type='date' [(ngModel)]="paymentDetails.expiryDate" name="expiryDate" required
+                  min="{{ today }}" #expiryDate="ngModel">
+              </div>
+              <div>
+                <p *ngIf="expiryDate.invalid && expiryDate.touched" class="error">Expiration date must be in the
+                  future.</p>
+              </div>
+
+              <label>CCV/CVV</label>
+              <div class='input-field'>
+                <input class='form' type='text' [(ngModel)]="paymentDetails.cvv" name="cvv" required minlength="3"
+                  maxlength="3" #cvv="ngModel">
+              </div>
+              <div>
+                <p *ngIf="cvv.invalid && cvv.touched" class="error">CVV must be 3 digits.</p>
+              </div>
+
+                <ion-button type='submit' color="tertiary"  fill="solid" [disabled]="paymentForm.invalid">Pay
+                      {{ticketDetails?.totalAmount | currency:"INR"}}</ion-button>
+                
             </form>
           </div>
 
@@ -82,7 +81,8 @@
               <div class='input-field'>
                 <input class='form' type='text'>
               </div>
-              <input class='button -primary -block' type='submit' value='Continue'>
+              <ion-button type='submit' color="tertiary"  fill="solid" >Continue
+                {{ticketDetails?.totalAmount | currency:"INR"}}</ion-button>
             </div>
           </div>
 
@@ -102,7 +102,8 @@
               <div class='input-field'>
                 <input class='form' type='text'>
               </div>
-              <input class='button -primary -block' type='submit' value='Continue'>
+              <ion-button type='submit' color="tertiary"  fill="solid" >Continue
+                {{ticketDetails?.totalAmount | currency:"INR"}}</ion-button>
             </div>
           </div>
 

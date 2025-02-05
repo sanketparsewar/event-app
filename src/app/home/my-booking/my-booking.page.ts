@@ -2,7 +2,6 @@ import { BookingService } from 'src/app/services/booking/booking.service';
 import {
   ChangeDetectorRef,
   Component,
-  ElementRef,
   inject,
   OnInit,
   ViewChild,
@@ -99,7 +98,6 @@ export class MyBookingPage implements OnInit {
   getLoggedUser() {
     this.userService.getLoggedUser().subscribe({
       next: (response) => {
-        // console.log('User is authenticated:', response);
         this.loggedUserData = response.user; // Store user data in this.data
         console.log('User :', this.loggedUserData);
         this.bookingData.name = this.loggedUserData.name;

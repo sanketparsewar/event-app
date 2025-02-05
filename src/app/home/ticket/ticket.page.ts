@@ -10,15 +10,14 @@ import {
   IonToolbar,
   IonList,
   IonIcon,
-  IonButton,
-} from '@ionic/angular/standalone';
+  IonButton, IonButtons } from '@ionic/angular/standalone';
 
 @Component({
   selector: 'app-ticket',
   templateUrl: './ticket.page.html',
   styleUrls: ['./ticket.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonButtons, 
     IonButton,
     IonIcon,
     IonList,

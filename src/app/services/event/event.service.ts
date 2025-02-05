@@ -2,31 +2,22 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { Ievent } from 'src/app/interfaces/event.interface';
+import { ApiService } from '../api/api.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class EventService {
-  private _data: Ievent[] = [];  
-  private API_URI = 'http://localhost:8000/api';
-  // private API_URI = 'https://event-app-backend-ntri.onrender.com/api';
+  private BASE_URI: string;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private apiService: ApiService) {
+    this.BASE_URI = this.apiService.getApiUrl();
+  }
   getEvents(): Observable<Ievent[]> {
-    return this.http.get<Ievent[]>(`${this.API_URI}/event`);
+    return this.http.get<Ievent[]>(`${this.BASE_URI}/event`);
   }
 
   getEventById(id: string): Observable<Ievent> {
-    return this.http.get<Ievent>(`${this.API_URI}/event/${id}`);
+    return this.http.get<Ievent>(`${this.BASE_URI}/event/${id}`);
   }
-
-  //  // Getter for event data
-  //  get data(): Ievent[] {
-  //   return this._data;
-  // }
-
-  // // Setter for event data
-  // set data(events: Ievent[]) {
-  //   this._data = events;
-  // }
 }

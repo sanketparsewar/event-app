@@ -91,47 +91,65 @@
         <ion-toolbar>
           <ion-title>Your Orders</ion-title>
           <ion-buttons slot="end">
-            <ion-buttons (click)="modal.dismiss()">Close</ion-buttons>
+            <ion-buttons class="ion-margin-horizontal" (click)="modal.dismiss()">Close</ion-buttons>
           </ion-buttons>
         </ion-toolbar>
       </ion-header>
       <ion-content>
         <ion-list style="background-color: rgb(240, 240, 240);" *ngIf="bookingsList?.length>0">
-          <ion-item class="ion-margin" *ngFor="let item of bookingsList; let i = index" lines="full"
-            style="border-radius: 10px;">
-            <div slot="start" class="ion-align-items-center" style="display: flex;flex-direction: column;">
-              <!-- <ion-avatar > -->
-              <ion-img style="width: 3rem; height:4rem;" [src]="item.showId.eventId.image"></ion-img>
-              <!-- </ion-avatar> -->
-              <ion-text class="dark ion-no-margin ion-no-padding">
-                <strong>{{ item?.date | date: 'd MMM' }}</strong>
-              </ion-text>
-            </div>
+          @for(item of bookingsList;track $index){
+          <ion-card class="" style="border-radius: 15px; padding: 10px;" (click)="onShowTicket(item._id)" >
+            <ion-grid>
+              <ion-row class="ion-align-items-center">
 
-            <ion-text style="font-size: .8rem;">
-              <p class="ion-no-margin ion-no-padding">
-                <strong>{{ item.showId.eventId.name}}</strong>
-              </p>
-              <p class=" ion-no-margin ion-no-padding">
-                <strong>{{ item?.showId.date | date: 'd MMM' }} | {{ item?.showId.time}}</strong> <span
-                  style="color: green;">{{ item?.availableSeats
-                  }}</span>
-              </p>
-              <p class="ion-no-margin ion-no-padding">
-                {{ item.showId.eventId.location}}
-              </p>
-              <p class="ion-no-margin ion-no-padding">
-                <strong>{{ item?.tickets}} ticket (s) </strong>
-              </p>
-            </ion-text>
+                <!-- Image Column -->
+                <ion-col size="auto">
+                  <ion-img [src]="item.showId.eventId.image"
+                    style="width: 3rem; height: 3rem; border-radius: 10px;"></ion-img>
+                </ion-col>
 
-            <!-- <div slot="end" style="display: flex; flex-direction: column;align-items: center;">
-                  <ion-button class="ion-no-padding" color="primary" expand="block" fill="clear"
-                      class="book-now-btn" (click)="bookTickets(item) ; modal.dismiss()">
-                      <ion-icon size="large" name="ticket-outline"></ion-icon>Book
-                  </ion-button>
-              </div> -->
-          </ion-item>
+                <!-- Text Column -->
+                <ion-col>
+                  <ion-text style="font-size: 0.8rem;">
+                    <p class="ion-no-margin ion-no-padding">
+                      <strong>{{ item.showId.eventId.name }}</strong>
+                    </p>
+                    <p class="ion-no-margin ion-no-padding">
+                      <strong>{{ item?.showId.date | date: 'd MMM' }} | {{ item?.showId.time }}</strong>
+                      <span style="color: green;">{{ item?.availableSeats }}</span>
+                    </p>
+                    <p class="ion-no-margin ion-no-padding">
+                      {{ item.showId.eventId.location }}
+                    </p>
+                    <p class="ion-no-margin ion-no-padding">
+                      <strong>{{ item?.tickets }} ticket(s) </strong>,
+                      Order on: {{ item?.createdAt | date: 'd MMM | hh:mm a' }}
+                    </p>
+                  </ion-text>
+                </ion-col>
+
+              </ion-row>
+              <ion-row>
+                <!-- If show is over -->
+                <ion-col *ngIf="!getRemainingTime(item?.showId.date, item?.showId.time)" size="12" class="ion-text-center">
+                  <strong class="ion-padding-horizontal"
+                    style="background-color: rgb(51, 51, 51); color: white; border-radius: 3px;">
+                    Finished
+                  </strong> | Hope you enjoyed the show!
+                </ion-col>
+              
+                <!-- If show is not over -->
+                <ion-col *ngIf="getRemainingTime(item?.showId.date, item?.showId.time)" size="12" class="ion-text-center">
+                  {{ getRemainingTime(item?.showId.date, item?.showId.time) }}
+                </ion-col>
+              </ion-row>
+              
+            </ion-grid>
+          </ion-card>
+
+
+          <!-- <p class="ion-padding-horizontal ion-no-margin">|Hope you enjoyed the show!</p> -->
+          }
         </ion-list>
       </ion-content>
     </ng-template>

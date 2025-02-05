@@ -12,8 +12,7 @@ import {
   IonLabel,
   IonAccordionGroup,
   IonIcon,
-  IonButton,
-} from '@ionic/angular/standalone';
+  IonButton, IonButtons, } from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert/alert.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
@@ -23,7 +22,7 @@ import { ToastService } from 'src/app/services/toast/toast.service';
   templateUrl: './payment.page.html',
   styleUrls: ['./payment.page.scss'],
   standalone: true,
-  imports: [
+  imports: [ IonButtons, 
     IonButton,
     IonIcon,
     IonAccordionGroup,

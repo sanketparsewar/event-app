@@ -1,15 +1,19 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
-    <ion-button slot="start" fill="clear" size="large" shape="round"
-      (click)="router.navigateByUrl('/event/'+bookingDetails?.showId?.eventId?._id)"
-      routerLinkActive="router-link-active">
-      <ion-icon slot="icon-only" size="large" name="chevron-back-circle-outline"></ion-icon>
+    <ion-buttons slot="start">
+      <ion-button color="dark" (click)="router.navigateByUrl('/event/'+bookingDetails?.showId?.eventId?._id)">Event
+      <!-- <ion-icon slot="icon-only" size="large" color="dark" name="chevron-back-circle-outline"></ion-icon> -->
     </ion-button>
+    </ion-buttons>
     <ion-title>Your Ticket</ion-title>
-    <ion-button slot="end" fill="clear" size="large" shape="round" (click)="router.navigateByUrl('/home')"
-      routerLinkActive="router-link-active">
-      <ion-icon slot="icon-only" size="large" name="home-outline"></ion-icon>
-    </ion-button>
+    <ion-buttons slot="end">
+      <ion-button    (click)="router.navigateByUrl('/home')">
+        <ion-icon class="ion-no-padding ion-no-margin" slot="icon-only"  color="dark"  name="home-outline"></ion-icon>
+      </ion-button>
+      <ion-button   (click)="router.navigateByUrl('/profile')">
+        <ion-icon slot="icon-only"  color="dark" name="person-outline"></ion-icon>
+      </ion-button>
+    </ion-buttons>
     <!-- <ion-button slot="start" fill="clear" size="large" shape="round"
   (click)="router.navigateByUrl('/event/'+bookingDetails?.showId?.eventId?._id)" routerLinkActive="router-link-active">
   <ion-icon slot="icon-only" size="large"  name="chevron-back-circle-outline"></ion-icon>

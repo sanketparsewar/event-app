@@ -1,5 +1,5 @@
 import { BookingService } from 'src/app/services/booking/booking.service';
-import { Component, inject, OnInit, ViewChild } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, inject, OnInit, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import {
@@ -20,7 +20,6 @@ import {
   IonModal,
   IonButtons,
   IonList,
-  IonAvatar,
   IonImg,
   IonText,
 } from '@ionic/angular/standalone';
@@ -37,7 +36,6 @@ import { ToastService } from 'src/app/services/toast/toast.service';
   imports: [
     IonText,
     IonImg,
-    IonAvatar,
     IonList,
     IonButtons,
     IonModal,
@@ -58,6 +56,7 @@ import { ToastService } from 'src/app/services/toast/toast.service';
     CommonModule,
     FormsModule,
   ],
+  schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class ProfilePage implements OnInit {
   loggedUserData: any;
@@ -141,4 +140,51 @@ export class ProfilePage implements OnInit {
       console.log('Logout canceled');
     }
   }
+
+
+  getRemainingTime(showDate: string, showTime: string): string | null {
+    const showDateTime = new Date(showDate);
+  
+    // Extract time and convert to 24-hour format
+    const [time, period] = showTime.split(" ");
+    let [hours, minutes] = time.split(":").map(Number);
+  
+    if (period === "PM" && hours !== 12) {
+      hours += 12;
+    } else if (period === "AM" && hours === 12) {
+      hours = 0;
+    }
+  
+    showDateTime.setHours(hours, minutes, 0, 0);
+  
+    const now = new Date();
+    const diffInMs = showDateTime.getTime() - now.getTime();
+  
+    // If the show is over, return null
+    if (diffInMs <= 0) {
+      return null;
+    }
+  
+    const diffInMinutes = Math.floor(diffInMs / 60000);
+    const diffInHours = Math.floor(diffInMinutes / 60);
+    const diffInDays = Math.floor(diffInHours / 24);
+  
+    if (diffInDays > 0) {
+      return `${diffInDays} day${diffInDays > 1 ? "s" : ""} to go`;
+    } else if (diffInHours > 0) {
+      return `${diffInHours} hour${diffInHours > 1 ? "s" : ""} to start the show`;
+    } else if (diffInMinutes > 0) {
+      return `${diffInMinutes} minute${diffInMinutes > 1 ? "s" : ""} to start the show`;
+    } else {
+      return "Starting soon";
+    }
+  }
+  
+  onShowTicket(bookingId:string){
+    this.router.navigate(['/ticket', bookingId]);
+    this.modal.dismiss();
+  }
+
+
+
 }
