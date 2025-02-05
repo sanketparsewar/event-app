@@ -11,6 +11,7 @@ import {
   checkmark,
   chevronBackCircleOutline,
   chevronForwardOutline,
+  cloudUploadOutline,
   createOutline,
   giftOutline,
   globe,
@@ -61,6 +62,7 @@ export class AppComponent {
       logOutOutline,
       settingsOutline,
       chevronForwardOutline,
+      cloudUploadOutline,
     });
   }
 

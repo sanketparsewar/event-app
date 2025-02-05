@@ -37,12 +37,6 @@ ion-icon {
 }
 
 ion-modal{
-  // ion-item{
-  //   padding: 10px;
-  //   margin: 10px;
-  //   border-radius: 20px;
-  //   cursor: pointer;
-  // }
   p{
     color: black;
   }
@@ -51,4 +45,66 @@ ion-modal{
 
 logout-btn {
   text-align: center;
+}
+
+
+ion-modal#example-modal {
+  --width: fit-content;
+  --max-width: 280px;
+  
+  --height:fit-content;
+  --border-radius: 10px;
+  --box-shadow: 0 28px 48px rgba(0, 0, 0, 0.4);
+}
+
+ion-modal#example-modal h1 {
+  margin: 20px 20px 10px 20px;
+}
+
+ion-modal#example-modal ion-icon {
+  margin-right: 6px;
+
+  width: 48px;
+  height: 48px;
+
+  padding: 4px 0;
+
+  color: #aaaaaa;
+}
+
+ion-modal#example-modal .wrapper {
+  padding: 5px;
+  margin: 5px;
+  margin-bottom: 10px;
+  .save-change-button{
+    border-radius: 20px;
+  }
+}
+
+
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 15px;
+}
+
+label {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input {
+  width: 100%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 16px;
+}
+
+input:focus {
+  outline: none;
+  border-color: #3880ff; /* Ionic primary color */
+  box-shadow: 0 0 5px rgba(56, 128, 255, 0.5);
 }

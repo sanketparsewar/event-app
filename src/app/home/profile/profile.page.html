@@ -28,15 +28,6 @@
     <ion-card-content>
       <p class=""><strong>Email:</strong> {{loggedUserData?.email}}</p>
       <p class=""><strong>Phone:</strong> {{loggedUserData?.phone}}</p>
-      <!-- <ion-item lines="none">
-        <ion-button slot="end" fill="clear" class="card-btn-solid" size="small"><ion-icon size="large" color="dark"
-            name="create-outline"></ion-icon></ion-button>
-      </ion-item> -->
-      <!-- <ion-item lines="none">
-        <ion-button color="danger" fill="outline" size="small" (click)="logOut()">Log Out</ion-button>
-      </ion-item> -->
-
-
     </ion-card-content>
   </ion-card>
 
@@ -52,35 +43,60 @@
           <ion-item slot="header" lines="true">
             <ion-label><ion-icon name="settings-outline"></ion-icon>Account</ion-label>
           </ion-item>
-          <div class="ion-padding" (click)="logOut()" slot="content"><ion-icon color="dark"
+          <div class="ion-padding" (click)="onEdit()" slot="content"><ion-icon color="dark"
               name="create-outline"></ion-icon>Edit</div>
-          <div class="ion-padding" (click)="logOut()" slot="content"><ion-icon name="log-out-outline"></ion-icon>Logout
+          <div class="ion-padding" (click)="onLogOut()" slot="content"><ion-icon
+              name="log-out-outline"></ion-icon>Logout
           </div>
         </ion-accordion>
-        <!-- <ion-accordion>
-          <ion-item slot="header">
-            <ion-label><ion-icon name="ticket-outline" ></ion-icon>Your Orders</ion-label>
-          </ion-item>
-          <div class="ion-padding" slot="content" (click)="openModal()">First Content</div>
-        </ion-accordion> -->
-
-        <!-- <ion-accordion value="third">
-          <ion-item slot="header" >
-            <ion-label>Third Accordion</ion-label>
-          </ion-item>
-          <div class="ion-padding" slot="content">Third Content</div>
-        </ion-accordion> -->
-
       </ion-accordion-group>
-
-
-
     </ion-card-content>
   </ion-card>
 
 
 
+  <!-- edit profile modal -->
+  <ion-modal id="example-modal" #editmodal>
+    <ng-template>
+      <div class="wrapper">
+        <h1>Edit Profile</h1>
 
+        <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
+          <!-- Name Input -->
+          <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" id="name" [(ngModel)]=" updateProfileData.name" name="name" required />
+          </div>
+
+          <!-- Email Input -->
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" [(ngModel)]=" updateProfileData.email" name="email" required />
+          </div>
+
+          <!-- Phone Input -->
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="tel" maxlength="10" minlength="10" id="phone" [(ngModel)]=" updateProfileData.phone"
+              name="phone" required />
+          </div>
+
+          <!-- Image Upload -->
+          <div class="form-group ion-text-center">
+            <label for="image">Upload Image <br> <ion-icon name="cloud-upload-outline"></ion-icon> </label>
+            <input type="file" style="display: none;" id="image" (change)="onFileSelected($event)" name="image"
+              accept="image/*" />
+          </div>
+
+          <!-- Submit Button -->
+          <ion-button type="submit" class="save-change-button" color="tertiary" [disabled]="!profileForm.form.valid"
+            expand="full">
+            Save Changes
+          </ion-button>
+        </form>
+      </div>
+    </ng-template>
+  </ion-modal>
 
 
 
@@ -102,13 +118,11 @@
             <ion-grid>
               <ion-row class="ion-align-items-center">
 
-                <!-- Image Column -->
                 <ion-col size="auto">
                   <ion-img [src]="item.showId.eventId.image"
                     style="width: 3rem; height: 3rem; border-radius: 10px;"></ion-img>
                 </ion-col>
 
-                <!-- Text Column -->
                 <ion-col>
                   <ion-text style="font-size: 0.8rem;">
                     <p class="ion-no-margin ion-no-padding">
@@ -130,7 +144,6 @@
 
               </ion-row>
               <ion-row>
-                <!-- If show is over -->
                 <ion-col *ngIf="!getRemainingTime(item?.showId.date, item?.showId.time)" size="12"
                   class="ion-text-center">
                   <strong class="ion-padding-horizontal"
@@ -139,18 +152,13 @@
                   </strong> | Hope you enjoyed the show!
                 </ion-col>
 
-                <!-- If show is not over -->
                 <ion-col *ngIf="getRemainingTime(item?.showId.date, item?.showId.time)" size="12"
                   class="ion-text-center">
                   {{ getRemainingTime(item?.showId.date, item?.showId.time) }}
                 </ion-col>
               </ion-row>
-
             </ion-grid>
           </ion-card>
-
-
-          <!-- <p class="ion-padding-horizontal ion-no-margin">|Hope you enjoyed the show!</p> -->
           }
         </ion-list>
       </ion-content>
