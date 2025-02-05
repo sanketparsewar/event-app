@@ -107,7 +107,7 @@ export class ProfilePage implements OnInit {
         this.loggedUserData = response.user; // Store user data in this.data
         // console.log('User :', this.loggedUserData);
         this.updateProfileData = this.loggedUserData;
-        console.log(response.user)
+        // console.log(response.user)
         this.getUserBookings();
       },
       error: () => {
@@ -125,7 +125,7 @@ export class ProfilePage implements OnInit {
       this.uploadService.uploadFile(this.selectedFile).subscribe({
         next: (res: any) => {
           this.updateProfileData.image = res.file.url;
-          console.log(res)
+          // console.log(res)
           this.toastService.presentToast(
             'Profile updated Successfully!',
             'checkmark',
@@ -148,7 +148,7 @@ export class ProfilePage implements OnInit {
       this.updateProfileData.email &&
       this.updateProfileData.phone
     ) {
-      console.log('Form Submitted:', this.updateProfileData);
+      // console.log('Form Submitted:', this.updateProfileData);
       this.userService.updateUser(this.updateProfileData).subscribe({
         next: (res) => {
           // this.updateProfileData=res.user
@@ -173,7 +173,12 @@ export class ProfilePage implements OnInit {
         // console.log('User bookingsList :', this.bookingsList);
       },
       error: () => {
-        console.log('Failed to fetch user bookings');
+        this.toastService.presentToast(
+          'Failed to fetch user bookings',
+          'alert',
+         'danger'
+        );
+        // console.log('Failed to fetch user bookings');
       },
     });
   }
@@ -225,9 +230,7 @@ export class ProfilePage implements OnInit {
     } else if (period === 'AM' && hours === 12) {
       hours = 0;
     }
-
     showDateTime.setHours(hours, minutes, 0, 0);
-
     const now = new Date();
     const diffInMs = showDateTime.getTime() - now.getTime();
 
