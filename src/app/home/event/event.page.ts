@@ -92,7 +92,7 @@ export class EventPage implements OnInit {
     this.eventService.getEventById(this.eventId).subscribe({
       next: (res: Ievent) => {
         this.event = res; // Assigning response to event
-        console.log('event', res);
+        // console.log('event', res);
         this.getShowsByEvent();
       },
       error: (error) => {
@@ -119,7 +119,7 @@ export class EventPage implements OnInit {
           return showDateTime > currentDateTime; // Filter future shows
         });
   
-        console.log("Filtered showsList:", this.showsList);
+        // console.log("Filtered showsList:", this.showsList);
       },
       error: (error) => {
         console.error("Error:", error);

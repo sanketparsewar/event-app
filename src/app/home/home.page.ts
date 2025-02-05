@@ -78,11 +78,11 @@ export class HomePage implements OnInit {
       next: (response) => {
         // console.log('User is authenticated:', response);
         this.loggedUserData = response.user;
-        console.log('User :',this.loggedUserData);
+        // console.log('User :',this.loggedUserData);
         this.isLogged.set(true)
       },
       error: () => {
-        console.log('User is not authenticated, redirecting to login...');
+        console.log('User is not authenticated');
         this.isLogged.set(false)
         // this.router.navigate(['/login']);
       },

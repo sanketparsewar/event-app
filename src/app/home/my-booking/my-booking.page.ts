@@ -80,7 +80,7 @@ export class MyBookingPage implements OnInit {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       this.showData = navigation.extras.state['showData'];
-      console.log('mybooking showdata', this.showData);
+      // console.log('mybooking showdata', this.showData);
     } else {
       console.log('No data received.');
     }
@@ -99,7 +99,7 @@ export class MyBookingPage implements OnInit {
     this.userService.getLoggedUser().subscribe({
       next: (response) => {
         this.loggedUserData = response.user; // Store user data in this.data
-        console.log('User :', this.loggedUserData);
+        // console.log('User :', this.loggedUserData);
         this.bookingData.name = this.loggedUserData.name;
         this.bookingData.email = this.loggedUserData.email;
         this.bookingData.phone = this.loggedUserData.phone;
@@ -127,7 +127,7 @@ export class MyBookingPage implements OnInit {
       this.bookingData.tickets * this.showData.ticketPrice;
 
     this.ticketDetails = this.bookingData;
-    console.log('ticketdetails', this.ticketDetails);
+    // console.log('ticketdetails', this.ticketDetails);
     this.openModal();
   }
   back() {
@@ -140,6 +140,6 @@ export class MyBookingPage implements OnInit {
       state: { ticketDetails: this.ticketDetails },
     });
     this.modal.dismiss();
-    console.log('ticketdetails', this.ticketDetails);
+    // console.log('ticketdetails', this.ticketDetails);
   }
 }

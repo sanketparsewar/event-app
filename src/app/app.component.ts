@@ -26,6 +26,7 @@ import {
   settingsOutline,
   ticketOutline,
 } from 'ionicons/icons'; // Import specific icons
+import { Router } from '@angular/router';
 
 register();
 
@@ -35,7 +36,8 @@ register();
   imports: [IonApp, IonRouterOutlet],
 })
 export class AppComponent {
-  constructor() {
+  constructor(private router: Router) {
+    this.checkAuth();
     addIcons({
       locateOutline,
       notificationsOutline,
@@ -51,9 +53,33 @@ export class AppComponent {
       logoPaypal,
       giftOutline,
       personOutline,
-      createOutline,homeOutline,globe,
-      alert,checkmark,logOutOutline,settingsOutline
-      ,chevronForwardOutline
+      createOutline,
+      homeOutline,
+      globe,
+      alert,
+      checkmark,
+      logOutOutline,
+      settingsOutline,
+      chevronForwardOutline,
     });
+  }
+
+  checkAuth() {
+    const getToken = (): string | null => {
+      return (
+        document.cookie
+          .split('; ')
+          .find((row) => row.startsWith('token='))
+          ?.split('=')[1] || null
+      );
+    };
+
+    const token = getToken();
+
+    if (token) {
+      this.router.navigateByUrl('/home');
+    } else {
+      this.router.navigateByUrl('/welcome');
+    }
   }
 }

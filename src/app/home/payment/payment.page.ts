@@ -72,7 +72,7 @@ export class PaymentPage implements OnInit {
     const navigation = this.router.getCurrentNavigation();
     if (navigation?.extras.state) {
       this.ticketDetails = navigation.extras.state['ticketDetails'];
-      console.log('ticketDetails', this.ticketDetails);
+      // console.log('ticketDetails', this.ticketDetails);
     } else {
       console.log('No data received.');
     }
@@ -93,7 +93,7 @@ export class PaymentPage implements OnInit {
             this.bookingDetails = res.booking;
             this.transaction.booking = this.bookingDetails?._id;
             this.transaction.paymentDetails = this.paymentDetails;
-            console.log('transaction', this.transaction);
+            // console.log('transaction', this.transaction);
             this.toastService.presentToast(
               'Ticket Booked!',
               'checkmark',
@@ -104,7 +104,7 @@ export class PaymentPage implements OnInit {
           },
           error: (error: any) => console.error('Error:', error),
         });
-        console.log('Card Details:', this.paymentDetails);
+        // console.log('Card Details:', this.paymentDetails);
       }
     } catch (error) {
       console.log('Payment canceled');

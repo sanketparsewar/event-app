@@ -43,7 +43,7 @@ export class TicketPage implements OnInit {
         this.bookingService.getBookingById(params['id']).subscribe({
           next: (res: any) => {
             this.bookingDetails = res;
-            console.log('bookingDetails:', this.bookingDetails);
+            // console.log('bookingDetails:', this.bookingDetails);
           },
           error: (error) => {
             console.error('Error:', error);

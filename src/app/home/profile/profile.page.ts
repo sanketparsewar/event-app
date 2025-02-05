@@ -89,7 +89,7 @@ export class ProfilePage implements OnInit {
     this.userService.getLoggedUser().subscribe({
       next: (response) => {
         this.loggedUserData = response.user; // Store user data in this.data
-        console.log('User :', this.loggedUserData);
+        // console.log('User :', this.loggedUserData);
         this.getUserBookings();
       },
       error: () => {
@@ -103,7 +103,7 @@ export class ProfilePage implements OnInit {
     this.bookingService.getUserBookings(this.loggedUserData._id).subscribe({
       next: (res) => {
         this.bookingsList = res;
-        console.log('User bookingsList :', this.bookingsList);
+        // console.log('User bookingsList :', this.bookingsList);
       },
       error: () => {
         console.log('Failed to fetch user bookings');
@@ -117,7 +117,8 @@ export class ProfilePage implements OnInit {
   }
 
   back() {
-    history.back();
+    // history.back();
+    this.router.navigateByUrl('/home')
   }
 
   async logOut() {

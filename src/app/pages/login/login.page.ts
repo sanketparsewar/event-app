@@ -70,7 +70,7 @@ router=inject(Router)
 
       this.userService.login(this.loginForm.value).subscribe({
         next: (res) => {
-          console.log(res);
+          // console.log(res);
           this.loading = false;
           this.toastService.presentToast(
             'Login successful!',

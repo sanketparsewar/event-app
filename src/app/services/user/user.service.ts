@@ -37,10 +37,11 @@ export class UserService {
     return this.http
       .post(`${this.BASE_URI}/auth/login`, userData, { withCredentials: true })
       .pipe(
-        tap(() => {
+        tap((response) => {
           this.isAuthenticated = true;
         })
       );
+    
   }
 
   // Logout User
@@ -72,4 +73,9 @@ export class UserService {
       withCredentials: true,
     });
   }
+
+
+
+
+  
 }
