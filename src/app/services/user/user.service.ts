@@ -41,7 +41,6 @@ export class UserService {
           this.isAuthenticated = true;
         })
       );
-    
   }
 
   // Logout User
@@ -74,8 +73,12 @@ export class UserService {
     });
   }
 
+  updateUser(user: any): Observable<any> {
+    return this.http.put(`${this.BASE_URI}/user/${user._id}`, user);
+  }
 
+  deleteUser(): Observable<any> {
+    return this.http.delete(`${this.BASE_URI}/user`);
+  }
 
-
-  
 }
