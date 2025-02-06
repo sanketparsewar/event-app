@@ -1,9 +1,4 @@
-import { routes } from './../app.routes';
 import { UserService } from './../services/user/user.service';
-// import { categories } from './../data/categories';
-// import { FormsModule } from '@angular/forms';
-// import { categories } from '../data/categories';
-// import { events } from '../data/events';
 import { Icategory } from '../interfaces/category.interface';
 import { Ievent } from '../interfaces/event.interface';
 import {
@@ -23,7 +18,6 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { EventService } from '../services/event/event.service';
 import { CategoryService } from '../services/category/category.service';
-
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -32,6 +26,9 @@ import { CategoryService } from '../services/category/category.service';
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomePage implements OnInit {
+  tostring(arg0: number | undefined) {
+    throw new Error('Method not implemented.');
+  }
   swiperModule = [IonicSlides];
   upcomingEvents: Ievent[] = [];
   currentEvents: Ievent[] = [];
@@ -42,11 +39,9 @@ export class HomePage implements OnInit {
     private userService: UserService
   ) {}
   router = inject(Router);
-  isLogged=signal<boolean>(false);
+  isLogged = signal<boolean>(false);
   loggedUserData: any;
-  ngOnInit(): void {
-   
-  }
+  ngOnInit(): void {}
   ionViewWillEnter() {
     this.getEvents();
     this.getCategories();
@@ -54,6 +49,7 @@ export class HomePage implements OnInit {
   }
 
   getEvents() {
+    this.selectedCategoryId = '';
     this.evenService.getEvents().subscribe({
       next: (events) => {
         // this.currentEvents = events.filter(event => new Date(event.date) >= new Date());
@@ -68,6 +64,7 @@ export class HomePage implements OnInit {
     this.categoryService.getCategories().subscribe({
       next: (categories) => {
         this.categories = categories;
+        // console.log(categories)
       },
       error: (error) => console.error('Error:', error),
     });
@@ -79,20 +76,32 @@ export class HomePage implements OnInit {
         // console.log('User is authenticated:', response);
         this.loggedUserData = response.user;
         // console.log('User :',this.loggedUserData);
-        this.isLogged.set(true)
+        this.isLogged.set(true);
       },
       error: () => {
         console.log('User is not authenticated');
-        this.isLogged.set(false)
+        this.isLogged.set(false);
         // this.router.navigate(['/login']);
       },
     });
   }
   profile() {
-    if(this.isLogged()){
+    if (this.isLogged()) {
       this.router.navigateByUrl('/profile');
-    }else{
+    } else {
       this.router.navigateByUrl('/login');
     }
+  }
+  selectedCategoryId: string = '';
+  getEventsByCategoryId(category: any) {
+    this.selectedCategoryId = category._id;
+    // console.log(this.selectedCategoryId)
+    this.evenService.getEventsByCategory(category._id).subscribe({
+      next: (res: any) => {
+        this.currentEvents = res.events;
+        // console.log(res.events)
+      },
+      error: (error) => console.error('Error:', error),
+    });
   }
 }
