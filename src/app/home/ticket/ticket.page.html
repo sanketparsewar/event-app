@@ -29,14 +29,19 @@
         <div class="event">
           <h4>{{bookingDetails?.showId?.eventId?.name}}</h4>
           <p>{{bookingDetails?.showId?.eventId?.date | date:'MMM d, y | hh:mm a' }}</p>
-          <p><ion-icon name="location-outline"></ion-icon>{{bookingDetails?.showId?.eventId?.location}}</p>
+          <p><ion-icon name="location-outline"></ion-icon>{{bookingDetails?.showId?.eventId?.location?.venue}}, {{bookingDetails?.showId?.eventId?.location?.city}}</p>
           <p>{{bookingDetails?.showId?.eventId?.description}}</p>
+          <p>{{bookingDetails?.showId?.eventId?.performers}}</p>
         </div>
 
       </div>
-
+      <!-- <div class="total-amount">
+        <p>Total Amount</p>
+        <p>{{bookingDetails?.totalAmount | currency:"INR"}}</p>
+      </div> -->
       <div class="info">
-        Thanks for Booking, with us!
+        <!-- Thanks for Booking, with us! -->
+        <h6>Show on: {{bookingDetails?.showId?.date | date:'d MMM,y'}} | {{bookingDetails?.showId?.time}}</h6>
       </div>
 
       <div class="ticket-details" style="align-items: center;">
@@ -46,18 +51,23 @@
           <b>{{bookingDetails?.name}}</b>
           <p>{{bookingDetails?.email}} | {{bookingDetails?.phone}} </p>
           <h6>{{bookingDetails?.tickets}} Ticket(s)</h6>
-          <p><strong>BOOKING ID: </strong> <a href="">{{bookingDetails?._id}}</a></p>
+          <p><strong>BOOKING ID: </strong> <a >{{bookingDetails?._id}}</a></p>
 
         </div>
       </div>
       <div class="info-cancel">
         Cancellation not available for this venue
       </div>
-
+      
+      <!-- http://localhost:8100/ticket/67a339f6b00ade12eae25877 -->
       <div class="total-amount">
         <p>Total Amount</p>
         <p>{{bookingDetails?.totalAmount | currency:"INR"}}</p>
       </div>
+      
+    </div>
+    <div class="info " style="text-align: center; margin-top: 20px;">
+      Thanks for Booking, with us!
     </div>
   </ion-list>
 

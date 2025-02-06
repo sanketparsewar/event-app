@@ -29,8 +29,8 @@ ion-icon {
 
     .avatar {
       border-radius: 100%;
-      width: 20%;
-      height: 20%;
+      width: 90px ;
+      height: 90px;
 
     }
   }
@@ -49,8 +49,8 @@ logout-btn {
 
 
 ion-modal#example-modal {
-  --width: fit-content;
-  --max-width: 280px;
+  --width: 290px;
+  // --max-width: 280px;
   
   --height:fit-content;
   --border-radius: 10px;
@@ -78,6 +78,9 @@ ion-modal#example-modal .wrapper {
   margin-bottom: 10px;
   .save-change-button{
     border-radius: 20px;
+  }
+  p{
+    color: red;
   }
 }
 

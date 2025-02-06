@@ -1,9 +1,12 @@
 export interface Ievent {
-  _id: number;
+  _id: string;
   name: string;
   date: Date;
   image: string;
-  location: string;
+  location: {
+    venue: string;
+    city: string;
+  };
   headliners?: string[];
   performers?: string[];
   categoryId: string;

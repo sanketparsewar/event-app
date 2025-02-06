@@ -28,7 +28,10 @@
 
               <label>Name on card</label>
               <div class='input-field'>
-                <input class='form' type='text' [(ngModel)]="paymentDetails.nameOnCard" name="nameOnCard" required>
+                <input class='form' type='text' [(ngModel)]="paymentDetails.nameOnCard" #nameOnCard="ngModel" name="nameOnCard" required>
+              </div>
+              <div>
+                <p *ngIf="nameOnCard.invalid && nameOnCard.touched" class="error">Name on card is required.</p>
               </div>
 
               <label>Card Number</label>

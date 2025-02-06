@@ -59,26 +59,41 @@
   <ion-modal id="example-modal" #editmodal>
     <ng-template>
       <div class="wrapper">
-        <h1>Edit Profile</h1>
-
+        <div style="display: flex;justify-content: space-between;" >
+          <h1>Edit Profile</h1>
+          <ion-button  size="small" fill="clear" (click)="editmodal.dismiss()">
+            <ion-icon slot="icon-only" size="small" name="close-circle-outline"></ion-icon>
+          </ion-button>
+        
+        </div>
         <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
           <!-- Name Input -->
           <div class="form-group">
             <label for="name">Name</label>
-            <input type="text" id="name" [(ngModel)]=" updateProfileData.name" name="name" required />
+            <input type="text" id="name" [(ngModel)]=" updateProfileData.name" #name="ngModel" name="name" required />
+          </div>
+          <div>
+            <p *ngIf="name.invalid" class="error">Name is required.</p>
           </div>
 
           <!-- Email Input -->
           <div class="form-group">
             <label for="email">Email</label>
-            <input type="email" id="email" [(ngModel)]=" updateProfileData.email" name="email" required />
+            <input type="email" id="email" [(ngModel)]=" updateProfileData.email" name="email" #email="ngModel"
+              required />
+          </div>
+          <div>
+            <p *ngIf="email.invalid && email.touched" class="error">Email is required.</p>
           </div>
 
           <!-- Phone Input -->
           <div class="form-group">
             <label for="phone">Phone</label>
             <input type="tel" maxlength="10" minlength="10" id="phone" [(ngModel)]=" updateProfileData.phone"
-              name="phone" required />
+              name="phone" #phone="ngModel" required />
+          </div>
+          <div>
+            <p *ngIf="phone.invalid && phone.touched" class="error">Phone number must be 10 digits long.</p>
           </div>
 
           <!-- Image Upload -->
@@ -87,11 +102,16 @@
             <input type="file" style="display: none;" id="image" (change)="onFileSelected($event)" name="image"
               accept="image/*" />
           </div>
+          <div class="ion-text-center">
+            <label for="image">{{selectedFile?.name}}</label>
+          </div>
 
           <!-- Submit Button -->
-          <ion-button type="submit" class="save-change-button" color="tertiary" [disabled]="!profileForm.form.valid"
-            expand="full">
-            Save Changes
+          <ion-button slot="end" type="submit" shape="round" class="save-change-button" color="tertiary"
+            [disabled]="!profileForm.form.valid || loading" expand="full">
+            <ion-spinner *ngIf="loading"></ion-spinner>
+            <span *ngIf="!loading">Save Changes</span>
+
           </ion-button>
         </form>
       </div>
@@ -133,7 +153,7 @@
                       <span style="color: green;">{{ item?.availableSeats }}</span>
                     </p>
                     <p class="ion-no-margin ion-no-padding">
-                      {{ item.showId.eventId.location }}
+                      {{ item.showId.eventId.location.venue }}, {{ item.showId.eventId.location.city }}
                     </p>
                     <p class="ion-no-margin ion-no-padding">
                       <strong>{{ item?.tickets }} ticket(s) </strong>,

@@ -1,5 +1,5 @@
 export interface Icategory {
-  _id: number;
+  _id: string;
   name: string;
   image: string;
 }

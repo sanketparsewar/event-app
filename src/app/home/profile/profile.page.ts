@@ -72,12 +72,13 @@ export class ProfilePage implements OnInit {
   @ViewChild('modal') modal: any;
   @ViewChild('editmodal') editmodal: any;
   selectedFile: File | null = null;
+  loading = false;
 
   updateProfileData = {
     name: '',
     email: '',
     phone: '',
-    image: null, // to store the selected file
+    image: '', // to store the selected file
   };
   constructor(
     private userService: UserService,
@@ -105,9 +106,12 @@ export class ProfilePage implements OnInit {
     this.userService.getLoggedUser().subscribe({
       next: (response) => {
         this.loggedUserData = response.user; // Store user data in this.data
-        // console.log('User :', this.loggedUserData);
-        this.updateProfileData = this.loggedUserData;
-        // console.log(response.user)
+        console.log('User :', this.loggedUserData);
+        this.updateProfileData.name = this.loggedUserData.name;
+        this.updateProfileData.phone = this.loggedUserData.phone;
+        this.updateProfileData.email = this.loggedUserData.email;
+        this.updateProfileData.image = this.loggedUserData.image;
+        console.log('updateProfileData',this.updateProfileData)
         this.getUserBookings();
       },
       error: () => {
@@ -119,13 +123,20 @@ export class ProfilePage implements OnInit {
 
   // Method to handle file selection
   onFileSelected(event: any) {
-    
     this.selectedFile = event.target.files[0];
+    
+  }
+
+  // Method to handle form submission
+  onSubmit() {
+    this.loading = true; // Show spinner
+
     if (this.selectedFile) {
       this.uploadService.uploadFile(this.selectedFile).subscribe({
         next: (res: any) => {
           this.updateProfileData.image = res.file.url;
           // console.log(res)
+          this.updateUser()
           this.toastService.presentToast(
             'Profile updated Successfully!',
             'checkmark',
@@ -137,19 +148,20 @@ export class ProfilePage implements OnInit {
         },
       });
     } else {
-      console.log('No file selected');
+      this.updateUser()
+      // console.log('No file selected');
     }
-  }
 
-  // Method to handle form submission
-  onSubmit() {
+    
+  }
+  updateUser(){
     if (
       this.updateProfileData.name &&
       this.updateProfileData.email &&
       this.updateProfileData.phone
     ) {
       // console.log('Form Submitted:', this.updateProfileData);
-      this.userService.updateUser(this.updateProfileData).subscribe({
+      this.userService.updateUser(this.updateProfileData,this.loggedUserData._id).subscribe({
         next: (res) => {
           // this.updateProfileData=res.user
           this.toastService.presentToast(
@@ -157,9 +169,14 @@ export class ProfilePage implements OnInit {
             'checkmark',
            'success'
           );
+          this.loggedUserData=res.updatedUser
+          this.loading = false;
+          console.log('response from back',res)
           this.editmodal.dismiss();
+          this.selectedFile
         },
         error: (error: any) => {
+          this.editmodal.dismiss();
           this.toastService.presentToast('Error!', 'alert', 'danger');
         },
       })
