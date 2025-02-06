@@ -126,17 +126,20 @@ ion-content {
     background-position: center;
 
     align-content: end;
+
     ion-item {
       border-radius: 20px;
       --background: rgba(47, 47, 47, 0.05);
       backdrop-filter: blur(10px);
       margin: 5px 5px 10px 5px;
+
       p.name {
         color: rgb(255, 255, 255);
         font-weight: bold;
         font-size: 1.3rem;
       }
-      p{
+
+      p {
         color: rgb(255, 255, 255);
       }
     }
@@ -145,4 +148,10 @@ ion-content {
 
   }
 
+}
+
+.selected-category {
+  --background: rgb(130,50,185);// Apply secondary color
+    color: rgb(255, 255, 255); // Adjust text color if needed
+  transition: background-color 0.5s ease-in-out;
 }
