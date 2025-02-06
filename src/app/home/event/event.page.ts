@@ -58,11 +58,14 @@ import { ShowService } from 'src/app/services/show/show.service';
 export class EventPage implements OnInit {
   eventId: string = '';
   event: Ievent = {
-    _id: 0,
+    _id: '',
     name: '',
     date: new Date(),
     image: '',
-    location: '',
+    location: {
+      venue: '',
+      city: '',
+    },
     headliners: [],
     performers: [],
     categoryId: '',
@@ -70,6 +73,7 @@ export class EventPage implements OnInit {
     shows: [],
     bookings: [],
   };
+  // event!:Ievent;
   showsList: any;
   router = inject(Router);
   constructor(
