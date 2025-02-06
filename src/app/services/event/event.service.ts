@@ -20,4 +20,8 @@ export class EventService {
   getEventById(id: string): Observable<Ievent> {
     return this.http.get<Ievent>(`${this.BASE_URI}/event/${id}`);
   }
+
+  getEventsByCategory(categoryId: string): Observable<Ievent[]> {
+    return this.http.get<Ievent[]>(`${this.BASE_URI}/event/category/${categoryId}`);
+  }
 }
