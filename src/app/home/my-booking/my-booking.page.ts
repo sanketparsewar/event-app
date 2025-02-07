@@ -1,6 +1,4 @@
-import { BookingService } from 'src/app/services/booking/booking.service';
 import {
-  ChangeDetectorRef,
   Component,
   inject,
   OnInit,
@@ -86,9 +84,7 @@ export class MyBookingPage implements OnInit {
     }
   }
   constructor(
-    private bookingService: BookingService,
     private userService: UserService,
-    private cdr: ChangeDetectorRef // Inject ChangeDetectorRef
   ) {}
 
   ionViewWillEnter() {
@@ -98,8 +94,7 @@ export class MyBookingPage implements OnInit {
   getLoggedUser() {
     this.userService.getLoggedUser().subscribe({
       next: (response) => {
-        this.loggedUserData = response.user; // Store user data in this.data
-        // console.log('User :', this.loggedUserData);
+        this.loggedUserData = response.user; 
         this.bookingData.name = this.loggedUserData.name;
         this.bookingData.email = this.loggedUserData.email;
         this.bookingData.phone = this.loggedUserData.phone;
@@ -127,7 +122,6 @@ export class MyBookingPage implements OnInit {
       this.bookingData.tickets * this.showData.ticketPrice;
 
     this.ticketDetails = this.bookingData;
-    // console.log('ticketdetails', this.ticketDetails);
     this.openModal();
   }
   back() {
@@ -139,7 +133,6 @@ export class MyBookingPage implements OnInit {
     this.router.navigate(['/payment'], {
       state: { ticketDetails: this.ticketDetails },
     });
-    this.modal.dismiss();
-    // console.log('ticketdetails', this.ticketDetails);
+    this.closeModal();
   }
 }
