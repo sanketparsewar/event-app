@@ -16,15 +16,6 @@ ion-header {
       }
     }
 
-    // ion-label {
-    //   p {
-    //     padding: 32px 5px;
-    //     padding-top: 5px;
-    //     color: white;
-    //     font-weight: bold;
-    //     font-size: 2.5rem;
-    //   }
-    // }
 
     ion-fab-button {
 
@@ -159,34 +150,6 @@ ion-content {
 
 
 
-// ion-range::part(pin) {
-//   display: inline-flex;
-//   align-items: center;
-//   justify-content: center;
-
-//   background: rgba(141, 65, 192, 0.63);
-//   color: #fff;
-
-//   border-radius: 50%;
-//   transform: scale(1.01);
-
-//   top: -13px;
-
-//   min-width: 28px;
-//   height: 28px;
-//   transition: transform 120ms ease, --background 120ms ease;
-// }
-
-// ion-range::part(pin)::before {
-//   content: none;
-// }
-
-// ion-range::part(knob) {
-//   width: 18px;
-//   height: 18px;
-//   top: 17px;
-//   background: rgb(59, 127, 182);
-// }
 
 ion-select {
   padding: 10px 5px;
