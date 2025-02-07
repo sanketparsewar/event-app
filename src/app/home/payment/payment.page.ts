@@ -1,3 +1,4 @@
+import { TransactionService } from './../../services/transaction/transaction.service';
 import { BookingService } from 'src/app/services/booking/booking.service';
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
@@ -46,7 +47,8 @@ export class PaymentPage implements OnInit {
     private bookingService: BookingService,
     private alertService: AlertService,
     private toastService: ToastService,
-    private loaderService: LoaderService
+    private loaderService: LoaderService,
+    private transactionService: TransactionService
   ) {}
   router = inject(Router);
   ticketDetails: any;
@@ -96,16 +98,17 @@ export class PaymentPage implements OnInit {
         event.preventDefault();
         this.bookingService.bookTicket(this.ticketDetails).subscribe({
           next: async (res: any) => {
-            await this.loaderService.hideLoading();
             this.bookingDetails = res.booking;
             this.transaction.booking = this.bookingDetails?._id;
             this.transaction.paymentDetails = this.paymentDetails;
-            // console.log('transaction', this.transaction);
+            console.log('transaction', this.transaction);
+            this.createTransaction();
             this.toastService.presentToast(
               'Ticket Booked!',
               'checkmark',
               'success'
             );
+            await this.loaderService.hideLoading();
             this.router.navigateByUrl(`/ticket/${this.bookingDetails._id}`);
           },
           error: (error: any) => {
@@ -119,9 +122,21 @@ export class PaymentPage implements OnInit {
     } catch (error) {
       this.toastService.presentToast('Error!', 'alert', 'danger');
       this.router.navigateByUrl('/home');
-      console.log('Payment canceled',);
+      console.log('Payment canceled');
     }
   }
+
+  createTransaction() {
+    this.transactionService.createTransaction(this.transaction).subscribe({
+      next: (res: any) => {
+        console.log('Booking created');
+      },
+      error: (error: any) => {
+        console.error('Error:', error.error.message);
+      },
+    });
+  }
+
   back() {
     history.back();
   }
