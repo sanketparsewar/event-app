@@ -8,6 +8,7 @@ import {
   arrowRedoOutline,
   calendarOutline,
   cardOutline,
+  caretDownSharp,
   checkmark,
   chevronBackCircleOutline,
   chevronForwardOutline,
@@ -64,7 +65,7 @@ export class AppComponent {
       settingsOutline,
       chevronForwardOutline,
       cloudUploadOutline,
-      closeCircleOutline,
+      closeCircleOutline,caretDownSharp
     });
   }
 

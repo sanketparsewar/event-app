@@ -151,20 +151,13 @@ ion-content {
 }
 
 .selected-category {
-  --background: rgb(130,50,185);// Apply secondary color
-    color: rgb(255, 255, 255); // Adjust text color if needed
+  --background: rgb(130, 50, 185); // Apply secondary color
+  color: rgb(255, 255, 255); // Adjust text color if needed
   transition: background-color 0.5s ease-in-out;
 }
 
 
 
-// ion-range::part(tick) {
-//   background: #a2d2ff;
-// }
-
-// ion-range::part(tick-active) {
-//   background: #bde0fe;
-// }
 
 ion-range::part(pin) {
   display: inline-flex;
@@ -195,22 +188,27 @@ ion-range::part(knob) {
   background: rgb(59, 127, 182);
 }
 
-// ion-range::part(bar) {
-//   background: #a2d2ff;
-// }
+ion-select {
+  padding: 32px 5px;
+  padding-top: 5px;
+  font-weight: bold;
+  font-size: 2.5rem;
 
-// ion-range::part(bar-active) {
-//   background: #bde0fe;
-// }
+  .icon-inner,
+  .ionicon,
+  svg {
+    color: white;
+  }
 
-/* Add custom styles for the scrollable popover */
-// .city-select {
-//   --max-height: 300px !important;  /* Ensure the max height is applied */
-//   --overflow-y: auto !important;   /* Enable scrolling */
-// }
+}
 
-// .city-select .select-popover .popover-content {
-//   max-height: 300px; /* Set max height */
-//   overflow-y: auto; /* Enable scrolling */
-// }
+ion-select::part(icon) {
+  color: white;
+  stroke: white;
+}
 
+
+.city-select {
+  --color: white;
+  --icon-color: white;
+}

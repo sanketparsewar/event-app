@@ -106,12 +106,12 @@ export class ProfilePage implements OnInit {
     this.userService.getLoggedUser().subscribe({
       next: (response) => {
         this.loggedUserData = response.user; // Store user data in this.data
-        console.log('User :', this.loggedUserData);
+        // console.log('User :', this.loggedUserData);
         this.updateProfileData.name = this.loggedUserData.name;
         this.updateProfileData.phone = this.loggedUserData.phone;
         this.updateProfileData.email = this.loggedUserData.email;
         this.updateProfileData.image = this.loggedUserData.image;
-        console.log('updateProfileData',this.updateProfileData)
+        // console.log('updateProfileData',this.updateProfileData)
         this.getUserBookings();
       },
       error: () => {
@@ -171,7 +171,7 @@ export class ProfilePage implements OnInit {
           );
           this.loggedUserData=res.updatedUser
           this.loading = false;
-          console.log('response from back',res)
+          // console.log('response from back',res)
           this.editmodal.dismiss();
           this.selectedFile
         },

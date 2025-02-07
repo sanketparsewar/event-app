@@ -24,4 +24,24 @@ export class EventService {
   getEventsByCategory(categoryId: string): Observable<Ievent[]> {
     return this.http.get<Ievent[]>(`${this.BASE_URI}/event/category/${categoryId}`);
   }
+  getEventsByCity(city:string):Observable<Ievent[]>{
+    return this.http.get<Ievent[]>(`${this.BASE_URI}/event/city/${city}`);
+  }
+  getFilteredEvents(filter: { selectedCity?: string; selectedCategoryId?: string }) {
+    let params: any = {};
+  
+    if (filter.selectedCity) params.city = filter.selectedCity;
+    if (filter.selectedCategoryId) params.categoryId = filter.selectedCategoryId; // Only send if it's not empty
+  
+    return this.http.get<Ievent[]>(`${this.BASE_URI}/event/filter`,{ params });
+  }
+  
+  // getFilteredEvents(city?: string, categoryId?: string) {
+  //   let params: any = {};
+  //   if (city) params.city = city;
+  //   if (categoryId && categoryId !== "null") params.categoryId = categoryId; // Avoid passing "null" as a string
+  
+  //   return this.http.get<Ievent[]>(`${this.BASE_URI}/event/filter`, { params });
+  // }
+  
 }

@@ -13,17 +13,14 @@ import {
   IonToolbar,
   IonicSlides,
   IonContent,
-  IonMenu,
-  IonMenuButton,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { Router, RouterLink, } from '@angular/router';
 import { EventService } from '../services/event/event.service';
 import { CategoryService } from '../services/category/category.service';
-import { MenuController } from '@ionic/angular';
 import {
-  FormControl,
-  FormGroup,
+  
+  
   FormsModule,
   ReactiveFormsModule,
 } from '@angular/forms';
@@ -39,8 +36,8 @@ import {
     IonContent,
     CommonModule,
     RouterLink,
-    IonMenu,
-    IonMenuButton,
+    // IonMenu,
+    // IonMenuButton,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
@@ -50,30 +47,35 @@ export class HomePage implements OnInit {
   currentEvents: Ievent[] = [];
   categories: Icategory[] = [];
   cityList: string[] = [];
-  today: string = new Date().toISOString();
-  minDate: string = this.today;
-  filterForm: FormGroup;
-  selectedCity: string = 'Pune';
-  selectedPriceRange: number = 1000;
-  selectedDate: string = this.today;
-  searchForm: FormGroup;
+  // today: string = new Date().toISOString();
+  // minDate: string = this.today;
+  // filterForm: FormGroup;
+  // selectedCity: string = 'Pune';
+  // selectedPriceRange: number = 1000;
+  // selectedDate: string = this.today;
+  // searchForm: FormGroup;
   filteredEvents: Ievent[] = [];
   searchQuery: string = '';
-  constructor(
-    private evenService: EventService,
-    private categoryService: CategoryService,
-    private userService: UserService,
-    private menuController: MenuController
-  ) {
-    this.searchForm = new FormGroup({
-      searchQuery: new FormControl(''), // Default empty search query
-    });
+  selectedCategoryId: string = '';
+  filter: any = {
+    selectedCity: 'Pune',
+    selectedCategoryId: '',
+  };
 
-    this.filterForm = new FormGroup({
-      selectedCity: new FormControl(this.selectedCity),
-      selectedPriceRange: new FormControl(this.selectedPriceRange),
-      selectedDate: new FormControl(this.today),
-    });
+  constructor(
+    private eventService: EventService,
+    private categoryService: CategoryService,
+    private userService: UserService
+  ) // private menuController: MenuController
+  {
+    // this.searchForm = new FormGroup({
+    // searchQuery: new FormControl(''), // Default empty search query
+    // });
+    // this.filterForm = new FormGroup({
+    // selectedCity: new FormControl(this.selectedCity),
+    // selectedPriceRange: new FormControl(this.selectedPriceRange),
+    // selectedDate: new FormControl(this.today),
+    // });
   }
   router = inject(Router);
   isLogged = signal<boolean>(false);
@@ -82,49 +84,60 @@ export class HomePage implements OnInit {
   ngOnInit(): void {}
 
   ionViewWillEnter() {
+    // this.getEventsByCity(this.selectedCity);
+    this.fetchEvents();
     this.getEvents();
     this.getCategories();
     this.getLoggedUser();
   }
-  customPopoverOptions = {
-    // header: 'Hair Color',
-    // subHeader: 'Select your City',
-    // message: 'Only select your dominant hair color',
-  };
 
   updateCity(value: string) {
-    this.selectedCity = value;
-    this.filterForm.get('selectedCity')?.setValue(value);
+    this.filter.selectedCity = value;
+    // this.filterForm.get('selectedCity')?.setValue(value);
+    // this.getEventsByCity(this.selectedCity);
+    this.fetchEvents();
   }
-  pinFormatter(value: number) {
-    return `${value}`;
-  }
-  updatePriceRange(event: CustomEvent) {
-    this.selectedPriceRange = event.detail.value;
-    this.filterForm.get('selectedPriceRange')?.setValue(event.detail.value);
-  }
-  updateDate(event: any) {
-    this.selectedDate = event.detail.value;
-    this.filterForm.get('selectedDate')?.setValue(event.detail.value);
-  }
+  // pinFormatter(value: number) {
+  //   return `${value}`;
+  // }
+  // updatePriceRange(event: CustomEvent) {
+  //   this.selectedPriceRange = event.detail.value;
+  //   this.filterForm.get('selectedPriceRange')?.setValue(event.detail.value);
 
-  applyFilters() {
-    console.log('Applied Filters:', this.filterForm.value);
-    this.menuController.close();
-  }
+  // }
+
+  // updateDate(event: any) {
+  //   this.selectedDate = event.detail.value;
+  //   this.filterForm.get('selectedDate')?.setValue(event.detail.value);
+  // }
+
+  // applyFilters() {
+  //   console.log('Applied Filters:', this.filterForm.value);
+  //   this.menuController.close();
+  // }
   getEvents() {
     this.selectedCategoryId = '';
-    this.evenService.getEvents().subscribe({
+    this.eventService.getEvents().subscribe({
       next: (events) => {
-        this.currentEvents = events;
-        this.upcomingEvents = events;
+        // this.currentEvents = events;
+        // this.upcomingEvents = events;
         this.cityList = [
-          ...new Set(this.currentEvents.map((event) => event.location.city)),
-        ];
+          ...new Set(events.map((event) => event.location.city))
+        ].sort();
+        
       },
       error: (error) => console.error('Error:', error),
     });
   }
+  // getEventsByCity(selectedCity:string){
+  //   this.eventService.getEventsByCity(selectedCity).subscribe({
+  //     next: (res:any) => {
+  //       this.currentEvents = res.events;
+  //       this.upcomingEvents = res.events;
+  //     },
+  //     error: (error) => console.error('Error:', error),
+  //   });
+  // }
 
   searchEvents(event: any) {
     this.searchQuery = event.detail.value.trim().toLowerCase();
@@ -132,7 +145,6 @@ export class HomePage implements OnInit {
       this.filteredEvents = this.currentEvents.filter((event) =>
         event.name.toLowerCase().includes(this.searchQuery)
       );
-     
     } else {
       this.filteredEvents = [];
     }
@@ -166,12 +178,38 @@ export class HomePage implements OnInit {
       this.router.navigateByUrl('/login');
     }
   }
-  selectedCategoryId: string = '';
-  getEventsByCategoryId(category: any) {
-    this.selectedCategoryId = category._id;
-    this.evenService.getEventsByCategory(category._id).subscribe({
+  // getEventsByCategoryId(category: any) {
+  //   this.selectedCategoryId = category._id;
+  //   this.eventService.getEventsByCategory(category._id).subscribe({
+  //     next: (res: any) => {
+  //       this.currentEvents = res.events;
+  //     },
+  //     error: (error) => console.error('Error:', error),
+  //   });
+  // }
+
+  // getEventsByCity(selectedCity: string) {
+  // this.selectedCity = selectedCity;
+  // console.log(this.selectedCity);
+  // this.fetchEvents();
+  // }
+
+  getEventsByCategoryId(category?: any) {
+    this.filter.selectedCategoryId = category ? category._id : '';
+    // console.log(this.selectedCategoryId);
+    this.fetchEvents();
+  }
+  getAllEventsByCityOnly() {
+    this.filter.selectedCategoryId = '';
+    this.fetchEvents();
+  }
+
+  fetchEvents() {
+    this.eventService.getFilteredEvents(this.filter).subscribe({
       next: (res: any) => {
         this.currentEvents = res.events;
+        this.upcomingEvents = res.events;
+        // console.log(this.currentEvents);
       },
       error: (error) => console.error('Error:', error),
     });

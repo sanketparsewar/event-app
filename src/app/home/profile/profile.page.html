@@ -59,12 +59,12 @@
   <ion-modal id="example-modal" #editmodal>
     <ng-template>
       <div class="wrapper">
-        <div style="display: flex;justify-content: space-between;" >
+        <div style="display: flex;justify-content: space-between;">
           <h1>Edit Profile</h1>
-          <ion-button  size="small" fill="clear" (click)="editmodal.dismiss()">
+          <ion-button size="small" fill="clear" (click)="editmodal.dismiss()">
             <ion-icon slot="icon-only" size="small" name="close-circle-outline"></ion-icon>
           </ion-button>
-        
+
         </div>
         <form (ngSubmit)="onSubmit()" #profileForm="ngForm">
           <!-- Name Input -->

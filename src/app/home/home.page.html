@@ -8,7 +8,11 @@
             Events near me
           </ion-text>
         </div>
-        <p color="light">Pune, MH</p>
+        <!-- <p color="light">{{selectedCity}}</p> -->
+        <ion-select class="always-flip" toggleIcon="caret-down-sharp" interface="popover" [value]="filter?.selectedCity"
+          (ionChange)="updateCity($event.detail.value)" interface="popover" class="city-select">
+          <ion-select-option *ngFor="let item of cityList" [value]="item">{{item}}</ion-select-option>
+        </ion-select>
 
       </ion-label>
       <ion-fab-button size="small" color="white" (click)="profile()">
@@ -17,19 +21,19 @@
       </ion-fab-button>
     </ion-item>
 
-    <ion-toolbar [translate]="true" class="srchBar" mode="ios">
+    <ion-toolbar  [translate]="true" class="srchBar" mode="ios">
       <ion-row>
-        
-        <ion-col size="10">
+
+        <ion-col size="12">
           <ion-searchbar debounce="500" (ionInput)="searchEvents($event)" placeholder="Search event"></ion-searchbar>
         </ion-col>
-        <ion-col size="2">
+        <!-- <ion-col size="2">
           <ion-fab-button size="small" color="white">
             <ion-menu-button>
               <ion-icon name="options-outline" color="dark"></ion-icon>
             </ion-menu-button>
           </ion-fab-button>
-        </ion-col>
+        </ion-col> -->
       </ion-row>
     </ion-toolbar>
 
@@ -39,10 +43,10 @@
 
 
 <ion-content color="light" id="main-content">
-  <ion-item-divider  *ngIf="searchQuery && filteredEvents.length == 0" class="ion-margin-bottom" mode="ios" clor-light>
-   <ion-text color="danger" class="ion-text-center">
-    <p>No matches found for the search!</p>
-   </ion-text>
+  <ion-item-divider *ngIf="searchQuery && filteredEvents.length == 0" class="ion-margin-bottom" mode="ios" clor-light>
+    <ion-text color="danger" class="ion-text-center">
+      <p>No match found for the {{searchQuery}}!</p>
+    </ion-text>
   </ion-item-divider>
 
   <ion-list *ngIf="filteredEvents.length > 0">
@@ -105,7 +109,7 @@
     <swiper-container #category [modules]="swiperModule" [slidesPerView]="2.3" [keyboard]="true" [centerSlides]="true">
       <swiper-slide *ngFor="let category of categories; let i = index">
         <ion-card class="category1 ion-no-padding">
-          <ion-item [ngClass]="{'selected-category': selectedCategoryId === category._id}" lines="none"
+          <ion-item [ngClass]="{'selected-category': filter.selectedCategoryId === category._id}" lines="none"
             (click)="getEventsByCategoryId(category)">
             <ion-avatar>
               <img [src]="category.image" />
@@ -124,7 +128,7 @@
   <ion-list>
     <ion-item-divider mode="ios" clor-light>
       Current Events ({{currentEvents.length}})
-      <ion-button fill="clear" slot="end" shape="round" (click)="getEvents()">
+      <ion-button fill="clear" slot="end" shape="round" (click)="getAllEventsByCityOnly()">
         View All
       </ion-button>
     </ion-item-divider>
@@ -142,11 +146,16 @@
         </ion-fab-button>
       </ion-item>
     </ion-card>
+    <ion-item-divider *ngIf="currentEvents.length==0" class="ion-margin-bottom" mode="ios" clor-light>
+      <ion-text color="danger" class="ion-text-center">
+        <p>No Event found for this Category!</p>
+      </ion-text>
+    </ion-item-divider>
   </ion-list>
 </ion-content>
 
 
-<ion-menu side="end" contentId="main-content">
+<!-- <ion-menu side="end" contentId="main-content">
   <ion-header>
     <ion-toolbar>
       <ion-title>Filter</ion-title>
@@ -155,13 +164,11 @@
   <ion-content class="ion-padding">
     <form [formGroup]="filterForm">
       <ion-list>
-        <!-- City Filter -->
         <ion-select label="City" [value]="selectedCity" (ionChange)="updateCity($event.detail.value)"
           interface="popover" class="city-select">
           <ion-select-option *ngFor="let item of cityList" [value]="item">{{item}}</ion-select-option>
         </ion-select>
 
-        <!-- Price Range Filter -->
         <ion-range [value]="selectedPriceRange" [pin]="true" (ionChange)="updatePriceRange($event)" min="0" max="5000"
           step="500">
           <ion-label slot="start">Rs.0</ion-label>
@@ -171,11 +178,10 @@
         <ion-datetime (ionChange)="updateDate($event)" [value]="today" [min]="minDate">
         </ion-datetime>
 
-        <!-- Apply Filters Button -->
         <ion-buttons class=" ion-padding-vertical ion-text-center ion-justify-content-center">
           <ion-button color="tertiary" (click)="applyFilters()">Apply Filters</ion-button>
         </ion-buttons>
       </ion-list>
     </form>
   </ion-content>
-</ion-menu>
+</ion-menu> -->
