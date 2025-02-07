@@ -13,17 +13,13 @@ import {
   IonToolbar,
   IonicSlides,
   IonContent,
+  // IonToggle,
 } from '@ionic/angular/standalone';
 import { CommonModule } from '@angular/common';
-import { Router, RouterLink, } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { EventService } from '../services/event/event.service';
 import { CategoryService } from '../services/category/category.service';
-import {
-  
-  
-  FormsModule,
-  ReactiveFormsModule,
-} from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -36,14 +32,17 @@ import {
     IonContent,
     CommonModule,
     RouterLink,
+    // IonToggle,
     // IonMenu,
     // IonMenuButton,
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
 })
 export class HomePage implements OnInit {
+  paletteToggle = false;
+
   swiperModule = [IonicSlides];
-  upcomingEvents: Ievent[] = [];
+  // upcomingEvents: Ievent[] = [];
   currentEvents: Ievent[] = [];
   categories: Icategory[] = [];
   cityList: string[] = [];
@@ -57,6 +56,10 @@ export class HomePage implements OnInit {
   filteredEvents: Ievent[] = [];
   searchQuery: string = '';
   selectedCategoryId: string = '';
+  router = inject(Router);
+  isLogged = signal<boolean>(false);
+  loggedUserData: any;
+
   filter: any = {
     selectedCity: 'Pune',
     selectedCategoryId: '',
@@ -66,8 +69,7 @@ export class HomePage implements OnInit {
     private eventService: EventService,
     private categoryService: CategoryService,
     private userService: UserService
-  ) // private menuController: MenuController
-  {
+  ) {
     // this.searchForm = new FormGroup({
     // searchQuery: new FormControl(''), // Default empty search query
     // });
@@ -77,11 +79,35 @@ export class HomePage implements OnInit {
     // selectedDate: new FormControl(this.today),
     // });
   }
-  router = inject(Router);
-  isLogged = signal<boolean>(false);
-  loggedUserData: any;
 
   ngOnInit(): void {}
+  // ngOnInit() {
+  //   // Use matchMedia to check the user preference
+  //   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
+
+  //   // Initialize the dark palette based on the initial
+  //   // value of the prefers-color-scheme media query
+  //   this.initializeDarkPalette(prefersDark.matches);
+
+  //   // Listen for changes to the prefers-color-scheme media query
+  //   prefersDark.addEventListener('change', (mediaQuery) => this.initializeDarkPalette(mediaQuery.matches));
+  // }
+
+  // // Check/uncheck the toggle and update the palette based on isDark
+  // initializeDarkPalette(isDark: boolean) {
+  //   this.paletteToggle = isDark;
+  //   this.toggleDarkPalette(isDark);
+  // }
+
+  // // Listen for the toggle check/uncheck to toggle the dark palette
+  // toggleChange(event: CustomEvent) {
+  //   this.toggleDarkPalette(event.detail.checked);
+  // }
+
+  // // Add or remove the "ion-palette-dark" class on the html element
+  // toggleDarkPalette(shouldAdd: boolean) {
+  //   document.documentElement.classList.toggle('ion-palette-dark', shouldAdd);
+  // }
 
   ionViewWillEnter() {
     // this.getEventsByCity(this.selectedCity);
@@ -122,22 +148,12 @@ export class HomePage implements OnInit {
         // this.currentEvents = events;
         // this.upcomingEvents = events;
         this.cityList = [
-          ...new Set(events.map((event) => event.location.city))
+          ...new Set(events.map((event) => event.location.city)),
         ].sort();
-        
       },
       error: (error) => console.error('Error:', error),
     });
   }
-  // getEventsByCity(selectedCity:string){
-  //   this.eventService.getEventsByCity(selectedCity).subscribe({
-  //     next: (res:any) => {
-  //       this.currentEvents = res.events;
-  //       this.upcomingEvents = res.events;
-  //     },
-  //     error: (error) => console.error('Error:', error),
-  //   });
-  // }
 
   searchEvents(event: any) {
     this.searchQuery = event.detail.value.trim().toLowerCase();
@@ -178,21 +194,6 @@ export class HomePage implements OnInit {
       this.router.navigateByUrl('/login');
     }
   }
-  // getEventsByCategoryId(category: any) {
-  //   this.selectedCategoryId = category._id;
-  //   this.eventService.getEventsByCategory(category._id).subscribe({
-  //     next: (res: any) => {
-  //       this.currentEvents = res.events;
-  //     },
-  //     error: (error) => console.error('Error:', error),
-  //   });
-  // }
-
-  // getEventsByCity(selectedCity: string) {
-  // this.selectedCity = selectedCity;
-  // console.log(this.selectedCity);
-  // this.fetchEvents();
-  // }
 
   getEventsByCategoryId(category?: any) {
     this.filter.selectedCategoryId = category ? category._id : '';
@@ -208,7 +209,7 @@ export class HomePage implements OnInit {
     this.eventService.getFilteredEvents(this.filter).subscribe({
       next: (res: any) => {
         this.currentEvents = res.events;
-        this.upcomingEvents = res.events;
+        // this.upcomingEvents = res.events;
         // console.log(this.currentEvents);
       },
       error: (error) => console.error('Error:', error),

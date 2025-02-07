@@ -1,10 +1,9 @@
 <ion-content [fullscreen]="true" class="ion-padding">
   <div class="bg ion-display-flex">
     <ion-buttons slot="start">
-      <ion-button (click)="back()"
-      routerLinkActive="router-link-active">
-      <ion-icon color="dark" slot="icon-only" size="large" name="chevron-back-circle-outline"></ion-icon>
-    </ion-button>
+      <ion-button (click)="back()" routerLinkActive="router-link-active">
+        <ion-icon color="dark" slot="icon-only" size="large" name="chevron-back-circle-outline"></ion-icon>
+      </ion-button>
     </ion-buttons>
   </div>
 
@@ -26,44 +25,44 @@
       </ion-grid>
 
       <!-- Booking Form -->
-      <ion-list class="ion-no-margin ion-no-padding">
-        <!-- <ion-item class="ion-no-padding ion-margin-bottom" lines="none">
-          <ion-label position="stacked" required>Name:</ion-label>
-          <input placeholder="Enter your name" [(ngModel)]="bookingData.name" />
-        </ion-item>
-
-        <ion-item class="ion-no-padding ion-margin-bottom" lines="none">
-          <ion-label position="stacked" >Phone:</ion-label>
-          <input type="tel" placeholder="7984561321" minlength="10" maxlength="10" [(ngModel)]="bookingData.phone" />
-        </ion-item>
-
-        <ion-item class="ion-no-padding ion-margin-bottom" lines="none">
-          <ion-label position="stacked" required>Email:</ion-label>
-          <input type="email" placeholder="example@gmail.com" [(ngModel)]="bookingData.email" />
-        </ion-item> -->
-
+      <!-- <ion-list class="ion-no-margin ion-no-padding">
         <ion-item class="ion-no-padding ion-margin-bottom" lines="none">
           <ion-label position="stacked" required>Tickets (max 6) :</ion-label>
           <input type="number" placeholder="1" maxlength="1" minlength="1" max="6" min="1"
-            [(ngModel)]="bookingData.tickets" />
+            [(ngModel)]="bookingData.tickets" #bookingDataTickets="ngModel" />
         </ion-item>
-        <div>
-          <p *ngIf="bookingData.tickets > 6 || bookingData.tickets<1" class="error" style="color: red;">Number of
-            tickets allowed is between 1 to 6.</p>
+        <div *ngIf="bookingDataTickets.invalid && bookingDataTickets.touched">
+          <p *ngIf="bookingDataTickets.errors?.['required']" class="error" style="color: red;">
+            Number of tickets is required.
+          </p>
+          <p *ngIf="bookingDataTickets.errors?.['min'] || bookingDataTickets.errors?.['max']" class="error" style="color: red;">
+            Number of tickets allowed is between 1 to 6.
+          </p>
         </div>
       </ion-list>
 
-      <!-- Book Now Button -->
-      <ion-button expand="full" color="tertiary" (click)="bookNow()" shape="round" class="ion-margin-top">
-        Book Now {{(bookingData.tickets * showData.ticketPrice)| currency:"INR"}}
-      </ion-button>
+      <ion-button [disabled]="bookingDataTickets.invalid" expand="full" color="tertiary" (click)="bookNow()"
+        shape="round" class="ion-margin-top">
+        Book Now {{ (bookingData.tickets * showData.ticketPrice) | currency:"INR" }}
+      </ion-button> -->
+      <!-- Booking Form -->
+      <form #bookingForm="ngForm">
+        <ion-list class="ion-no-margin ion-no-padding">
+          <!-- Tickets Input -->
+          <ion-item class="ion-no-padding ion-margin-bottom" lines="none">
+            <ion-label position="stacked" required>Tickets (max 6) :</ion-label>
+            <input type="number" [(ngModel)]="bookingData.tickets" name="tickets" required min="1" max="6" />
+          </ion-item>
+        </ion-list>
+        <!-- Book Now Button -->
+        <ion-button [disabled]="bookingForm.invalid" expand="full" color="tertiary" (click)="bookNow()" shape="round"
+          class="ion-margin-top">
+          Book Now {{ (bookingData.tickets * showData.ticketPrice) | currency:"INR" }}
+        </ion-button>
+      </form>
+
     </div>
   </div>
-
-
-
-
-
 
 
   <ion-modal #modal>

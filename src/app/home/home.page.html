@@ -3,6 +3,7 @@
     <ion-item lines="none">
       <ion-label color="light">
         <div>
+        
           <ion-icon name="locate-outline"></ion-icon>
           <ion-text>
             Events near me
@@ -72,7 +73,36 @@
   </ion-list>
 
 
-  <ion-list class="ion-margin-top">
+  
+
+  <!-- category -->
+  <ion-list class="">
+    <ion-item-divider mode="ios" clor-light>
+      Top Pick Categories
+      <ion-button fill="clear" slot="end" shape="round" (click)="getAllEventsByCityOnly()">
+        View All
+      </ion-button>
+    </ion-item-divider>
+
+    <swiper-container #category [modules]="swiperModule" [slidesPerView]="2.3" [keyboard]="true" [centerSlides]="true">
+      <swiper-slide *ngFor="let category of categories; let i = index">
+        <ion-card class="category1 ion-no-padding">
+          <ion-item [ngClass]="{'selected-category': filter.selectedCategoryId === category._id}" lines="none"
+            (click)="getEventsByCategoryId(category)">
+            <ion-avatar>
+              <img [src]="category.image" />
+            </ion-avatar>
+            <ion-label>
+              {{category?.name}}
+            </ion-label>
+          </ion-item>
+        </ion-card>
+      </swiper-slide>
+    </swiper-container>
+
+  </ion-list>
+
+  <!-- <ion-list class="ion-margin-top" *ngIf="upcomingEvents.length!==0">
     <ion-list-header mode="ios">
       Upcoming Events
     </ion-list-header>
@@ -98,39 +128,16 @@
         </ion-card>
       </swiper-slide>
     </swiper-container>
-  </ion-list>
-
-  <!-- category -->
-  <ion-list class="">
-    <ion-item-divider mode="ios" clor-light>
-      Top Picks
-    </ion-item-divider>
-
-    <swiper-container #category [modules]="swiperModule" [slidesPerView]="2.3" [keyboard]="true" [centerSlides]="true">
-      <swiper-slide *ngFor="let category of categories; let i = index">
-        <ion-card class="category1 ion-no-padding">
-          <ion-item [ngClass]="{'selected-category': filter.selectedCategoryId === category._id}" lines="none"
-            (click)="getEventsByCategoryId(category)">
-            <ion-avatar>
-              <img [src]="category.image" />
-            </ion-avatar>
-            <ion-label>
-              {{category?.name}}
-            </ion-label>
-          </ion-item>
-        </ion-card>
-      </swiper-slide>
-    </swiper-container>
-
-  </ion-list>
-
+  </ion-list> -->
 
   <ion-list>
-    <ion-item-divider mode="ios" clor-light>
-      Current Events ({{currentEvents.length}})
-      <ion-button fill="clear" slot="end" shape="round" (click)="getAllEventsByCityOnly()">
+    <ion-item-divider mode="ios" *ngIf="currentEvents.length!==0">
+      <!-- <ion-list-header mode="ios" *ngIf="currentEvents.length!==0"> -->
+        Current Events ({{currentEvents.length}})
+      <!-- </ion-list-header> -->
+      <!-- <ion-button fill="clear" slot="end" shape="round" (click)="getAllEventsByCityOnly()">
         View All
-      </ion-button>
+      </ion-button> -->
     </ion-item-divider>
 
     <ion-card class="currentEvent" *ngFor="let event of currentEvents; let i = index"

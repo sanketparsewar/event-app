@@ -37,11 +37,11 @@
 
       <ion-accordion-group color="light">
         <ion-item>
-          <ion-label (click)="openModal()"><ion-icon name="ticket-outline"></ion-icon>Your Orders</ion-label>
+          <ion-label (click)="openModal()"><ion-icon name="ticket-outline"></ion-icon>Tickets history</ion-label>
         </ion-item>
         <ion-accordion value="first">
           <ion-item slot="header" lines="true">
-            <ion-label><ion-icon name="settings-outline"></ion-icon>Account</ion-label>
+            <ion-label><ion-icon name="settings-outline"></ion-icon>Account settings</ion-label>
           </ion-item>
           <div class="ion-padding" (click)="onEdit()" slot="content"><ion-icon color="dark"
               name="create-outline"></ion-icon>Edit</div>
@@ -120,12 +120,12 @@
 
 
 
-  <!-- order modal -->
+  <!-- ticket history modal -->
   <ion-modal #modal>
     <ng-template>
       <ion-header>
         <ion-toolbar>
-          <ion-title>Your Orders</ion-title>
+          <ion-title>Your Tickets</ion-title>
           <ion-buttons slot="end">
             <ion-buttons class="ion-margin-horizontal" (click)="modal.dismiss()">Close</ion-buttons>
           </ion-buttons>
@@ -157,7 +157,7 @@
                     </p>
                     <p class="ion-no-margin ion-no-padding">
                       <strong>{{ item?.tickets }} ticket(s) </strong>,
-                      Order on: {{ item?.createdAt | date: 'd MMM | hh:mm a' }}
+                      Booked on: {{ item?.createdAt | date: 'd MMM | hh:mm a' }}
                     </p>
                   </ion-text>
                 </ion-col>
@@ -169,7 +169,7 @@
                   <strong class="ion-padding-horizontal"
                     style="background-color: rgb(51, 51, 51); color: white; border-radius: 3px;">
                     Finished
-                  </strong> | Hope you enjoyed the show!
+                  </strong> | Hope you enjoyed the event!
                 </ion-col>
 
                 <ion-col *ngIf="getRemainingTime(item?.showId.date, item?.showId.time)" size="12"

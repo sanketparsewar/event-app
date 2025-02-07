@@ -35,13 +35,5 @@ export class EventService {
   
     return this.http.get<Ievent[]>(`${this.BASE_URI}/event/filter`,{ params });
   }
-  
-  // getFilteredEvents(city?: string, categoryId?: string) {
-  //   let params: any = {};
-  //   if (city) params.city = city;
-  //   if (categoryId && categoryId !== "null") params.categoryId = categoryId; // Avoid passing "null" as a string
-  
-  //   return this.http.get<Ievent[]>(`${this.BASE_URI}/event/filter`, { params });
-  // }
-  
+    
 }
