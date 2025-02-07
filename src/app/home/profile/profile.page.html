@@ -169,7 +169,7 @@
                   <strong class="ion-padding-horizontal"
                     style="background-color: rgb(51, 51, 51); color: white; border-radius: 3px;">
                     Finished
-                  </strong> | Hope you enjoyed the event!
+                  </strong> | Hope you enjoyed the show!
                 </ion-col>
 
                 <ion-col *ngIf="getRemainingTime(item?.showId.date, item?.showId.time)" size="12"
@@ -181,6 +181,11 @@
           </ion-card>
           }
         </ion-list>
+        <ion-item *ngIf="bookingsList?.length === 0" lines="none" class="ion-text-center ion-margin" >
+          <ion-text>No tickets found.</ion-text>
+        </ion-item>
+               
+     
       </ion-content>
     </ng-template>
   </ion-modal>

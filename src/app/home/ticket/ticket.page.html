@@ -1,7 +1,7 @@
 <ion-header [translucent]="true">
   <ion-toolbar>
     <ion-buttons slot="start">
-      <ion-button color="dark" (click)="router.navigateByUrl('/event/'+bookingDetails?.showId?.eventId?._id)">Event
+      <ion-button color="dark" (click)="backToEvent()">Event
       <!-- <ion-icon slot="icon-only" size="large" color="dark" name="chevron-back-circle-outline"></ion-icon> -->
     </ion-button>
     </ion-buttons>
@@ -45,7 +45,7 @@
       </div>
 
       <div class="ticket-details" style="align-items: center;">
-        <img [src]="bookingDetails?.image" class="scan">
+        <img [src]="bookingDetails?.image" class="scan" alt="User profile image">
 
         <div class="ticket">
           <b>{{bookingDetails?.name}}</b>

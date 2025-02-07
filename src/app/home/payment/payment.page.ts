@@ -12,17 +12,21 @@ import {
   IonLabel,
   IonAccordionGroup,
   IonIcon,
-  IonButton, IonButtons, } from '@ionic/angular/standalone';
+  IonButton,
+  IonButtons,
+} from '@ionic/angular/standalone';
 import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert/alert.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 @Component({
   selector: 'app-payment',
   templateUrl: './payment.page.html',
   styleUrls: ['./payment.page.scss'],
   standalone: true,
-  imports: [ IonButtons, 
+  imports: [
+    IonButtons,
     IonButton,
     IonIcon,
     IonAccordionGroup,
@@ -41,7 +45,8 @@ export class PaymentPage implements OnInit {
   constructor(
     private bookingService: BookingService,
     private alertService: AlertService,
-    private toastService: ToastService
+    private toastService: ToastService,
+    private loaderService: LoaderService
   ) {}
   router = inject(Router);
   ticketDetails: any;
@@ -87,9 +92,11 @@ export class PaymentPage implements OnInit {
       );
 
       if (result === 'confirmed') {
+        this.loaderService.showLoading();
         event.preventDefault();
         this.bookingService.bookTicket(this.ticketDetails).subscribe({
           next: async (res: any) => {
+            await this.loaderService.hideLoading();
             this.bookingDetails = res.booking;
             this.transaction.booking = this.bookingDetails?._id;
             this.transaction.paymentDetails = this.paymentDetails;
@@ -99,15 +106,20 @@ export class PaymentPage implements OnInit {
               'checkmark',
               'success'
             );
-
             this.router.navigateByUrl(`/ticket/${this.bookingDetails._id}`);
           },
-          error: (error: any) => console.error('Error:', error),
+          error: (error: any) => {
+            this.toastService.presentToast('Error!', 'alert', 'danger');
+            console.error('Error:', error.error.message);
+            this.loaderService.hideLoading();
+          },
         });
         // console.log('Card Details:', this.paymentDetails);
       }
     } catch (error) {
-      console.log('Payment canceled');
+      this.toastService.presentToast('Error!', 'alert', 'danger');
+      this.router.navigateByUrl('/home');
+      console.log('Payment canceled',);
     }
   }
   back() {

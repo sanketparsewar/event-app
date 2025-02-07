@@ -3,14 +3,12 @@
     <ion-item lines="none">
       <ion-label color="light">
         <div>
-        
           <ion-icon name="locate-outline"></ion-icon>
           <ion-text>
             Events near me
           </ion-text>
         </div>
-        <!-- <p color="light">{{selectedCity}}</p> -->
-        <ion-select class="always-flip" toggleIcon="caret-down-sharp" interface="popover" [value]="filter?.selectedCity"
+        <ion-select class="always-flip ion-no-padding ion-no-margin" toggleIcon="caret-down-sharp" interface="popover" [value]="filter?.selectedCity"
           (ionChange)="updateCity($event.detail.value)" interface="popover" class="city-select">
           <ion-select-option *ngFor="let item of cityList" [value]="item">{{item}}</ion-select-option>
         </ion-select>
@@ -22,7 +20,7 @@
       </ion-fab-button>
     </ion-item>
 
-    <ion-toolbar  [translate]="true" class="srchBar" mode="ios">
+    <ion-toolbar [translate]="true" class="srchBar" mode="ios">
       <ion-row>
 
         <ion-col size="12">
@@ -46,7 +44,7 @@
 <ion-content color="light" id="main-content">
   <ion-item-divider *ngIf="searchQuery && filteredEvents.length == 0" class="ion-margin-bottom" mode="ios" clor-light>
     <ion-text color="danger" class="ion-text-center">
-      <p>No match found for the {{searchQuery}}!</p>
+      <p>No match found for {{searchQuery}}!</p>
     </ion-text>
   </ion-item-divider>
 
@@ -73,14 +71,15 @@
   </ion-list>
 
 
-  
+
 
   <!-- category -->
   <ion-list class="">
-    <ion-item-divider mode="ios" clor-light>
+    <ion-item-divider mode="ios" lines="none">
       Top Pick Categories
-      <ion-button fill="clear" slot="end" shape="round" (click)="getAllEventsByCityOnly()">
-        View All
+      <ion-button class="ion-no-margin" fill="clear" slot="end" shape="round" *ngIf="filter.selectedCategoryId"
+        (click)="getAllEventsByCityOnly()">
+        View All Events
       </ion-button>
     </ion-item-divider>
 
@@ -133,7 +132,7 @@
   <ion-list>
     <ion-item-divider mode="ios" *ngIf="currentEvents.length!==0">
       <!-- <ion-list-header mode="ios" *ngIf="currentEvents.length!==0"> -->
-        Current Events ({{currentEvents.length}})
+      Current Events ({{currentEvents.length}})
       <!-- </ion-list-header> -->
       <!-- <ion-button fill="clear" slot="end" shape="round" (click)="getAllEventsByCityOnly()">
         View All

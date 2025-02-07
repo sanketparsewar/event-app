@@ -73,12 +73,11 @@ export class UserService {
     });
   }
 
-  updateUser(user: any,userId:string): Observable<any> {
+  updateUser(user: any, userId: string): Observable<any> {
     return this.http.put(`${this.BASE_URI}/user/${userId}`, user);
   }
 
   deleteUser(): Observable<any> {
     return this.http.delete(`${this.BASE_URI}/user`);
   }
-
 }

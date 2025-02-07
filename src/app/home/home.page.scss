@@ -6,7 +6,7 @@ ion-header {
     border-bottom-left-radius: 25px;
     border-bottom-right-radius: 25px;
     padding: 32px 5px 10px 5px;
-
+    margin-bottom: 8px;
     ion-item,
     ion-toolbar.srchBar {
       --background: transparent;
@@ -16,15 +16,15 @@ ion-header {
       }
     }
 
-    ion-label {
-      p {
-        padding: 32px 5px;
-        padding-top: 5px;
-        color: white;
-        font-weight: bold;
-        font-size: 2.5rem;
-      }
-    }
+    // ion-label {
+    //   p {
+    //     padding: 32px 5px;
+    //     padding-top: 5px;
+    //     color: white;
+    //     font-weight: bold;
+    //     font-size: 2.5rem;
+    //   }
+    // }
 
     ion-fab-button {
 
@@ -159,37 +159,37 @@ ion-content {
 
 
 
-ion-range::part(pin) {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
+// ion-range::part(pin) {
+//   display: inline-flex;
+//   align-items: center;
+//   justify-content: center;
 
-  background: rgba(141, 65, 192, 0.63);
-  color: #fff;
+//   background: rgba(141, 65, 192, 0.63);
+//   color: #fff;
 
-  border-radius: 50%;
-  transform: scale(1.01);
+//   border-radius: 50%;
+//   transform: scale(1.01);
 
-  top: -13px;
+//   top: -13px;
 
-  min-width: 28px;
-  height: 28px;
-  transition: transform 120ms ease, --background 120ms ease;
-}
+//   min-width: 28px;
+//   height: 28px;
+//   transition: transform 120ms ease, --background 120ms ease;
+// }
 
-ion-range::part(pin)::before {
-  content: none;
-}
+// ion-range::part(pin)::before {
+//   content: none;
+// }
 
-ion-range::part(knob) {
-  width: 18px;
-  height: 18px;
-  top: 17px;
-  background: rgb(59, 127, 182);
-}
+// ion-range::part(knob) {
+//   width: 18px;
+//   height: 18px;
+//   top: 17px;
+//   background: rgb(59, 127, 182);
+// }
 
 ion-select {
-  padding: 32px 5px;
+  padding: 10px 5px;
   padding-top: 5px;
   font-weight: bold;
   font-size: 2.5rem;

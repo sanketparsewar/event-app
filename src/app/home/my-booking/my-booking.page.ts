@@ -104,8 +104,8 @@ export class MyBookingPage implements OnInit {
         this.bookingData.email = this.loggedUserData.email;
         this.bookingData.phone = this.loggedUserData.phone;
       },
-      error: () => {
-        console.log('User is not authenticated, redirecting to login...');
+      error: (error) => {
+        console.log('User is not authenticated, redirecting to login...',error.error.message);
         this.router.navigate(['/login']);
       },
     });

@@ -20,6 +20,7 @@ import { Router, RouterLink } from '@angular/router';
 import { EventService } from '../services/event/event.service';
 import { CategoryService } from '../services/category/category.service';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { LoaderService } from '../services/loader/loader.service';
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
@@ -68,7 +69,8 @@ export class HomePage implements OnInit {
   constructor(
     private eventService: EventService,
     private categoryService: CategoryService,
-    private userService: UserService
+    private userService: UserService,
+    private loaderService: LoaderService
   ) {
     // this.searchForm = new FormGroup({
     // searchQuery: new FormControl(''), // Default empty search query
@@ -80,7 +82,11 @@ export class HomePage implements OnInit {
     // });
   }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.fetchEvents();
+    this.getEvents();
+    this.getCategories();
+  }
   // ngOnInit() {
   //   // Use matchMedia to check the user preference
   //   const prefersDark = window.matchMedia('(prefers-color-scheme: dark)');
@@ -111,9 +117,9 @@ export class HomePage implements OnInit {
 
   ionViewWillEnter() {
     // this.getEventsByCity(this.selectedCity);
-    this.fetchEvents();
-    this.getEvents();
-    this.getCategories();
+    // this.fetchEvents();
+    // this.getEvents();
+    // this.getCategories();
     this.getLoggedUser();
   }
 
@@ -151,7 +157,7 @@ export class HomePage implements OnInit {
           ...new Set(events.map((event) => event.location.city)),
         ].sort();
       },
-      error: (error) => console.error('Error:', error),
+      error: (error) => console.error('Error:', error.error.message),
     });
   }
 
@@ -206,13 +212,17 @@ export class HomePage implements OnInit {
   }
 
   fetchEvents() {
+    this.loaderService.showLoading();
     this.eventService.getFilteredEvents(this.filter).subscribe({
       next: (res: any) => {
         this.currentEvents = res.events;
         // this.upcomingEvents = res.events;
         // console.log(this.currentEvents);
+        this.loaderService.hideLoading();
       },
-      error: (error) => console.error('Error:', error),
+      error: (error) => {
+        console.error('Error:', error.error.message), this.loaderService.hideLoading();
+      },
     });
   }
 }

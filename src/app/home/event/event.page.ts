@@ -25,6 +25,8 @@ import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { EventService } from 'src/app/services/event/event.service';
 import { Ievent } from 'src/app/interfaces/event.interface';
 import { ShowService } from 'src/app/services/show/show.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
+import { ToastService } from 'src/app/services/toast/toast.service';
 
 @Component({
   selector: 'app-event',
@@ -79,7 +81,9 @@ export class EventPage implements OnInit {
   constructor(
     private activatedRoute: ActivatedRoute,
     private eventService: EventService,
-    private showService: ShowService
+    private showService: ShowService,
+    private loaderService: LoaderService,
+    private toastService: ToastService
   ) {}
   @ViewChild('modal') modal!: IonModal;
   ngOnInit() {
@@ -87,12 +91,12 @@ export class EventPage implements OnInit {
       if (params['id']) {
         this.eventId = params['id'];
         this.getEventById();
-       
       }
     });
   }
 
   getEventById() {
+    this.loaderService.showLoading();
     this.eventService.getEventById(this.eventId).subscribe({
       next: (res: Ievent) => {
         this.event = res; // Assigning response to event
@@ -100,7 +104,14 @@ export class EventPage implements OnInit {
         this.getShowsByEvent();
       },
       error: (error) => {
-        console.error('Error:', error); // Log error if request fails
+        this.toastService.presentToast(
+          error.error.message,
+          'alert',
+          'danger'
+        );
+        console.error('Error:', error.error.message); // Log error if request fails
+        this.loaderService.hideLoading();
+        this.router.navigateByUrl('/profile')
       },
     });
   }
@@ -108,29 +119,29 @@ export class EventPage implements OnInit {
     this.showService.getShowsByEvent(this.eventId).subscribe({
       next: (shows) => {
         const currentDateTime = new Date(); // Get current date and time
-  
+
         this.showsList = shows.filter((show) => {
           const showDateTime = new Date(show.date);
-          const [time, period] = show.time.split(" "); // Splitting "9:00 PM"
-          let [hours, minutes] = time.split(":").map(Number);
-  
+          const [time, period] = show.time.split(' '); // Splitting "9:00 PM"
+          let [hours, minutes] = time.split(':').map(Number);
+
           // Convert 12-hour format to 24-hour format
-          if (period === "PM" && hours !== 12) hours += 12;
-          if (period === "AM" && hours === 12) hours = 0;
-  
+          if (period === 'PM' && hours !== 12) hours += 12;
+          if (period === 'AM' && hours === 12) hours = 0;
+
           showDateTime.setHours(hours, minutes, 0, 0); // Set time in showDateTime
-  
+          
           return showDateTime > currentDateTime; // Filter future shows
         });
-  
-        // console.log("Filtered showsList:", this.showsList);
+
+        this.loaderService.hideLoading();
       },
       error: (error) => {
-        console.error("Error:", error);
+        console.error('Error:', error.error.message);
+        this.loaderService.hideLoading();
       },
     });
   }
-  
 
   openModal() {
     this.modal.present();

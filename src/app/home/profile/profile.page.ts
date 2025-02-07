@@ -34,6 +34,7 @@ import { Router } from '@angular/router';
 import { AlertService } from 'src/app/services/alert/alert.service';
 import { ToastService } from 'src/app/services/toast/toast.service';
 import { UploadFileService } from 'src/app/services/uploadFile/upload-file.service';
+import { LoaderService } from 'src/app/services/loader/loader.service';
 
 @Component({
   selector: 'app-profile',
@@ -85,7 +86,8 @@ export class ProfilePage implements OnInit {
     private alertService: AlertService,
     private toastService: ToastService,
     private bookingService: BookingService,
-    private uploadService: UploadFileService
+    private uploadService: UploadFileService,
+    private loaderService: LoaderService
   ) {}
 
   public alertButtons = [
@@ -103,6 +105,7 @@ export class ProfilePage implements OnInit {
     this.getLoggedUser();
   }
   getLoggedUser() {
+    this.loaderService.showLoading()
     this.userService.getLoggedUser().subscribe({
       next: (response) => {
         this.loggedUserData = response.user; // Store user data in this.data
@@ -113,9 +116,11 @@ export class ProfilePage implements OnInit {
         this.updateProfileData.image = this.loggedUserData.image;
         // console.log('updateProfileData',this.updateProfileData)
         this.getUserBookings();
+        this.loaderService.hideLoading()
       },
-      error: () => {
-        console.log('User is not authenticated, redirecting to login...');
+      error: (error) => {
+        console.log('User is not authenticated, redirecting to login...',error.error.message);
+        this.loaderService.hideLoading()
         this.router.navigate(['/login']);
       },
     });
@@ -124,7 +129,6 @@ export class ProfilePage implements OnInit {
   // Method to handle file selection
   onFileSelected(event: any) {
     this.selectedFile = event.target.files[0];
-    
   }
 
   // Method to handle form submission
@@ -136,7 +140,7 @@ export class ProfilePage implements OnInit {
         next: (res: any) => {
           this.updateProfileData.image = res.file.url;
           // console.log(res)
-          this.updateUser()
+          this.updateUser();
           this.toastService.presentToast(
             'Profile updated Successfully!',
             'checkmark',
@@ -144,42 +148,42 @@ export class ProfilePage implements OnInit {
           );
         },
         error: (error: any) => {
-          this.toastService.presentToast('Error!', 'alert', 'danger');
+          this.toastService.presentToast(error.error.message, 'alert', 'danger',);
         },
       });
     } else {
-      this.updateUser()
+      this.updateUser();
       // console.log('No file selected');
     }
-
-    
   }
-  updateUser(){
+  updateUser() {
     if (
       this.updateProfileData.name &&
       this.updateProfileData.email &&
       this.updateProfileData.phone
     ) {
       // console.log('Form Submitted:', this.updateProfileData);
-      this.userService.updateUser(this.updateProfileData,this.loggedUserData._id).subscribe({
-        next: (res) => {
-          // this.updateProfileData=res.user
-          this.toastService.presentToast(
-            'Profile updated Successfully!',
-            'checkmark',
-           'success'
-          );
-          this.loggedUserData=res.updatedUser
-          this.loading = false;
-          // console.log('response from back',res)
-          this.editmodal.dismiss();
-          this.selectedFile
-        },
-        error: (error: any) => {
-          this.editmodal.dismiss();
-          this.toastService.presentToast('Error!', 'alert', 'danger');
-        },
-      })
+      this.userService
+        .updateUser(this.updateProfileData, this.loggedUserData._id)
+        .subscribe({
+          next: (res) => {
+            // this.updateProfileData=res.user
+            this.toastService.presentToast(
+              'Profile updated Successfully!',
+              'checkmark',
+              'success'
+            );
+            this.loggedUserData = res.updatedUser;
+            this.loading = false;
+            // console.log('response from back',res)
+            this.editmodal.dismiss();
+            this.selectedFile;
+          },
+          error: (error: any) => {
+            this.editmodal.dismiss();
+            this.toastService.presentToast(error.error.message, 'alert', 'danger');
+          },
+        });
     }
   }
 
@@ -193,7 +197,7 @@ export class ProfilePage implements OnInit {
         this.toastService.presentToast(
           'Failed to fetch user bookings',
           'alert',
-         'danger'
+          'danger'
         );
         // console.log('Failed to fetch user bookings');
       },
