@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
 import { tap } from 'rxjs/operators';
 import { ApiService } from '../api/api.service';
+import { environment } from 'src/environments/environment.prod';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,8 @@ export class UserService {
     private apiService: ApiService,
     private router: Router
   ) {
-    this.BASE_URI = this.apiService.getApiUrl();
+    // this.BASE_URI = this.apiService.getApiUrl();
+    this.BASE_URI = environment.apiUrl;
   }
   isAuthenticated = false;
 
